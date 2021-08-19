@@ -1,0 +1,11 @@
+[
+    {
+        "name": "Militia",
+        "move" : 7,
+        "spritebounds": [ 96, 16 ]
+    },{
+        "name": "Light Cavalry",
+        "move" : 10,
+        "spritebounds": [ 112, 64 ]
+    }
+]

@@ -1,0 +1,24 @@
+[
+    {
+        "name": "Plains",
+        "move_cost": 2,
+        "sight_cost": 2,
+        "range_bonus": 0,
+        "defence_bonus": 0.2,
+        "spritebounds": [ 0, 16 ]
+    },{
+        "name": "Mountain",
+        "move_cost": 4,
+        "sight_cost": 4,
+        "range_bonus": 1,
+        "defence_bonus": 0.4,
+        "spritebounds": [ 16, 16 ]
+    },{
+        "name": "Forest",
+        "move_cost": 3,
+        "sight_cost": 4,
+        "range_bonus": -1,
+        "defence_bonus": 0.2,
+        "spritebounds": [ 80, 16 ]
+    }
+]
