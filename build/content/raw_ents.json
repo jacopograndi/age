@@ -1,0 +1,564 @@
+Unit name: Militia
+Unit type: Infantry
+Bonuses: +33% vs. siege +33% vs. Building
+Move: 7
+Attack: 100
+Defense: 100
+Sight: 7
+Range: 1
+Specials: None
+
+
+Unit name: Villagers
+Unit type: Infantry
+Bonuses: +33% vs. siege +33% vs. Building
+Move: 7
+Attack: 50
+Defense: 50
+Sight: 7
+Range: 1
+Specials: Build
+
+
+Unit name: Scout Cavalry
+Unit type: Cavalry
+Bonuses: +33% vs. Infantry +33% vs. Ranged -50% Vs. Building
+Move: 12
+Attack: 100
+Defense: 100
+Sight: 10
+Range: 1
+Specials: Scout
+
+
+Age 2:
+
+Unit name: Archers
+Unit type: Ranged
+Bonuses: -50% vs. Building
+Move: 7
+Attack: 150
+Defense: 100
+Sight: 7
+Range: 3
+Specials: None
+
+
+Unit name: Skirmishers
+Unit type: Ranged
+Bonuses: -50% vs. Building
+Move: 7
+Attack: 110
+Defense: 110
+Sight: 7
+Range: 2
+Specials: Skirmish
+
+
+Unit name: Light Cavalry
+Unit type: Cavalry
+Bonuses: +33% vs. Infantry +33% vs. Ranged -50% vs. Building
+Move: 10
+Attack: 150
+Defense: 150
+Sight: 7
+Range: 1
+Specials: Plains Charge
+
+
+Unit name: Men-at-Arms
+Unit type: Infantry
+Bonuses: +33% vs. siege +33% vs. Building
+Move: 7
+Attack: 150
+Defense: 150
+Sight: 7
+Range: 1
+Specials: None
+
+
+Unit name: Spearmen
+Unit type: Infantry
+Bonuses: +33% vs. siege +33% vs. Building
+Move: 7
+Attack: 100
+Defense: 150
+Sight: 7
+Range: 1
+Specials: Anti-Cavalry
+
+
+Age 3:
+
+Unit name: Knights
+Unit type: Cavalry
+Bonuses: +33% vs. Infantry +33% vs. Ranged -50% Vs. Building
+Move: 10
+Attack: 200
+Defense: 200
+Sight: 7
+Range: 1
+Specials: Plains Charge
+
+
+Unit name: Camels
+Unit type: Cavalry
+Bonuses: +33% vs. Infantry +33% vs. Ranged -50% Vs. Building
+Move: 10
+Attack: 200
+Defense: 200
+Sight: 7
+Range: 1
+Specials: Desert Charge, Scares Horses.
+
+
+Unit name: Longswordmen
+Unit type: Infantry
+Bonuses: +33% vs. Siege +33% vs. Building
+Move: 7
+Attack: 200
+Defense: 200
+Sight: 7
+Range: 1
+Specials: None
+
+Unit name: Pikemen
+Unit type: Infantry
+Bonuses: +33% vs. Siege +33% vs. Building
+Move: 7
+Attack: 150
+Defense: 200
+Sight: 7
+Range: 1
+Specials: Anti-Cavalry
+
+Unit name: Viking Berserkers
+Unit type: Infantry
+Bonuses: +33% vs. Siege +33% vs. Building
+Move: 7
+Attack: 200
+Defense: 200
+Sight: 7
+Range: 1
+Specials: Frenzy
+
+Unit name: Crossbowmen
+Unit type: Ranged
+Bonuses: -50% vs. Building
+Move: 7
+Attack: 200
+Defense: 175
+Sight: 7
+Range: 3
+Specials: No Move & Attack.
+
+Unit name: Elite Skirmishers
+Unit type: Ranged
+Bonuses: -50% vs. Building
+Move: 7
+Attack: 150
+Defense: 150
+Sight: 7
+Range: 2
+Specials: Skirmish
+
+Unit name: Horse Archers
+Unit type: Ranged
+Bonuses: -50% vs. Building
+Move: 10
+Attack: 150
+Defense: 150
+Sight: 7
+Range: 2
+Specials: None
+
+Unit name: Throwing Axmen
+Unit type: Infantry
+Bonuses: 33% vs. Siege 33% vs. Building
+Move: 7
+Attack: 225
+Defense: 250
+Sight: 7
+Range: 1
+Specials: Skirmish, Woodsman
+
+Unit name: Persian War Elephants
+Unit type: Cavalry
+Bonuses: 33% vs. Infantry 33% vs. Ranged -50% vs. Building
+Move: 7
+Attack: 200
+Defense: 250
+Sight: 7
+Range: 1
+Specials: Causes Fear
+
+Unit name: Celtic Woad Raiders
+Unit type: Infantry
+Bonuses: 33% vs. Siege 33% vs. Building
+Move: 7
+Attack: 200
+Defense: 200
+Sight: 7
+Range: 1
+Specials: Causes Fear
+
+Unit name: Knights Templar
+Unit type: Cavalry
+Bonuses: 33% vs. Infantry 33% vs. Ranged -50% vs. Building
+Move: 10
+Attack: 200
+Defense: 200
+Sight: 7
+Range: 1
+Specials: Plains Charge, Zeal
+
+Unit name: Scorpions
+Unit type: Siege
+Bonuses: 50% vs. Building
+Move: 7
+Attack: 350
+Defense: 250
+Sight: 7
+Range: 3
+Specials: Units only, No Counter, No Move & Attack
+
+Unit name: Battering Rams
+Unit type: Siege
+Bonuses: 50% vs. Building
+Move: 7
+Attack: 400
+Defense: 325
+Sight: 7
+Range: 1
+Specials: Buildings only, No Counter.
+
+Unit name: Onagers
+Unit type: Siege
+Bonuses: 50% vs. Building
+Move: 7
+Attack: 275
+Defense: 275
+Sight: 7
+Range: 3
+Specials: No Counter, No Move & Attack
+
+
+Age 4:
+
+Unit name: Two Handed Swordsmen
+Unit type: Infantry
+Bonuses: +33% vs. Siege +33% vs. Building
+Move: 7
+Attack: 250
+Defense: 250
+Sight: 7
+Range: 1
+Specials: None
+
+Unit name: Elite Pikemen
+Unit type: Infantry
+Bonuses: +33% vs. Siege +33% vs. Building
+Move: 7
+Attack: 200
+Defense: 250
+Sight: 7
+Range: 1
+Specials: Anti-Cavalry
+
+Unit name: Archers
+Unit type: Ranged
+Bonuses: -50% vs. Building
+Move: 7
+Attack: 200
+Defense: 200
+Sight: 7
+Range: 3
+Specials: None
+
+Unit name: Arbalests
+Unit type: Ranged
+Bonuses: -50% vs. Building
+Move: 7
+Attack: 250
+Defense: 225
+Sight: 7
+Range: 3
+Specials: No Move & Attack.
+
+Unit name: Expert Skirmishers
+Unit type: Ranged
+Bonuses: -50% vs. Building
+Move: 7
+Attack: 190
+Defense: 190
+Sight: 7
+Range: 2
+Specials: Skirmish
+
+Unit name: Hvy Horse Archers
+Unit type: Ranged
+Bonuses: -50% vs. Building
+Move: 10
+Attack: 200
+Defense: 200
+Sight: 7
+Range: 2
+Specials: None
+
+Unit name: Cavaliers
+Unit type: Cavalry
+Bonuses: +33% vs. Infantry +33% vs. Ranged -50% Vs. Building
+Move: 10
+Attack: 250
+Defense: 250
+Sight: 7
+Range: 1
+Specials: Plains Charge
+
+Unit name: Heavy Camels
+Unit type: Cavalry
+Bonuses: +33% vs. Infantry +33% vs. Ranged -50% Vs. Building
+Move: 10
+Attack: 250
+Defense: 250
+Sight: 7
+Range: 1
+Specials: Desert Charge, Scares Horses.
+
+Unit name: Elite Berserkers
+Unit type: Infantry
+Bonuses: +33% vs. Siege +33% vs. Building
+Move: 7
+Attack: 250
+Defense: 250
+Sight: 7
+Range: 1
+Specials: Frenzy
+
+Unit name: Elite Woad Raiders
+Unit type: Infantry
+Bonuses: 33% vs. Siege 33% vs. Building
+Move: 7
+Attack: 250
+Defense: 250
+Sight: 7
+Range: 1
+Specials: Causes Fear
+
+Unit name: Trebuchets
+Unit type: Siege
+Bonuses: 50% vs. Building
+Move: 7
+Attack: 370
+Defense: 350
+Sight: 7
+Range: 3
+Specials: Min Range 2, No Counter, No Move & Attack
+
+Unit name: Bombard Cannons
+Unit type: Siege
+Bonuses: 50% vs. Building
+Move: 7
+Attack: 325
+Defense: 325
+Sight: 7
+Range: 3
+Specials: No Counter, No Move & Attack
+(Notes: You need to research 'Chemistry' To raise these.)
+
+Unit name: Hand Cannoneers
+Unit type: Ranged
+Bonuses: -50% vs. Building
+Move: 7
+Attack: 300
+Defense: 225
+Sight: 7
+Range: 3
+Specials: No Move & Attack
+(Notes: You need to research 'Chemistry' To raise these.)
+
+Unit name: Champions
+Unit type: Infantry
+Bonuses: +33% vs. Siege +33% vs. Building
+Move: 7
+Attack: 300
+Defense: 300
+Sight: 7
+Range: 1
+Specials: None
+(Notes: You need to research 'Arena' To raise these.)
+
+Unit name: Paladins
+Unit type: Cavalry
+Bonuses: +33% vs. Infantry +33% vs. Ranged -50% Vs. Building
+Move: 10
+Attack: 300
+Defense: 300
+Sight: 7
+Range: 1
+Specials: Plains Charge
+(Note: You need to research 'Squire' to create Paladins)
+
+Unit name: Heavy Scorpions
+Unit type: Siege
+Bonuses: 50% vs. Building
+Move: 7
+Attack: 400
+Defense: 300
+Sight: 7
+Range: 3
+Specials: Units only, No Counter, No Move & Attack
+(Note: You need to Research Siege Engineers to raise these.)
+
+Unit name: Siege Rams
+Unit type: Siege
+Bonuses: 50% vs. Building
+Move: 7
+Attack: 500
+Defense: 375
+Sight: 7
+Range: 3
+Specials: Buildings only, No Counter.
+
+
+Unit name: Elite Monks
+Unit type: Infantry
+Bonuses: 33% vs. Siege 33% vs. Building
+Move: 7
+Attack: 50
+Defense: 200
+Sight: 7
+Range: 1
+Specials: Improved Heal, Improved Convert
+
+Unit name: Elite Knights Templar
+Unit type: Cavalry
+Bonuses: 33% vs. Infantry 33% vs. Ranged -50% vs. Building
+Move: 10
+Attack: 250
+Defense: 250
+Sight: 7
+Range: 1
+Specials: Plains Charge, Zeal
+
+
+Unit name: Elite Janissaries
+Unit type: Ranged
+Bonuses: -50% vs. Building
+Move: 7
+Attack: 300
+Defense: 225
+Sight: 7
+Range: 1
+Specials: No Move & Attack 
+
+Civ Specific Units:
+
+-Franks
+Unit name: Throwing Axmen
+Unit type: Infantry
+Bonuses: 33% vs. Siege 33% vs. Building
+Move: 7
+Attack: 250
+Defense: 275
+Sight: 7
+Range: 1
+Specials: Skirmish, Woodsman
+
+
+Unit name: Elite Throwing Axmen
+Unit type: Infantry
+Bonuses: 33% vs. Siege 33% vs. Building
+Move: 7
+Attack: 275
+Defense: 300
+Sight: 7
+Range: 1
+Specials: Skirmish, Woodsman
+
+-Britons
+Unit name: Longbowmen
+Unit type: Ranged
+Bonuses: -50% vs. Buildings
+Move: 7
+Attack: 250
+Defense: 200
+Sight: 7
+Range: 3
+Specials: Volley
+
+
+Unit name: Elite Longbowmen
+Unit type: Ranged
+Bonuses: -50% vs. Buildings
+Move: 7
+Attack: 275
+Defense: 250
+Sight: 7
+Range: 3
+Specials: Volley
+
+-Mongols
+Unit name: Mangudai
+Unit type: Ranged
+Bonuses: -50% vs. Buildings
+Move: 7
+Attack: 150
+Defense: 150
+Sight: 7
+Range: 2
+Specials: First Strike
+
+Unit name: Elite Mangudai
+Unit type: Ranged
+Bonuses: -50% vs. Buildings
+Move: 7
+Attack: 200
+Defense: 200
+Sight: 7
+Range: 2
+Specials: First Strike
+
+-Saracens
+Unit name: Mamelukes
+Unit type: Cavalry
+Bonuses: +33% vs. Infantry & Ranged, -50% vs. Buildings
+Move: 7
+Attack: 250
+Defense: 250
+Sight: 7
+Range: 1
+Specials: Desert Charge, Scares Horses
+
+
+Unit name: Elite Mamelukes
+Unit type: Cavalry
+Bonuses: +33% vs. Infantry & Ranged, -50% vs. Buildings
+Move: 7
+Attack: 300
+Defense: 300
+Sight: 7
+Range: 1
+Specials: Desert Charge, Scares Horses
+
+-Japanese
+Unit name: Samurai
+Unit type: Infantry
+Bonuses: +33% vs. Siege & Buildings
+Move: 9
+Attack: 250
+Defense: 250
+Sight: 7
+Range: 1
+Specials: Seasoned Veteran
+
+
+Unit name: Elite Samurai
+Unit type: Infantry
+Bonuses: +33% vs. Siege & Buildings
+Move: 9
+Attack: 300
+Defense: 300
+Sight: 7
+Range: 1
+Specials: Seasoned Veteran

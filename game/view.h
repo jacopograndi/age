@@ -25,6 +25,8 @@ class View {
     
     Menu_unit menu_unit;
     Menu_day menu_day;
+    Menu_build menu_build;
+    Menu_train menu_train;
     
     void process (Gst &gst, vec2 cam, vec2 mouse, int *mheld);
 };

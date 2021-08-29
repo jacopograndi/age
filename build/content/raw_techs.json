@@ -1,0 +1,303 @@
+[A1] List of Technologies
+
+---------
+Dark Age:
+---------
+
+* Loom
+Requires: Town Center
+Cost: 50f 150g
+All Villagers get +25 DEF
+
+* Town Scouts
+Requires: Town Center
+Cost: 50f 150g
+Town Centers gain +4 Sight
+
+* Leather Soles
+Prereqs: Town Center
+Cost: 50f 150g
+Villagers gain +1 Move
+
+* Weaponsmith
+Requires: Barracks
+Cost: 50f 150g
+Militia gain +25 ATT
+
+============
+-Feudal Age:
+============
+
+* Town Watch
+Requires: Town Center
+Cost: 95f 280g
+Improves Town Center DEF by +20% and Sight by +2
+
+* Wheelbarrow
+Requires: Town Center
+Cost: 125f 375g
+Cost of buildings is reduced by 10%
+
+* Advanced Mining
+Requires: Mine
+Cost: 95f 280g
++15% to Mine income
+
+* Horse Collar
+Requires: Mill
+Cost: 95f 280g
++15% to food income
+
+* Scale Mail Armor
+Requires: Blacksmith
+Cost: 95f 280g
++25% DEF for Infantry
+
+* Scale Barding
+Requires: Blacksmith
+Cost: 95f 280g
++25% DEF for Cavalry
+
+* Fletching
+Requires: Blacksmith
+Cost: 95f 280g
++25% ATT for Ranged Units
+
+* Padded Armor
+Requires: Blacksmith
+Cost: 95f 280g
++25% DEF for Ranged Units
+
+* Forging
+Requires: Blacksmith
+Cost: 155f 470g
++25% ATT for Infantry and Cavalry
+
+* Tracking
+Requires: Barracks
+Cost: 95f 280g
++2 Sight for Infantry
+
+* Cartography
+Requires: Market
+Cost: 95f 280g
++1 Sight for all units
+
+++++++++++++
+-Castle Age:
+++++++++++++
+
+* Town Patrol
+Requires: Town Center
+Cost: 150f 450g
++2 Sight and +20% DEF for Town Center
+
+* Hand Cart
+Requires: Town Center
+Cost: 150f 450g
+Cost of Building is reduced by 10%
+
+* Shaft Mining
+Requires: Mine
+Cost: 150f 450g
++15% to Mine income
+
+* Heavy Plow
+Requires: Mill
+Cost: 150f 450g
++15% to food income
+
+* Chain Mail Armor
+Requires: Blacksmith
+Cost: 150f 450g
++25% DEF to Age 3 infantry
+
+* Chain Barding
+Requires: Blacksmith
+Cost: 150f 450g
++25% DEF to Age 3 Cavalry
+
+* Bodkin Arrow
+Requires: Blacksmith
+Cost: 150f 450g
++25% ATT to Age 3 Ranged Units
+
+* Leather Armor
+Requires: Blacksmith
+Cost: 150f 450g
++25% DEF to Age 3 Ranged Units
+
+* Iron Casting
+Requires: Blacksmith
+Cost: 250f 750g
++25% ATT to Age 3 Infantry and Cavalry
+
+* Conscription
+Requires: Barracks
+Cost: 150f 450g
+Cost of Infantry is reduced by 15 food and 15 gold
+
+* Husbandry
+Requires: Stable
+Cost: 150f 450g
+Cost of Cavalry is reduced by 15 food and 15 gold
+
+* Archery Tournaments
+Requires: Archery Range
+Cost: 150f 450g
+Cost of Ranged Units is reduced by 15 food and 15 gold
+
+* Mechanics Guild
+Requires: Siege Workshop
+Cost: 150f 450g
+Cost of Siege Units is reduced by 15 food and 15 gold
+
+* Banking
+Requires: Market
+Cost: 200f 600g
++ 5% gold Income and improved Trade Rate
+
+* Merchant Network
+Requires: Market
+Cost: 150f 450g
+Price for Mercenaries is reduced by 25%
+
+* Redemption
+Requires: Church
+Cost: 150f 450g
+Improves Heal ability of Monks and Elite Monks
+
+* Fervor
+Requires: Church
+Cost: 150f 450g
+Improves Convert ability of Monks and Elite Monks
+
+* Sanctity
+Requires: Church
+Cost: 150f 450g
++25% DEF for Monks and Elite Monks
+
+* Murder Holes
+Requires: University
+Cost: 95f 280g
++25% DEF for Towers
+
+* Masonry
+Requires: University
+Cost: 150f 450g
++5% DEF for all buildings
+
+/////////////
+Imperial Age:
+\\\\\\\\\\\\\
+
+
+* Crop Rotation
+Requires: Mill
+Cost: 250f 750g
++10% to food income
+
+* Plate Mail Armor
+Requires: Blacksmith
+Cost: 250f 750g
+Age 4 Infantry units gain +25% DEF
+
+* Plate Barding
+Requires: Blacksmith
+Cost: 250f 750g
+Age 4 Cavalry units gain +25% DEF
+
+* Bracers
+Requires: Blacksmith
+Cost: 250f 750g
+Age 4 Ranged units gain +25% ATK
+
+* Ring Archer Armor
+Requires: Blacksmith
+Cost: 250f 750g
+Age 4 Ranged units gain +25% DEF
+
+* Blast Furnace
+Requires: Blacksmith
+Cost: 625f 975g
+Age 4 INF and CAV units gain +25% ATK
+
+* Arena
+Requires: Barracks
+Cost: 250f 750g
+Allows Champions
+
+* Squires
+Requires: Stables
+Cost: 250f 750g
+Allows Paladins
+
+* Flaming Arrows
+Requires: Archery Range
+Cost: 300f 900g
+RNG units no longer suffer penalty vs. BLDGS
+
+* Sappers
+Requires: Castle
+Cost: 300f 900g
+All INF units improve in +50% ATK vs. buildings
+
+* Hoardings
+Requires: Castle
+Cost: 250f 750g
+Improves Castle DEF by +35%
+
+* Spies
+Requires: Castles
+Cost: 300f 900g
+All enemy Town Complexes are now sighted
+
+* Guilds
+Requires: Market
+Cost: 300f 900g
++5% gold income and improves Trade rate
+
+* Atonement
+Requires: Church
+Cost: 250f 750g
+Improves Heal ability of Monks or Elite Monks
+
+* Block Printing
+Requires: Church
+Cost: 250f 750g
+Improves Convert ability of Monks or Elite Monks
+
+* Illumination
+Requires: Church
+Cost: 250f 750g
++505 gold income from all relics
+
+* Faith
+Requires: Church
+Cost: 250f 750g
+Monks and Elite Monks gain +25% DEF
+
+* Treadmill Crane
+Requires: University
+Cost: 250f 750g
+Cost of buildings is reduced by 10%
+
+* Siege Engineers
+Requires: University
+Cost: 250f 750g
+Allows Imperial Age Siege units to be built
+
+* Architecture
+Requires: University
+Cost: 250f 750g
++5% DEF for all buildings
+
+* Chemistry
+Requires: University
+Cost: 250f 750g
+Allows Hand Cannondeers and Bombard Cannons
+
+* Ballistics
+Requires: University
+Cost: 300f 900g
++25% ATK for Siege units with Range above 1

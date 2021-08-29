@@ -1,24 +1,33 @@
+> Combat Order
 Anti-Cavalry - When fighting cavalry, gets 83% ATK and DEF bonus and "First Strike."
-Anti-Personnel - May not attack buildings.
-Build - May build and repair buildings.
-Buildings Only - May only attack buildings.
-Causes Fear - Opponents always suffer -25% ATK and DEF.
-Convert - May attempt to convert enemy units.
-Desert Charge - Gain +33% ATK when attacking units on Desert that don't have "Desert Charge."
-First Strike - Always strike first, even when defending (unless fighting another First Strike unit).
-Frenzy - Attack and counterattack at full health (100) until completely dead.
-Heal - May heal units; 20% per use (increased by certain techs)
-Hero Powers - Has Hero Powers (see section 2.1 - Heroes)
-Improved Convert - May attempt to convert enemies with an improved chance of success.
-Improved Heal - Heals unit; 30% per use.
-No Counterattacks - May not counterattack when attacked.
-No Move & Attack - May not attack in the turn that it moves.
-Plains Charge - Gains +33% ATK when attacking units on Plains that don't have "Plains Charge."
-Rapid Fire - When attacking, gets additional attack after opponent's counter-attack.
-Scares Horses - +33% ATK and DEF when fighting horse units.
-Scout - Mountains, forests, hills, and swamps only cost 2 move points.
-Seasoned Veteran - Achieves Veteran Status more quickly: 2 battles, 4, and 6.
 Skirmish - Gains First Strike against all units with a range of 1.
-volley - When health greater than 50% +33% ATK.
+First Strike - Always strike first, even when defending (unless fighting another First Strike unit).
+Rapid Fire - When attacking, gets additional attack after opponent's counter-attack.
+
+> Attack targets filter
+Units Only - May not attack buildings.
+Buildings Only - May only attack buildings.
+No Counter - May not counterattack when attacked.
+No Move & Attack - May not attack in the turn that it moves.
+
+> Battle bonuses
+Causes Fear - Opponents always suffer -25% ATK and DEF.
+Desert Charge - Gain +33% ATK when attacking units on Desert that don't have "Desert Charge"
+Plains Charge - Gains +33% ATK when attacking units on Plains that don't have "Plains Charge"
+Scares Horses - +33% ATK and DEF when fighting horse units.
 Woodsman - +33% ATK and DEF when fighting in the forest.
+Volley - When health greater than 50% +33% ATK.
+Frenzy - Attack and counterattack at full health (100) until completely dead.
 Zeal - Automatically heals 20 Health after any battle against another unit (but not buildings)
+
+> Movement discounts
+Scout - Mountains, forests, hills, and swamps only cost 2 move points.
+
+> Activated Abilities
+Convert - May attempt to convert enemy units.
+Heal - May heal units; 20% per use (increased by certain techs)
+
+> Veteran
+Seasoned Veteran - Achieves Veteran Status more quickly: 2 battles, 4, and 6.
+
+Hero Powers - Has Hero Powers (see section 2.1 - Heroes)

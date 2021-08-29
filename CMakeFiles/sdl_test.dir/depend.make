@@ -59,6 +59,7 @@ CMakeFiles/sdl_test.dir/game/ground.cpp.obj: game/ground.cpp
 CMakeFiles/sdl_test.dir/game/ground.cpp.obj: game/ground.h
 CMakeFiles/sdl_test.dir/game/ground.cpp.obj: game/gst.h
 CMakeFiles/sdl_test.dir/game/ground.cpp.obj: game/player.h
+CMakeFiles/sdl_test.dir/game/ground.cpp.obj: game/tech.h
 CMakeFiles/sdl_test.dir/game/ground.cpp.obj: game/tile.h
 CMakeFiles/sdl_test.dir/game/ground.cpp.obj: umath/vec2.h
 
@@ -67,8 +68,20 @@ CMakeFiles/sdl_test.dir/game/gst.cpp.obj: game/ground.h
 CMakeFiles/sdl_test.dir/game/gst.cpp.obj: game/gst.cpp
 CMakeFiles/sdl_test.dir/game/gst.cpp.obj: game/gst.h
 CMakeFiles/sdl_test.dir/game/gst.cpp.obj: game/player.h
+CMakeFiles/sdl_test.dir/game/gst.cpp.obj: game/tech.h
 CMakeFiles/sdl_test.dir/game/gst.cpp.obj: game/tile.h
 CMakeFiles/sdl_test.dir/game/gst.cpp.obj: umath/vec2.h
+
+CMakeFiles/sdl_test.dir/game/load.cpp.obj: game/entity.h
+CMakeFiles/sdl_test.dir/game/load.cpp.obj: game/ground.h
+CMakeFiles/sdl_test.dir/game/load.cpp.obj: game/gst.h
+CMakeFiles/sdl_test.dir/game/load.cpp.obj: game/load.cpp
+CMakeFiles/sdl_test.dir/game/load.cpp.obj: game/load.h
+CMakeFiles/sdl_test.dir/game/load.cpp.obj: game/nlohmann/json.hpp
+CMakeFiles/sdl_test.dir/game/load.cpp.obj: game/player.h
+CMakeFiles/sdl_test.dir/game/load.cpp.obj: game/tech.h
+CMakeFiles/sdl_test.dir/game/load.cpp.obj: game/tile.h
+CMakeFiles/sdl_test.dir/game/load.cpp.obj: umath/vec2.h
 
 CMakeFiles/sdl_test.dir/game/menu.cpp.obj: game/menu.cpp
 CMakeFiles/sdl_test.dir/game/menu.cpp.obj: game/menu.h
@@ -81,9 +94,14 @@ CMakeFiles/sdl_test.dir/game/playercontrol.cpp.obj: game/menu.h
 CMakeFiles/sdl_test.dir/game/playercontrol.cpp.obj: game/player.h
 CMakeFiles/sdl_test.dir/game/playercontrol.cpp.obj: game/playercontrol.cpp
 CMakeFiles/sdl_test.dir/game/playercontrol.cpp.obj: game/playercontrol.h
+CMakeFiles/sdl_test.dir/game/playercontrol.cpp.obj: game/tech.h
 CMakeFiles/sdl_test.dir/game/playercontrol.cpp.obj: game/tile.h
 CMakeFiles/sdl_test.dir/game/playercontrol.cpp.obj: game/view.h
 CMakeFiles/sdl_test.dir/game/playercontrol.cpp.obj: umath/vec2.h
+
+CMakeFiles/sdl_test.dir/game/tech.cpp.obj: game/tech.cpp
+CMakeFiles/sdl_test.dir/game/tech.cpp.obj: game/tech.h
+CMakeFiles/sdl_test.dir/game/tech.cpp.obj: umath/vec2.h
 
 CMakeFiles/sdl_test.dir/game/tile.cpp.obj: game/tile.cpp
 CMakeFiles/sdl_test.dir/game/tile.cpp.obj: game/tile.h
@@ -94,6 +112,7 @@ CMakeFiles/sdl_test.dir/game/view.cpp.obj: game/ground.h
 CMakeFiles/sdl_test.dir/game/view.cpp.obj: game/gst.h
 CMakeFiles/sdl_test.dir/game/view.cpp.obj: game/menu.h
 CMakeFiles/sdl_test.dir/game/view.cpp.obj: game/player.h
+CMakeFiles/sdl_test.dir/game/view.cpp.obj: game/tech.h
 CMakeFiles/sdl_test.dir/game/view.cpp.obj: game/tile.h
 CMakeFiles/sdl_test.dir/game/view.cpp.obj: game/view.cpp
 CMakeFiles/sdl_test.dir/game/view.cpp.obj: game/view.h
@@ -150,6 +169,7 @@ CMakeFiles/sdl_test.dir/graphics/graphics.cpp.obj: game/ground.h
 CMakeFiles/sdl_test.dir/graphics/graphics.cpp.obj: game/gst.h
 CMakeFiles/sdl_test.dir/graphics/graphics.cpp.obj: game/menu.h
 CMakeFiles/sdl_test.dir/graphics/graphics.cpp.obj: game/player.h
+CMakeFiles/sdl_test.dir/graphics/graphics.cpp.obj: game/tech.h
 CMakeFiles/sdl_test.dir/graphics/graphics.cpp.obj: game/tile.h
 CMakeFiles/sdl_test.dir/graphics/graphics.cpp.obj: game/view.h
 CMakeFiles/sdl_test.dir/graphics/graphics.cpp.obj: graphics/cam.h
@@ -207,15 +227,16 @@ CMakeFiles/sdl_test.dir/main.cpp.obj: commands/commands.h
 CMakeFiles/sdl_test.dir/main.cpp.obj: game/entity.h
 CMakeFiles/sdl_test.dir/main.cpp.obj: game/ground.h
 CMakeFiles/sdl_test.dir/main.cpp.obj: game/gst.h
+CMakeFiles/sdl_test.dir/main.cpp.obj: game/load.h
 CMakeFiles/sdl_test.dir/main.cpp.obj: game/menu.h
 CMakeFiles/sdl_test.dir/main.cpp.obj: game/player.h
 CMakeFiles/sdl_test.dir/main.cpp.obj: game/playercontrol.h
+CMakeFiles/sdl_test.dir/main.cpp.obj: game/tech.h
 CMakeFiles/sdl_test.dir/main.cpp.obj: game/tile.h
 CMakeFiles/sdl_test.dir/main.cpp.obj: game/view.h
 CMakeFiles/sdl_test.dir/main.cpp.obj: graphics/cam.h
 CMakeFiles/sdl_test.dir/main.cpp.obj: graphics/graphics.h
 CMakeFiles/sdl_test.dir/main.cpp.obj: main.cpp
-CMakeFiles/sdl_test.dir/main.cpp.obj: nlohmann/json.hpp
 CMakeFiles/sdl_test.dir/main.cpp.obj: timing/timing.h
 CMakeFiles/sdl_test.dir/main.cpp.obj: umath/vec2.h
 

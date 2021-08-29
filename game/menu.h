@@ -12,6 +12,8 @@ class Option {
     
     std::string name;
     int id;
+    
+    std::vector<int> cost;
 };
 
 
@@ -31,7 +33,7 @@ class Menu_unit : public Menu {
     Menu_unit () {}
     
     enum Opts {
-        move, attack, done
+        move, attack, done, build, train, trade, age_up
     };
 };
 
@@ -42,6 +44,15 @@ class Menu_day : public Menu {
     enum Opts {
         end_day, tech, empire_review, scoring
     };
+};
+
+class Menu_build : public Menu {
+    public:
+    Menu_build () {}
+};
+class Menu_train : public Menu {
+    public:
+    Menu_train () {}
 };
 
 #endif

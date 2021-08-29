@@ -23,6 +23,8 @@ bool Commands_sdl::check_key (SDL_Scancode key) {
 bool Commands_sdl::process_events () {
     SDL_GetMouseState(&mx, &my);
     
+    resx = -1; resy = -1;
+    
     SDL_Event e;
     while(SDL_PollEvent(&e) != 0) {
         if(e.type == SDL_QUIT) {
@@ -46,6 +48,10 @@ bool Commands_sdl::process_events () {
             if (e.button.button == SDL_BUTTON_LEFT) { mclick[0] = 0; }
             if (e.button.button == SDL_BUTTON_MIDDLE) { mclick[1] = 0; }
             if (e.button.button == SDL_BUTTON_RIGHT) { mclick[2] = 0; }
+        }
+        if(e.type == SDL_WINDOWEVENT
+            && e.window.event == SDL_WINDOWEVENT_RESIZED ) {
+            resx = e.window.data1; resy = e.window.data2;
         }
     }
     return false;

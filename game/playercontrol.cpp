@@ -4,6 +4,44 @@
 #include "playercontrol.h"
 #include "entity.h"
 
+void open_unit_menu (Gst &gst, View &view, Fsm &fsm, int p) {
+    Entity &ent = gst.entities[view.selected_entity];
+    view.menu_unit.options.clear();
+    if (ent.info->unit == 1) {
+        if (gst.ground.move_area(gst, ent).size() > 0 
+            && ent.moved == 0) 
+        {
+            view.menu_unit.options.emplace_back("Move", Menu_unit::Opts::move);
+        }
+        if (gst.ground.attack_targets(gst, ent).size() > 0
+            && (!gst.info_has_ability(ent.info, "No Move & Attack") 
+                || ent.moved == 0)) {
+            view.menu_unit.options.emplace_back("Attack", Menu_unit::Opts::attack);
+        }
+        if (ent.info->build.size() > 0
+            && !gst.check_obstructed(ent)
+            && gst.get_possible_builds(ent).size() > 0) 
+        {
+            view.menu_unit.options.emplace_back("Build", Menu_unit::Opts::build);
+        }
+        view.menu_unit.options.emplace_back("Done", Menu_unit::Opts::done);
+    } else {
+        if (ent.info->train.size() 
+            && !gst.check_obstructed(ent))
+        {
+            view.menu_unit.options.emplace_back("Train", Menu_unit::Opts::train);
+        }
+        if (ent.info->id == 100 
+            || ent.info->id == 101) {
+            view.menu_unit.options.emplace_back("Trade", Menu_unit::Opts::trade);
+        }
+        if (ent.info->id == 100) {
+            view.menu_unit.options.emplace_back("Age Up", Menu_unit::Opts::age_up);
+        }
+    }
+    view.menu_unit.open(view.res);
+}
+
 Player_control::Player_control () {   
     fsm.arcs.emplace_back(
         select, sel_ground, -1,
@@ -24,11 +62,24 @@ Player_control::Player_control () {
         [](Gst &gst, View &view, Fsm &fsm, int p) { 
             view.menu_day.close();
             view.selected_ground = -1;
-            // end turn calcs
+            gst.end_day();
             for (Entity &e : gst.entities) {
                 e.done = false;
+                e.moved = 0;
+                if (e.owner == gst.turn) {
+                    Player &player = gst.players[e.owner];
+                    for (int i=0; i<player.res.size(); i++) {
+                        player.res[i] += e.info->prod[i];
+                    } 
+                    // todo heal when on top of building
+                    if (e.building < 0) {
+                        e.building++;
+                        if (e.building == 0) {
+                            e.hp += 50; if (e.hp > 100) e.hp = 100;
+                        }
+                    }
+                }
             }
-            gst.end_day();
             std::cout << "end day " << p << "\n";
             return select;
         }
@@ -45,11 +96,7 @@ Player_control::Player_control () {
         select, sel_unit, -1,
         [](Gst &gst, View &view, Fsm &fsm, int p) { 
             view.selected_entity = p;
-            view.menu_unit.options.clear();
-            view.menu_unit.options.emplace_back("Move", Menu_unit::Opts::move);
-            view.menu_unit.options.emplace_back("Attack", Menu_unit::Opts::attack);
-            view.menu_unit.options.emplace_back("Done", Menu_unit::Opts::done);
-            view.menu_unit.open(view.res);
+            open_unit_menu(gst, view, fsm, p);
             std::cout << "selected unit " << p << "\n";
             return menu_unit;
         }
@@ -59,6 +106,82 @@ Player_control::Player_control () {
         [](Gst &gst, View &view, Fsm &fsm, int p) { 
             view.selected_entity = -1;
             view.menu_unit.close();
+            return select;
+        }
+    ); 
+    fsm.arcs.emplace_back(
+        menu_unit, opt, Menu_unit::Opts::train,
+        [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            view.menu_unit.close();
+            std::cout << "train " << p << "\n";
+            Entity &ent = gst.entities[view.selected_entity];
+            view.menu_train.options.clear();
+            for (int id : ent.info->train) {
+                std::cout << id << " " << gst.get_info(id)->name << "\n";
+                EntityInfo *info = gst.get_info(id);
+                Option opt { info->name, id };
+                opt.cost = info->cost;
+                view.menu_train.options.push_back(opt);
+            }
+            view.menu_train.open(view.res);
+            return menu_train;
+        }
+    ); 
+    fsm.arcs.emplace_back(
+        menu_train, opt, -1,
+        [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            view.menu_train.close();
+            Entity &ent = gst.entities[view.selected_entity];
+            ent.done = true;
+            Entity entb { ent.x, ent.y, gst.get_info(p), ent.owner };
+            entb.building = -1;
+            entb.done = true;
+            entb.hp = 50;
+            gst.entities.push_back(entb);
+            Player &player = gst.players[gst.turn];
+            for (int i=0; i<player.res.size(); i++) {
+                player.res[i] -= entb.info->cost[i];
+            } 
+            view.selected_entity = -1;
+            return select;
+        }
+    ); 
+    fsm.arcs.emplace_back(
+        menu_unit, opt, Menu_unit::Opts::build,
+        [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            view.menu_unit.close();
+            std::cout << "build " << p << "\n";
+            Entity &ent = gst.entities[view.selected_entity];
+            view.menu_build.options.clear();
+            for (int id : ent.info->build) {
+                EntityInfo *info = gst.get_info(id);
+                if(!gst.check_req_build(ent, info)) continue;
+                std::cout << id << " " << gst.get_info(id)->name << "\n";
+                Option opt { info->name, id };
+                opt.cost = info->cost;
+                view.menu_build.options.push_back(opt);
+            }
+            view.menu_build.open(view.res);
+            return menu_build;
+        }
+    ); 
+    fsm.arcs.emplace_back(
+        menu_build, opt, -1,
+        [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            view.menu_build.close();
+            std::cout << "building " << p << "\n";
+            Entity &ent = gst.entities[view.selected_entity];
+            ent.done = true;
+            Entity entb { ent.x, ent.y, gst.get_info(p), ent.owner };
+            entb.building = -1;
+            entb.done = true;
+            entb.hp = 50;
+            gst.entities.push_back(entb);
+            Player &player = gst.players[gst.turn];
+            for (int i=0; i<player.res.size(); i++) {
+                player.res[i] -= entb.info->cost[i];
+            } 
+            view.selected_entity = -1;
             return select;
         }
     ); 
@@ -80,12 +203,35 @@ Player_control::Player_control () {
             view.moves.clear();
             ent.x = p % gst.ground.sizex;
             ent.y = p / gst.ground.sizex;
-            // remove move points
-            view.menu_unit.options.clear();
-            view.menu_unit.options.emplace_back("Attack", Menu_unit::Opts::attack);
-            view.menu_unit.options.emplace_back("Done", Menu_unit::Opts::done);
-            view.menu_unit.open(view.res);
+            ent.moved = 1;
+            open_unit_menu(gst, view, fsm, p);
             return menu_unit;
+        }
+    ); 
+    fsm.arcs.emplace_back(
+        menu_unit, opt, Menu_unit::Opts::attack,
+        [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            view.menu_unit.close();
+            std::cout << "attack " << p << "\n";
+            Entity &ent = gst.entities[view.selected_entity];
+            view.attacks = gst.ground.attack_targets(gst, ent);
+            return attack;
+        }
+    ); 
+    fsm.arcs.emplace_back(
+        attack, sel_ground, -1,
+        [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            std::cout << "attacked " << p << "\n";
+            Entity &atk = gst.entities[view.selected_entity];
+            int x = view.cursor_ground % gst.ground.sizex;
+            int y = view.cursor_ground / gst.ground.sizex;
+            std::cout << "selg " << x << " " << y << "\n";
+            Entity &def = gst.get_at(x, y);
+            atk.done = true;
+            gst.battle(atk, def);
+            view.attacks.clear();
+            view.selected_entity = -1;
+            return select;
         }
     ); 
     fsm.arcs.emplace_back(

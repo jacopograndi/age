@@ -19,7 +19,7 @@ int Ground::at(int x, int y) {
 }
 
 
-// move area
+// areas
 std::vector<int> Ground::star (int pos) {
     std::vector<int> fs;
     int x = pos % sizex, y = pos / sizex;
@@ -37,10 +37,13 @@ class step { public:
     int pos, m; 
 };
 
-std::vector<int> Ground::move_area (Gst &gst, Entity ent) {
+std::vector<int> Ground::move_area (Gst &gst, Entity &ent) {
     std::vector<int> moves;
     std::vector<int> visited { at(ent.x, ent.y) };
-    std::vector<step> frontier { step { at(ent.x, ent.y), ent.info.move } };
+    std::vector<step> frontier { step { at(ent.x, ent.y), ent.info->move } };
+    
+    int maxcost = 99;
+    if (gst.info_has_ability(ent.info, "Scout")) maxcost = 2;
     
     int iter=0;
     for (; iter<10000; iter++) {
@@ -59,7 +62,9 @@ std::vector<int> Ground::move_area (Gst &gst, Entity ent) {
         for (int t : forward_star) {
             if (!(std::find(visited.begin(), visited.end(), t) != visited.end())
             && !(std::find(frontier.begin(), frontier.end(), t) != frontier.end())) {
-                int walkedm = maxf.m - gst.tiles[gst.ground.tiles[t]].move_cost;
+                int movecost = gst.tiles[gst.ground.tiles[t]].move_cost;
+                if (movecost > maxcost) movecost = maxcost;
+                int walkedm = maxf.m - movecost;
                 bool obstructed = false;
                 for (Entity &e : gst.entities) {
                     if (e.owner != ent.owner && at(e.x, e.y) == t) {
@@ -79,4 +84,21 @@ std::vector<int> Ground::move_area (Gst &gst, Entity ent) {
     std::cout << "iters: " << iter;
     
     return moves;
+}
+
+std::vector<int> Ground::attack_targets (Gst &gst, Entity &ent) {
+    std::vector<int> attacks;
+    int range = ent.info->range;
+    range += gst.tiles[gst.ground.tiles[gst.ground.at(ent.x, ent.y)]]
+        .range_bonus;
+    bool builds = !gst.info_has_ability(ent.info, "Units Only");
+    bool units = !gst.info_has_ability(ent.info, "Buildings Only");
+    for (Entity &e : gst.entities) {
+        if (!units && e.info->unit == 1) continue;
+        if (!builds && e.info->unit == 0) continue;
+        if (e.owner != ent.owner && abs(e.x-ent.x)+abs(e.y-ent.y) <= range) {
+            attacks.push_back(at(e.x, e.y));
+        }
+    }
+    return attacks;
 }

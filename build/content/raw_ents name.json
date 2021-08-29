@@ -1,0 +1,94 @@
+Buildings:
+Town Center
+Mill
+Mine
+Farm
+Barracks
+Archery Range
+Blacksmith
+University
+Stable
+Market
+Siege Workshop
+Church
+Castle
+Tower
+
+
+Age 1:
+
+Unit name: Villagers
+Unit name: Militia
+Unit name: Scout Cavalry
+
+Age 2:
+
+Unit name: Archers
+Unit name: Skirmishers
+Unit name: Light Cavalry
+Unit name: Men-at-Arms
+Unit name: Spearmen
+
+Age 3:
+
+Unit name: Knights
+Unit name: Camels
+Unit name: Longswordmen
+Unit name: Pikemen
+Unit name: Viking Berserkers
+Unit name: Crossbowmen
+Unit name: Elite Skirmishers
+Unit name: Horse Archers
+Unit name: Throwing Axmen
+Unit name: Persian War Elephants
+Unit name: Celtic Woad Raiders
+Unit name: Knights Templar
+Unit name: Scorpions
+Unit name: Battering Rams
+Unit name: Onagers
+Unit name: Monks
+
+Age 4:
+
+Unit name: Two Handed Swordsmen
+Unit name: Elite Pikemen
+Unit name: Expert Archers
+Unit name: Arbalests
+Unit name: Expert Skirmishers
+Unit name: Hvy Horse Archers
+Unit name: Cavaliers
+Unit name: Heavy Camels
+Unit name: Elite Berserkers
+Unit name: Elite Woad Raiders
+Unit name: Trebuchets
+Unit name: Bombard Cannons
+Unit name: Hand Cannoneers
+Unit name: Champions
+Unit name: Paladins
+Unit name: Heavy Scorpions
+Unit name: Siege Rams
+Unit name: Elite Monks
+Unit name: Elite Knights Templar
+Unit name: Elite Janissaries
+
+Civ Specific Units:
+
+-Franks
+Unit name: Throwing Axmen
+Unit name: Elite Throwing Axmen
+
+-Britons
+Unit name: Longbowmen
+Unit name: Elite Longbowmen
+
+-Mongols
+Unit name: Mangudai
+Unit name: Elite Mangudai
+
+-Saracens
+Unit name: Mamelukes
+Unit name: Elite Mamelukes
+
+-Japanese
+Unit name: Samurai
+Unit name: Elite Samurai

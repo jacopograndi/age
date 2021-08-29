@@ -11,11 +11,11 @@ class Tile {
     Tile() {}
     
     std::string name;
-    int move_cost;
-    int sight_cost;
-    int range_bonus;
-    float attack_bonus;
-    float defence_bonus;
+    int move_cost { 1 };
+    int sight_cost { 1 };
+    int range_bonus { 0 };
+    float attack_bonus { 0 };
+    float defence_bonus { 0 };
     
     vec2 spritebounds;
 };

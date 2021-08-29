@@ -249,6 +249,33 @@ game/gst.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\sdl_test.dir\build.make CMakeFiles/sdl_test.dir/game/gst.cpp.s
 .PHONY : game/gst.cpp.s
 
+game/load.obj: game/load.cpp.obj
+
+.PHONY : game/load.obj
+
+# target to build an object file
+game/load.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\sdl_test.dir\build.make CMakeFiles/sdl_test.dir/game/load.cpp.obj
+.PHONY : game/load.cpp.obj
+
+game/load.i: game/load.cpp.i
+
+.PHONY : game/load.i
+
+# target to preprocess a source file
+game/load.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\sdl_test.dir\build.make CMakeFiles/sdl_test.dir/game/load.cpp.i
+.PHONY : game/load.cpp.i
+
+game/load.s: game/load.cpp.s
+
+.PHONY : game/load.s
+
+# target to generate assembly for a file
+game/load.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\sdl_test.dir\build.make CMakeFiles/sdl_test.dir/game/load.cpp.s
+.PHONY : game/load.cpp.s
+
 game/menu.obj: game/menu.cpp.obj
 
 .PHONY : game/menu.obj
@@ -302,6 +329,33 @@ game/playercontrol.s: game/playercontrol.cpp.s
 game/playercontrol.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\sdl_test.dir\build.make CMakeFiles/sdl_test.dir/game/playercontrol.cpp.s
 .PHONY : game/playercontrol.cpp.s
+
+game/tech.obj: game/tech.cpp.obj
+
+.PHONY : game/tech.obj
+
+# target to build an object file
+game/tech.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\sdl_test.dir\build.make CMakeFiles/sdl_test.dir/game/tech.cpp.obj
+.PHONY : game/tech.cpp.obj
+
+game/tech.i: game/tech.cpp.i
+
+.PHONY : game/tech.i
+
+# target to preprocess a source file
+game/tech.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\sdl_test.dir\build.make CMakeFiles/sdl_test.dir/game/tech.cpp.i
+.PHONY : game/tech.cpp.i
+
+game/tech.s: game/tech.cpp.s
+
+.PHONY : game/tech.s
+
+# target to generate assembly for a file
+game/tech.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\sdl_test.dir\build.make CMakeFiles/sdl_test.dir/game/tech.cpp.s
+.PHONY : game/tech.cpp.s
 
 game/tile.obj: game/tile.cpp.obj
 
@@ -459,12 +513,18 @@ help:
 	@echo ... game/gst.obj
 	@echo ... game/gst.i
 	@echo ... game/gst.s
+	@echo ... game/load.obj
+	@echo ... game/load.i
+	@echo ... game/load.s
 	@echo ... game/menu.obj
 	@echo ... game/menu.i
 	@echo ... game/menu.s
 	@echo ... game/playercontrol.obj
 	@echo ... game/playercontrol.i
 	@echo ... game/playercontrol.s
+	@echo ... game/tech.obj
+	@echo ... game/tech.i
+	@echo ... game/tech.s
 	@echo ... game/tile.obj
 	@echo ... game/tile.i
 	@echo ... game/tile.s

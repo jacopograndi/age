@@ -20,6 +20,8 @@ class Commands_sdl {
     int mclick[3];
     int mheld[3];
     
+    int resx, resy;
+    
     private:
     std::vector<SDL_Scancode> keys;
     std::vector<SDL_Scancode> keysdown;

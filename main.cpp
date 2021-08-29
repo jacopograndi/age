@@ -1,5 +1,4 @@
 #include <iostream>
-#include <fstream>
 #include <vector>
 
 #include "umath/vec2.h"
@@ -12,9 +11,7 @@
 #include "game/playercontrol.h"
 #include "game/gst.h"
 #include "game/tile.h"
-
-#include "nlohmann/json.hpp"
-using json = nlohmann::json;
+#include "game/load.h"
 
 // state representation
 /*
@@ -59,8 +56,12 @@ int main () {
     float ts = 16;
     Gst gst (15,15);
     
+    load_json(gst);
+    
     gst.players.emplace_back(255, 0, 0);
+    gst.players[0].res = std::vector<int> { 1000, 1000 };
     gst.players.emplace_back(0, 0, 255);
+    gst.players[1].res = std::vector<int> { 1000, 1000 };
     
     gst.ground.tiles[1] = 1;
     gst.ground.tiles[8] = 1;
@@ -74,29 +75,18 @@ int main () {
         gst.ground.tiles[i%(gst.ground.sizex*gst.ground.sizey)] = 1;
     }
     
-    std::ifstream file_tiles("content/tiles.json");
-    json j_tiles; file_tiles >> j_tiles;
-    for (auto it : j_tiles) {
-        Tile tile;
-        tile.name = it["name"];
-        tile.move_cost = it["move_cost"];
-        tile.spritebounds = vec2 { it["spritebounds"][0], it["spritebounds"][1] };
-        gst.tiles.push_back(tile);
-    }
+    gst.ground.resources.emplace_back(gst.ground.at(3, 4), Resource::Type::gold);
+    gst.ground.resources.emplace_back(gst.ground.at(4, 4), Resource::Type::food);
     
-    std::ifstream file_ents("content/entities.json");
-    json j_ents; file_ents >> j_ents;
-    for (auto it : j_ents) {
-        EntityInfo ent;
-        ent.name = it["name"];
-        ent.move = it["move"];
-        ent.spritebounds = vec2 { it["spritebounds"][0], it["spritebounds"][1] };
-        gst.infos.push_back(ent);
-    }
     
-    gst.entities.emplace_back(1, 1, gst.infos[0], 0);
-    gst.entities.emplace_back(2, 1, gst.infos[1], 0);
-    gst.entities.emplace_back(10, 10, gst.infos[1], 1);
+    
+    gst.entities.emplace_back(5, 1, gst.get_info("Town Center"), 0);
+    gst.entities.emplace_back(1, 1, gst.get_info("Villager"), 0);
+    gst.entities.emplace_back(2, 1, gst.get_info("Light Cavalry"), 0);
+    gst.entities.emplace_back(10, 10, gst.get_info("Villager"), 1);
+    gst.entities.emplace_back(1, 5, gst.get_info("Villager"), 1);
+    gst.entities.emplace_back(2, 5, gst.get_info("Militia"), 1);
+    gst.entities.emplace_back(0, 0, gst.get_info("Scout Cavalry"), 0);
     
     View view (vec2 { (float)graphics.resx, (float)graphics.resy });
     
@@ -104,6 +94,10 @@ int main () {
     
     while(true) {
         if (com.process_events()) break;
+        if (com.resx != -1) { 
+            graphics.change_res(com.resx, com.resy); 
+            view.res = vec2 { (float)com.resx, (float)com.resy };
+        }
         vec2 mousepos { (float)com.mx, (float)com.my };
         vec2 mousedelta { mousepos };
         mousedelta -= mouselast;

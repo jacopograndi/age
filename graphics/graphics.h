@@ -17,12 +17,13 @@
 class Graphics_sdl_text {
     public:
     Graphics_sdl_text();
-    int get_text_width (char str[]);
+    int get_width (std::string str);
     void render_text (std::string str, vec2 off);
     SDL_Renderer* gRenderer;
     SDL_Texture *tex;
     int char_width[128];
 };
+
 
 class Graphics_sdl {
     public:
@@ -31,6 +32,9 @@ class Graphics_sdl {
     SDL_Renderer* get_renderer ();
     void load_sheet ();
     void present ();
+    void change_res (int resx, int resy) { 
+        SDL_SetWindowSize(window, resx, resy); 
+    }
     void render_sprite (
         int x, int y, int w, int h, 
         int u, int v, int s, int t);
@@ -65,6 +69,10 @@ class Graphics {
     
     void render (Gst &gst, View &view);
     void present ();
+    void change_res (int x, int y) {
+        resx = x; resy = y;
+        backend.change_res(x, y);
+    }
 };
 
 #endif

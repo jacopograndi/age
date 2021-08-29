@@ -20,6 +20,8 @@ add_executable(sdl_test
     game/view.cpp game/view.h
     game/menu.cpp game/menu.h
     game/tile.cpp game/tile.h
+    game/load.cpp game/load.h
+    game/tech.cpp game/tech.h
     game/player.h
     umath/vec2.h)
 

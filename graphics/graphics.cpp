@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <string>
 
 #include "graphics.h"
 #include "../game/menu.h"
@@ -10,6 +11,61 @@ Graphics::~Graphics () {
 
 void Graphics::present () {
     backend.present();
+}
+
+void render_ents (Graphics *graphics, Gst &gst, int unit) {
+    std::vector<Entity> &entities = gst.entities;
+    for (int i=0; i<entities.size(); i++) {
+        if (entities[i].info->unit != unit) continue;
+        int done = 0;
+        if (unit == 1) done += 512 * entities[i].done;
+        
+        Player &player = gst.players[entities[i].owner];
+        graphics->backend.render_sprite(
+            (int)entities[i].info->spritebounds.x,
+            (int)entities[i].info->spritebounds.y+done, 16, 16,
+            (int)graphics->cam.pos.x + (int)entities[i].x*32, 
+            (int)graphics->cam.pos.y + (int)entities[i].y*32, 32, 32
+        );
+        if (done == 0) {
+            graphics->backend.render_sprite(
+                (int)entities[i].info->spritebounds.x,
+                (int)entities[i].info->spritebounds.y+768, 16, 16,
+                (int)graphics->cam.pos.x + (int)entities[i].x*32, 
+                (int)graphics->cam.pos.y + (int)entities[i].y*32, 32, 32,
+                player.r, player.g, player.b
+            );
+        }
+    }
+}
+
+void render_menu (Graphics *graphics, Gst &gst, Menu &menu) {
+    vec2 res { (float)graphics->resx, (float)graphics->resy };
+    if (menu.active) {
+        vec2 pos { res };
+        float height = menu.options.size() * 20;
+        vec2 size { 120, height+10 };
+        pos *= 0.5f;
+        pos -= size/2;
+        graphics->backend.render_rect(
+            255,255,255,255,
+            menu.pos.x,menu.pos.y,menu.size.x,menu.size.y
+        );
+        float acc = 0;
+        for (Option opt : menu.options) {
+            graphics->backend.txt.render_text(opt.name, menu.pos + vec2 {10, 10 + acc});
+            float width = graphics->backend.txt.get_width(opt.name);
+            if (opt.cost.size() > 0) {
+                graphics->backend.txt.render_text(
+                    std::to_string (opt.cost[0]) + "f", 
+                    menu.pos + vec2 { width + 20, 10 + acc });
+                graphics->backend.txt.render_text(
+                    std::to_string (opt.cost[1]) + "g", 
+                    menu.pos + vec2 { width + 50, 10 + acc });
+            }
+            acc += 20;
+        }
+    }
 }
 
 void Graphics::render (Gst &gst, View &view) 
@@ -27,29 +83,21 @@ void Graphics::render (Gst &gst, View &view)
                 (int)cam.pos.x + x*32, (int)cam.pos.y + y*32, 32, 32
             );
         }
-    }            
-    for (int i=0; i<entities.size(); i++) {
-        int done = 0;
-        done += 160 * entities[i].done;
-        
-        Player &player = gst.players[entities[i].owner];
-        backend.render_sprite(
-            (int)entities[i].info.spritebounds.x,
-            (int)entities[i].info.spritebounds.y+done, 16, 16,
-            (int)cam.pos.x + (int)entities[i].x*32, 
-            (int)cam.pos.y + (int)entities[i].y*32, 32, 32
-        );
-        if (done == 0) {
-            backend.render_sprite(
-                (int)entities[i].info.spritebounds.x,
-                (int)entities[i].info.spritebounds.y+240, 16, 16,
-                (int)cam.pos.x + (int)entities[i].x*32, 
-                (int)cam.pos.y + (int)entities[i].y*32, 32, 32,
-                player.r, player.g, player.b
-            );
-        }
     }
     
+    for (Resource res : gst.ground.resources) {
+        int x = res.pos % gr.sizex;
+        int y = res.pos / gr.sizex;
+        backend.render_sprite(
+            16*res.kind, 16*2, 16, 16, 
+            (int)cam.pos.x + x*32, (int)cam.pos.y + y*32, 32, 32
+        );
+    }
+    
+    render_ents(this, gst, 0);
+    render_ents(this, gst, 1);
+    
+    /* overlay */
     for (int y=0; y<gr.sizey; y++) {
         for (int x=0; x<gr.sizex; x++) {
             Tile &tile = gst.tiles[gr.tiles[gr.at(x,y)]];
@@ -65,8 +113,8 @@ void Graphics::render (Gst &gst, View &view)
         int i = view.selected_entity;
         vec2 pos { (float)entities[i].x*32, (float)entities[i].y*32 };
         backend.render_sprite (
-            (int)entities[i].info.spritebounds.x,
-            (int)entities[i].info.spritebounds.y+16*5, 16, 16, 
+            (int)entities[i].info->spritebounds.x,
+            (int)entities[i].info->spritebounds.y+256, 16, 16, 
             (int)cam.pos.x + (int)pos.x, 
             (int)cam.pos.y + (int)pos.y, 32, 32
         );
@@ -79,47 +127,33 @@ void Graphics::render (Gst &gst, View &view)
         Tile &tile = gst.tiles[gr.tiles[gr.at(x,y)]];
         backend.render_sprite(
             (int)tile.spritebounds.x,
-            (int)tile.spritebounds.y+4*16, 16, 32, 
+            (int)tile.spritebounds.y+256-16, 16, 32, 
             (int)cam.pos.x + (int)pos.x, 
             (int)cam.pos.y + (int)pos.y-32, 32, 64
         );
     } 
     
-    if (view.menu_unit.active) {
-        vec2 pos { res };
-        float height = view.menu_unit.options.size() * 20;
-        vec2 size { 120, height+10 };
-        pos *= 0.5f;
-        pos -= size/2;
-        backend.render_rect(
-            255,255,255,255,
-            view.menu_unit.pos.x,view.menu_unit.pos.y,
-            view.menu_unit.size.x,view.menu_unit.size.y
-        );
-        float acc = 0;
-        for (Option opt : view.menu_unit.options) {
-            backend.txt.render_text(opt.name, view.menu_unit.pos + vec2 {10, 10 + acc});
-            acc += 20;
+    for (int i=0; i<entities.size(); i++) {
+        if (entities[i].info->unit == 1) {
+            backend.render_rect(
+                0, 0, 0, 255,
+                (int)cam.pos.x + (int)entities[i].x*32+2, 
+                (int)cam.pos.y + (int)entities[i].y*32+30, 28, 2
+            );
+            int amt = 28 * (entities[i].hp / 100);
+            Player &player = gst.players[entities[i].owner];
+            backend.render_rect(
+                player.r, player.g, player.b, 255,
+                (int)cam.pos.x + (int)entities[i].x*32+2, 
+                (int)cam.pos.y + (int)entities[i].y*32+30, amt, 2
+            );
         }
     }
     
-    if (view.menu_day.active) {
-        vec2 pos { res };
-        float height = view.menu_day.options.size() * 20;
-        vec2 size { 120, height+10 };
-        pos *= 0.5f;
-        pos -= size/2;
-        backend.render_rect(
-            255,255,255,255,
-            view.menu_day.pos.x,view.menu_day.pos.y,
-            view.menu_day.size.x,view.menu_day.size.y
-        );
-        float acc = 0;
-        for (Option opt : view.menu_day.options) {
-            backend.txt.render_text(opt.name, view.menu_day.pos + vec2 {10, 10 + acc});
-            acc += 20;
-        }
-    }
+    render_menu(this, gst, view.menu_unit);
+    render_menu(this, gst, view.menu_day);
+    render_menu(this, gst, view.menu_build);
+    render_menu(this, gst, view.menu_train);
     
     if (view.moves.size() > 0) {
         for (int m : view.moves) {
@@ -131,6 +165,43 @@ void Graphics::render (Gst &gst, View &view)
             );
         }
     }
+    
+    if (view.attacks.size() > 0) {
+        for (int m : view.attacks) {
+            int x = m % gr.sizex;
+            int y = m / gr.sizex;
+            backend.render_rect(
+                255, 120, 0, 100,
+                (int)cam.pos.x + x*32, (int)cam.pos.y + y*32, 32, 32
+            );
+        }
+    }
+    
+    // top bar
+    vec2 pos { 0,0 };
+    backend.render_rect (
+        255,255,255,255,
+        (int)pos.x,(int)pos.y,(int)res.x, 30
+    );
+    Player &player = gst.players[gst.turn];
+    backend.render_rect (
+        player.r, player.g, player.b, 255,
+        (int)pos.x+5,(int)pos.y+5, 20, 20
+    );
+    
+    std::string txtfood = std::to_string (player.res[0]) + "f";
+    std::string txtgold = std::to_string (player.res[1]) + "g";
+    backend.txt.render_text(
+        txtfood, pos + vec2 { -backend.txt.get_width(txtfood) + res.x/2-10, 10 }
+    );
+    backend.txt.render_text(
+        txtgold, pos + vec2 { res.x/2+10, 10 }
+    );
+    // low bar
+    backend.render_rect (
+        255,255,255,255,
+        0,(int)res.y-30,(int)res.x, 30
+    );
 }
 
 
@@ -232,7 +303,7 @@ Graphics_sdl_text::Graphics_sdl_text () {
     char_width['l'] = 1; char_width['k'] = 4; char_width['t'] = 4;
 }
 
-int Graphics_sdl_text::get_text_width (char str[]) {
+int Graphics_sdl_text::get_width (std::string str) {
     int width = 0;
     for (int i=0; str[i]!='\0'; i++) { 
         width += char_width[str[i]]; 

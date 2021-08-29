@@ -19,49 +19,88 @@ void View::process (Gst &gst, vec2 cam, vec2 mouse, int *mheld) {
             for (int i=0; i<moves.size() && !found; i++) {
                 int x = moves[i] % gr.sizex;
                 int y = moves[i] / gr.sizex;
+                int valid = 1;
+                for (Entity &e : gst.entities) {
+                    if (e.x == x && e.y == y && e.info->unit == 1) {
+                        valid = 0;
+                    }
+                }
+                if (!valid) continue;
                 vec2 pos { (float)x*32, (float)y*32 };
                 if (pos.x < absmouse.x && absmouse.x < pos.x+32 
                 && pos.y < absmouse.y && absmouse.y < pos.y+32) 
                 {
                     cursor_ground = moves[i];
-                    found = true;
                 }
+            }
+            found = true;
+        }
+        
+        if (attacks.size() > 0 && !found) {
+            for (int i=0; i<attacks.size() && !found; i++) {
+                int x = attacks[i] % gr.sizex;
+                int y = attacks[i] / gr.sizex;
+                vec2 pos { (float)x*32, (float)y*32 };
+                if (pos.x < absmouse.x && absmouse.x < pos.x+32 
+                && pos.y < absmouse.y && absmouse.y < pos.y+32) 
+                {
+                    cursor_ground = attacks[i];
+                }
+            }
+            found = true;
+        }
+
+        if (menu_train.active && !found) {
+            int selected = menu_train.mouse_option(mouse);
+            if (selected != -1) {
+                opt = selected; found = true;
+            } else {
+                back = 1; found = 1;
+            }
+        }
+
+        if (menu_build.active && !found) {
+            int selected = menu_build.mouse_option(mouse);
+            if (selected != -1) {
+                opt = selected; found = true;
+            } else {
+                back = 1; found = 1;
             }
         }
 
         if (menu_unit.active && !found) {
             int selected = menu_unit.mouse_option(mouse);
             if (selected != -1) {
-                opt = selected;
-                found = true;
+                opt = selected; found = true;
             } else {
-                back = 1;
-                found = 1;
+                back = 1; found = 1;
             }
         }
 
         if (menu_day.active && !found) {
             int selected = menu_day.mouse_option(mouse);
             if (selected != -1) {
-                opt = selected;
-                found = true;
+                opt = selected; found = true;
             } else {
-                back = 1;
-                found = 1;
+                back = 1; found = 1;
             }
         }
         
         for (int i=0; i<entities.size() && !found; i++) {
             if (entities[i].done) continue;
-            if (entities[i].owner != gst.day) continue;
+            if (entities[i].owner != gst.turn) continue;
             vec2 pos { (float)entities[i].x*32, (float)entities[i].y*32 };
             if (pos.x < absmouse.x && absmouse.x < pos.x+32 
             && pos.y < absmouse.y && absmouse.y < pos.y+32) 
             {
                 cursor_entity = i;
-                found = true;
+                if (entities[i].info->unit == 1) {
+                    found = true;
+                }
             }
         }
+        if (cursor_entity != -1) found = true;
+        
         for (int y=0; y<gr.sizey && !found; y++) {
             for (int x=0; x<gr.sizex && !found; x++) {
                 vec2 pos { (float)x*32, (float)y*32 };

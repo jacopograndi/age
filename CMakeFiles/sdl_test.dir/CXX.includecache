@@ -11,6 +11,8 @@ vector
 -
 string
 -
+iostream
+-
 ../umath/vec2.h
 C:/Users/jaksk/Desktop/dev/_cpp/age/umath/vec2.h
 
@@ -18,8 +20,22 @@ C:/Users/jaksk/Desktop/dev/_cpp/age/game/ground.h
 entity.h
 C:/Users/jaksk/Desktop/dev/_cpp/age/game/entity.h
 
+C:/Users/jaksk/Desktop/dev/_cpp/age/game/gst.cpp
+gst.h
 C:/Users/jaksk/Desktop/dev/_cpp/age/game/gst.h
+iostream
+-
+
+C:/Users/jaksk/Desktop/dev/_cpp/age/game/gst.h
+iostream
+-
+algorithm
+-
+string
+-
 vector
+-
+functional
 -
 ground.h
 C:/Users/jaksk/Desktop/dev/_cpp/age/game/ground.h
@@ -29,38 +45,20 @@ tile.h
 C:/Users/jaksk/Desktop/dev/_cpp/age/game/tile.h
 player.h
 C:/Users/jaksk/Desktop/dev/_cpp/age/game/player.h
+tech.h
+C:/Users/jaksk/Desktop/dev/_cpp/age/game/tech.h
 
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/menu.h
+C:/Users/jaksk/Desktop/dev/_cpp/age/game/player.h
+vector
+-
+
+C:/Users/jaksk/Desktop/dev/_cpp/age/game/tech.h
 vector
 -
 string
 -
 ../umath/vec2.h
 C:/Users/jaksk/Desktop/dev/_cpp/age/umath/vec2.h
-
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/player.h
-
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/playercontrol.cpp
-iostream
--
-string
--
-playercontrol.h
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/playercontrol.h
-entity.h
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/entity.h
-
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/playercontrol.h
-iostream
--
-gst.h
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/gst.h
-view.h
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/view.h
-vector
--
-functional
--
 
 C:/Users/jaksk/Desktop/dev/_cpp/age/game/tile.h
 vector
@@ -69,16 +67,6 @@ string
 -
 ../umath/vec2.h
 C:/Users/jaksk/Desktop/dev/_cpp/age/umath/vec2.h
-
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/view.h
-vector
--
-functional
--
-gst.h
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/gst.h
-menu.h
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/menu.h
 
 C:/Users/jaksk/Desktop/dev/_cpp/age/umath/vec2.h
 
