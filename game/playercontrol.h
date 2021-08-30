@@ -31,6 +31,7 @@ enum pc_state {
     target_power,
     menu_unit,
     menu_day,
+    menu_tech,
     end
 };
 

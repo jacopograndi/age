@@ -11,6 +11,8 @@ class Player {
     std::vector<int> res { 0, 0 };
     std::vector<int> techs;
     
+    int level { 0 };
+    
     int r, g, b;
 };
 

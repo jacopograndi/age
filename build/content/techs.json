@@ -1,304 +1,398 @@
 [
     {
-        "name": "Loom",
-        "cost": [ 50, 150 ]
-        ""
+        "name": "Loom", "id": 0, "level": 0,
+        "cost": [ 50, 150 ], "req_id": 100,
+        "bonus": {
+            "aff_id": [ 0 ],
+            "defence": 0.25
+        }
+    },{
+        "name": "Town Scouts", "id": 1, "level": 0,
+        "cost": [ 50, 150 ], "req_id": 100,
+        "bonus": {
+            "aff_id": [ 100 ],
+            "sight": 4
+        }
+    },{
+        "name": "Leather Soles", "id": 2, "level": 0,
+        "cost": [ 50, 150 ], "req_id": 100,
+        "bonus": {
+            "aff_id": [ 0 ],
+            "move": 1
+        }
+    },{
+        "name": "Weaponsmith", "id": 3, "level": 0,
+        "cost": [ 50, 150 ], "req_id": 104,
+        "bonus": {
+            "aff_id": [ 1 ],
+            "attack": 0.25
+        }
+    },{
+        "name": "Town Watch", "id": 4, "level": 1,
+        "cost": [ 95, 280 ], "req_id": 100,
+        "bonus": {
+            "aff_id": [ 100 ],
+            "defence": 0.2, "sight": 2
+        }
+    },{
+        "name": "Wheelbarrow", "id": 5, "level": 1,
+        "cost": [ 125, 375 ], "req_id": 100,
+        "bonus": {
+            "aff_class": [ "bld" ],
+            "cost": [ -0.1, -0.1 ]
+        }
+    },{
+        "name": "Advanced Mining", "id": 6, "level": 1,
+        "cost": [ 95, 280 ], "req_id": 102,
+        "bonus": {
+            "aff_id": [ 102 ],
+            "prod": [ 0, 0.15 ]
+        }
+    },{
+        "name": "Horse Collar", "id": 7, "level": 1,
+        "cost": [ 95, 280 ], "req_id": 101,
+        "bonus": {
+            "prod": [ 0.15, 0 ]
+        }
+    },{
+        "name": "Scale Mail Armor", "id": 8, "level": 1,
+        "cost": [ 95, 280 ], "req_id": 106,
+        "bonus": {
+            "aff_class": [ "inf" ],
+            "aff_level": 1,
+            "defence": 0.25
+        }
+    },{
+        "name": "Scale Barding", "id": 9, "level": 1,
+        "cost": [ 95, 280 ], "req_id": 106,
+        "bonus": {
+            "aff_class": [ "cav" ],
+            "aff_level": 1,
+            "defence": 0.25
+        }
+    },{
+        "name": "Fletching", "id": 10, "level": 1,
+        "cost": [ 95, 280 ], "req_id": 106,
+        "bonus": {
+            "aff_class": [ "ran" ],
+            "aff_level": 1,
+            "attack": 0.25
+        }
+    },{
+        "name": "Padded Armor", "id": 11, "level": 1,
+        "cost": [ 95, 280 ], "req_id": 106,
+        "bonus": {
+            "aff_class": [ "ran" ],
+            "aff_level": 1,
+            "defence": 0.25
+        }
+    },{
+        "name": "Forging", "id": 12, "level": 1,
+        "cost": [ 155, 470 ], "req_id": 106,
+        "bonus": {
+            "aff_class": [ "inf", "cav" ],
+            "aff_level": 1,
+            "attack": 0.25
+        }
+    },{
+        "name": "Tracking", "id": 13, "level": 1,
+        "cost": [ 95, 280 ], "req_id": 104,
+        "bonus": {
+            "aff_class": [ "inf" ],
+            "sight": 2
+        }
+    },{
+        "name": "Cartography", "id": 14, "level": 1,
+        "cost": [ 95, 280 ], "req_id": 107,
+        "bonus": {
+            "sight": 1
+        }
+    },{
+        "name": "Trading", "id": 15, "level": 1,
+        "cost": [ 95, 280 ], "req_id": 107,
+        "bonus": {
+            "trade": 1
+        }
+    },{
+        "name": "Coniage", "id": 16, "level": 1,
+        "cost": [ 125, 375 ], "req_id": 107,
+        "bonus": {
+            "prod": [ 0, 0.1 ]
+        }
+    },{
+        "name": "Town Patrol", "id": 17, "level": 2,
+        "cost": [ 150, 450 ], "req_id": 100,
+        "bonus": {
+            "aff_id": [ 100 ],
+            "defence": 0.2, "sight": 2
+        }
+    },{
+        "name": "Hand Cart", "id": 18, "level": 2,
+        "cost": [ 150, 450 ], "req_id": 100,
+        "bonus": {
+            "aff_class": [ "bld" ],
+            "cost": [ -0.1, -0.1 ]
+        }
+    },{
+        "name": "Shaft Mining", "id": 19, "level": 2,
+        "cost": [ 150, 450 ], "req_id": 102,
+        "bonus": {
+            "aff_id": [ 102 ],
+            "prod": [ 0, 0.15 ]
+        }
+    },{
+        "name": "Heavy Plow", "id": 20, "level": 2,
+        "cost": [ 150, 450 ], "req_id": 101,
+        "bonus": {
+            "prod": [ 0.1, 0 ]
+        }
+    },{
+        "name": "Chain Mail Armor", "id": 21, "level": 2,
+        "cost": [ 150, 450 ], "req_id": 106,
+        "bonus": {
+            "aff_level": 2,
+            "aff_class": [ "inf" ],
+            "defence": 0.25
+        }
+    },{
+        "name": "Chain Barding", "id": 22, "level": 2,
+        "cost": [ 150, 450 ], "req_id": 106,
+        "bonus": {
+            "aff_level": 2,
+            "aff_class": [ "cav" ],
+            "defence": 0.25
+        }
+    },{
+        "name": "Bodkin Arrow", "id": 23, "level": 2,
+        "cost": [ 150, 450 ], "req_id": 106,
+        "bonus": {
+            "aff_level": 2,
+            "aff_class": [ "ran" ],
+            "attack": 0.25
+        }
+    },{
+        "name": "Leather Armor", "id": 24, "level": 2,
+        "cost": [ 150, 450 ], "req_id": 106,
+        "bonus": {
+            "aff_level": 2,
+            "aff_class": [ "ran" ],
+            "defence": 0.25
+        }
+    },{
+        "name": "Iron Casting", "id": 25, "level": 2,
+        "cost": [ 250, 750 ], "req_id": 106,
+        "bonus": {
+            "aff_level": 2,
+            "aff_class": [ "inf", "cav" ],
+            "attack": 0.25
+        }
+    },{
+        "name": "Conscription", "id": 26, "level": 2,
+        "cost": [ 150, 450 ], "req_id": 104,
+        "bonus": {
+            "aff_class": [ "inf" ],
+            "cost_abs": [ -15, -15 ]
+        }
+    },{
+        "name": "Husbandry", "id": 27, "level": 2,
+        "cost": [ 150, 450 ], "req_id": 108,
+        "bonus": {
+            "aff_class": [ "cav" ],
+            "cost_abs": [ -15, -15 ]
+        }
+    },{
+        "name": "Tournaments", "id": 28, "level": 2,
+        "cost": [ 150, 450 ], "req_id": 105,
+        "bonus": {
+            "aff_class": [ "ran" ],
+            "cost_abs": [ -15, -15 ]
+        }
+    },{
+        "name": "Mechanics Guild", "id": 29, "level": 2,
+        "cost": [ 150, 450 ], "req_id": 109,
+        "bonus": {
+            "aff_class": [ "sie" ],
+            "cost_abs": [ -15, -15 ]
+        }
+    },{
+        "name": "Banking", "id": 30, "level": 2,
+        "cost": [ 200, 600 ], "req_id": 107,
+        "bonus": {
+            "trade": 1,
+            "prod": [ 0, 0.05 ]
+        }
+    },{
+        "name": "Merchant Network", "id": 31, "level": 2,
+        "cost": [ 150, 450 ], "req_id": 107,
+        "bonus": {
+            "aff_mercs": 1,
+            "cost_abs": [ 0, -25 ]
+        }
+    },{
+        "name": "Redemption", "id": 32, "level": 2,
+        "cost": [ 150, 450 ], "req_id": 110,
+        "bonus": {
+            "aff_id": [ 23 ],
+            "improved_heal": 1
+        }
+    },{
+        "name": "Fervor", "id": 33, "level": 2,
+        "cost": [ 150, 450 ], "req_id": 110,
+        "bonus": {
+            "aff_id": [ 23 ],
+            "improved_convert": 1
+        }
+    },{
+        "name": "Sanctity", "id": 34, "level": 2,
+        "cost": [ 150, 450 ], "req_id": 110,
+        "bonus": {
+            "aff_id": [ 23 ],
+            "defence": 0.25
+        }
+    },{
+        "name": "Murder Holes", "id": 35, "level": 2,
+        "cost": [ 95, 280 ], "req_id": 111,
+        "bonus": {
+            "aff_id": [ 112 ],
+            "defence": 0.25
+        }
+    },{
+        "name": "Masonry", "id": 36, "level": 2,
+        "cost": [ 95, 280 ], "req_id": 111,
+        "bonus": {
+            "aff_class": [ "bld" ],
+            "defence": 0.05
+        }
+    },{
+        "name": "Crop Rotation", "id": 37, "level": 3,
+        "cost": [ 250, 750 ], "req_id": 101,
+        "bonus": {
+            "prod": [ 0.1, 0 ]
+        }
+    },{
+        "name": "Plate Mail", "id": 38, "level": 3,
+        "cost": [ 250, 750 ], "req_id": 106,
+        "bonus": {
+            "aff_level": 3,
+            "aff_class": [ "inf" ],
+            "defence": 0.25
+        }
+    },{
+        "name": "Plate Barding", "id": 39, "level": 3,
+        "cost": [ 250, 750 ], "req_id": 106,
+        "bonus": {
+            "aff_level": 3,
+            "aff_class": [ "cav" ],
+            "defence": 0.25
+        }
+    },{
+        "name": "Bracers", "id": 40, "level": 3,
+        "cost": [ 250, 750 ], "req_id": 106,
+        "bonus": {
+            "aff_level": 3,
+            "aff_class": [ "ran" ],
+            "attack": 0.25
+        }
+    },{
+        "name": "Ring Archer Armor", "id": 41, "level": 3,
+        "cost": [ 250, 750 ], "req_id": 106,
+        "bonus": {
+            "aff_level": 3,
+            "aff_class": [ "ran" ],
+            "defence": 0.25
+        }
+    },{
+        "name": "Blast Furnace", "id": 42, "level": 3,
+        "cost": [ 625, 975 ], "req_id": 106,
+        "bonus": {
+            "aff_level": 3,
+            "aff_class": [ "inf", "cav" ],
+            "attack": 0.25
+        }
+    },{
+        "name": "Arena", "id": 43, "level": 3,
+        "cost": [ 250, 750 ], "req_id": 104
+    },{
+        "name": "Squires", "id": 44, "level": 3,
+        "cost": [ 250, 750 ], "req_id": 108
+    },{
+        "name": "Flaming Arrows", "id": 45, "level": 3,
+        "cost": [ 300, 900 ], "req_id": 105
+    },{
+        "name": "Sappers", "id": 46, "level": 3,
+        "cost": [ 300, 900 ], "req_id": 113
+    },{
+        "name": "Hoardings", "id": 47, "level": 3,
+        "cost": [ 250, 750 ], "req_id": 113, 
+        "bonus": {
+            "aff_id": [ 113 ],
+            "defence": 0.35
+        }
+    },{
+        "name": "Spies", "id": 48, "level": 3,
+        "cost": [ 300, 900 ], "req_id": 113
+    },{
+        "name": "Guilds", "id": 49, "level": 3,
+        "cost": [ 250, 750 ], "req_id": 107, 
+        "bonus": {
+            "trade": 1,
+            "prod": [ 0, 0.05 ]
+        }
+    },{
+        "name": "Atonement", "id": 50, "level": 3,
+        "cost": [ 250, 750 ], "req_id": 110, 
+        "bonus": {
+            "aff_id": [ 23 ],
+            "improved_heal": 1
+        }
+    },{
+        "name": "Block Printing", "id": 51, "level": 3,
+        "cost": [ 250, 750 ], "req_id": 110, 
+        "bonus": {
+            "aff_id": [ 23 ],
+            "improved_convert": 1
+        }
+    },{
+        "name": "Illumination", "id": 52, "level": 3,
+        "cost": [ 250, 750 ], "req_id": 110, 
+        "bonus": {
+            "aff_id": [ 110 ],
+            "prod": [ 0, 0.5 ]
+        }
+    },{
+        "name": "Faith", "id": 53, "level": 3,
+        "cost": [ 250, 750 ], "req_id": 110, 
+        "bonus": {
+            "aff_id": [ 23 ],
+            "defence": 0.25
+        }
+    },{
+        "name": "Treadmill Crane", "id": 54, "level": 3,
+        "cost": [ 250, 750 ], "req_id": 111, 
+        "bonus": {
+            "aff_class": [ "bld" ],
+            "cost": [ 0.1, 0.1 ]
+        }
+    },{
+        "name": "Siege Engineers", "id": 55, "level": 3,
+        "cost": [ 250, 750 ], "req_id": 111
+    },{
+        "name": "Architecture", "id": 56, "level": 3,
+        "cost": [ 250, 750 ], "req_id": 111, 
+        "bonus": {
+            "aff_class": [ "bld" ],
+            "defence": 0.05
+        }
+    },{
+        "name": "Chemistry", "id": 57, "level": 3,
+        "cost": [ 250, 750 ], "req_id": 111
+    },{
+        "name": "Ballistics", "id": 58, "level": 3,
+        "cost": [ 300, 900 ], "req_id": 111, 
+        "bonus": {
+            "aff_class": [ "sie" ],
+            "req_range": 1,
+            "attack": 0.25
+        }
     }
 ]
-* Loom
-Requires: Town Center
-Cost: 50f 150g
-All Villagers get +25 DEF
-
-* Town Scouts
-Requires: Town Center
-Cost: 50f 150g
-Town Centers gain +4 Sight
-
-* Leather Soles
-Prereqs: Town Center
-Cost: 50f 150g
-Villagers gain +1 Move
-
-* Weaponsmith
-Requires: Barracks
-Cost: 50f 150g
-Militia gain +25 ATT
-
-============
--Feudal Age:
-============
-
-* Town Watch
-Requires: Town Center
-Cost: 95f 280g
-Improves Town Center DEF by +20% and Sight by +2
-
-* Wheelbarrow
-Requires: Town Center
-Cost: 125f 375g
-Cost of buildings is reduced by 10%
-
-* Advanced Mining
-Requires: Mine
-Cost: 95f 280g
-+15% to Mine income
-
-* Horse Collar
-Requires: Mill
-Cost: 95f 280g
-+15% to food income
-
-* Scale Mail Armor
-Requires: Blacksmith
-Cost: 95f 280g
-+25% DEF for Infantry
-
-* Scale Barding
-Requires: Blacksmith
-Cost: 95f 280g
-+25% DEF for Cavalry
-
-* Fletching
-Requires: Blacksmith
-Cost: 95f 280g
-+25% ATT for Ranged Units
-
-* Padded Armor
-Requires: Blacksmith
-Cost: 95f 280g
-+25% DEF for Ranged Units
-
-* Forging
-Requires: Blacksmith
-Cost: 155f 470g
-+25% ATT for Infantry and Cavalry
-
-* Tracking
-Requires: Barracks
-Cost: 95f 280g
-+2 Sight for Infantry
-
-* Cartography
-Requires: Market
-Cost: 95f 280g
-+1 Sight for all units
-
-++++++++++++
--Castle Age:
-++++++++++++
-
-* Town Patrol
-Requires: Town Center
-Cost: 150f 450g
-+2 Sight and +20% DEF for Town Center
-
-* Hand Cart
-Requires: Town Center
-Cost: 150f 450g
-Cost of Building is reduced by 10%
-
-* Shaft Mining
-Requires: Mine
-Cost: 150f 450g
-+15% to Mine income
-
-* Heavy Plow
-Requires: Mill
-Cost: 150f 450g
-+15% to food income
-
-* Chain Mail Armor
-Requires: Blacksmith
-Cost: 150f 450g
-+25% DEF to Age 3 infantry
-
-* Chain Barding
-Requires: Blacksmith
-Cost: 150f 450g
-+25% DEF to Age 3 Cavalry
-
-* Bodkin Arrow
-Requires: Blacksmith
-Cost: 150f 450g
-+25% ATT to Age 3 Ranged Units
-
-* Leather Armor
-Requires: Blacksmith
-Cost: 150f 450g
-+25% DEF to Age 3 Ranged Units
-
-* Iron Casting
-Requires: Blacksmith
-Cost: 250f 750g
-+25% ATT to Age 3 Infantry and Cavalry
-
-* Conscription
-Requires: Barracks
-Cost: 150f 450g
-Cost of Infantry is reduced by 15 food and 15 gold
-
-* Husbandry
-Requires: Stable
-Cost: 150f 450g
-Cost of Cavalry is reduced by 15 food and 15 gold
-
-* Archery Tournaments
-Requires: Archery Range
-Cost: 150f 450g
-Cost of Ranged Units is reduced by 15 food and 15 gold
-
-* Mechanics Guild
-Requires: Siege Workshop
-Cost: 150f 450g
-Cost of Siege Units is reduced by 15 food and 15 gold
-
-* Banking
-Requires: Market
-Cost: 200f 600g
-+ 5% gold Income and improved Trade Rate
-
-* Merchant Network
-Requires: Market
-Cost: 150f 450g
-Price for Mercenaries is reduced by 25%
-
-* Redemption
-Requires: Church
-Cost: 150f 450g
-Improves Heal ability of Monks and Elite Monks
-
-* Fervor
-Requires: Church
-Cost: 150f 450g
-Improves Convert ability of Monks and Elite Monks
-
-* Sanctity
-Requires: Church
-Cost: 150f 450g
-+25% DEF for Monks and Elite Monks
-
-* Murder Holes
-Requires: University
-Cost: 95f 280g
-+25% DEF for Towers
-
-* Masonry
-Requires: University
-Cost: 150f 450g
-+5% DEF for all buildings
-
-/////////////
-Imperial Age:
-\\\\\\\\\\\\\
-
-
-* Crop Rotation
-Requires: Mill
-Cost: 250f 750g
-+10% to food income
-
-* Plate Mail Armor
-Requires: Blacksmith
-Cost: 250f 750g
-Age 4 Infantry units gain +25% DEF
-
-* Plate Barding
-Requires: Blacksmith
-Cost: 250f 750g
-Age 4 Cavalry units gain +25% DEF
-
-* Bracers
-Requires: Blacksmith
-Cost: 250f 750g
-Age 4 Ranged units gain +25% ATK
-
-* Ring Archer Armor
-Requires: Blacksmith
-Cost: 250f 750g
-Age 4 Ranged units gain +25% DEF
-
-* Blast Furnace
-Requires: Blacksmith
-Cost: 625f 975g
-Age 4 INF and CAV units gain +25% ATK
-
-* Arena
-Requires: Barracks
-Cost: 250f 750g
-Allows Champions
-
-* Squires
-Requires: Stables
-Cost: 250f 750g
-Allows Paladins
-
-* Flaming Arrows
-Requires: Archery Range
-Cost: 300f 900g
-RNG units no longer suffer penalty vs. BLDGS
-
-* Sappers
-Requires: Castle
-Cost: 300f 900g
-All INF units improve in +50% ATK vs. buildings
-
-* Hoardings
-Requires: Castle
-Cost: 250f 750g
-Improves Castle DEF by +35%
-
-* Spies
-Requires: Castles
-Cost: 300f 900g
-All enemy Town Complexes are now sighted
-
-* Guilds
-Requires: Market
-Cost: 300f 900g
-+5% gold income and improves Trade rate
-
-* Atonement
-Requires: Church
-Cost: 250f 750g
-Improves Heal ability of Monks or Elite Monks
-
-* Block Printing
-Requires: Church
-Cost: 250f 750g
-Improves Convert ability of Monks or Elite Monks
-
-* Illumination
-Requires: Church
-Cost: 250f 750g
-+505 gold income from all relics
-
-* Faith
-Requires: Church
-Cost: 250f 750g
-Monks and Elite Monks gain +25% DEF
-
-* Treadmill Crane
-Requires: University
-Cost: 250f 750g
-Cost of buildings is reduced by 10%
-
-* Siege Engineers
-Requires: University
-Cost: 250f 750g
-Allows Imperial Age Siege units to be built
-
-* Architecture
-Requires: University
-Cost: 250f 750g
-+5% DEF for all buildings
-
-* Chemistry
-Requires: University
-Cost: 250f 750g
-Allows Hand Cannondeers and Bombard Cannons
-
-* Ballistics
-Requires: University
-Cost: 300f 900g
-+25% ATK for Siege units with Range above 1

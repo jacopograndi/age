@@ -19,6 +19,7 @@ class Graphics_sdl_text {
     Graphics_sdl_text();
     int get_width (std::string str);
     void render_text (std::string str, vec2 off);
+    void render_text (std::string str, vec2 off, int r, int g, int b);
     SDL_Renderer* gRenderer;
     SDL_Texture *tex;
     int char_width[128];

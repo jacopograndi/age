@@ -63,23 +63,6 @@ Player_control::Player_control () {
             view.menu_day.close();
             view.selected_ground = -1;
             gst.end_day();
-            for (Entity &e : gst.entities) {
-                e.done = false;
-                e.moved = 0;
-                if (e.owner == gst.turn) {
-                    Player &player = gst.players[e.owner];
-                    for (int i=0; i<player.res.size(); i++) {
-                        player.res[i] += e.info->prod[i];
-                    } 
-                    // todo heal when on top of building
-                    if (e.building < 0) {
-                        e.building++;
-                        if (e.building == 0) {
-                            e.hp += 50; if (e.hp > 100) e.hp = 100;
-                        }
-                    }
-                }
-            }
             std::cout << "end day " << p << "\n";
             return select;
         }
@@ -92,6 +75,36 @@ Player_control::Player_control () {
             return select;
         }
     );   
+    fsm.arcs.emplace_back(
+        menu_day, opt, Menu_day::Opts::tech,
+        [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            view.menu_day.close();
+            view.menu_tech.tech_options.clear();
+            for (Tech &tech : gst.techs) {
+                view.menu_tech.tech_options.emplace_back(tech.name, &tech);
+            }
+            view.menu_tech.open(view.res);
+            std::cout << "tech screen " << "\n";
+            return menu_tech;
+        }
+    ); 
+    fsm.arcs.emplace_back(
+        menu_tech, opt, -1,
+        [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            view.menu_tech.close();
+            view.selected_ground = -1; 
+            std::cout << "selected tech " << p << "\n";
+            return select;
+        }
+    ); 
+    fsm.arcs.emplace_back(
+        menu_tech, back, -1,
+        [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            view.menu_tech.close();
+            view.selected_ground = -1; 
+            return select;
+        }
+    ); 
     fsm.arcs.emplace_back(
         select, sel_unit, -1,
         [](Gst &gst, View &view, Fsm &fsm, int p) { 

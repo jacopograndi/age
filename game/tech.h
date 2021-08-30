@@ -11,6 +11,9 @@ class Tech {
     Tech() {}
     
     std::string name;
+    int id;
+    int level;
+    int req_id;
     std::vector<int> cost { 0, 0 };
     
     vec2 spritebounds { 0, 0 };

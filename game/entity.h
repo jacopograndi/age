@@ -49,7 +49,7 @@ class Entity {
         return x == oth.x && y == oth.y && info->unit == oth.info->unit;
     }
 
-    int building = 0;
+    int building { 0 };
     float hp; /**/
     int x, y;
     bool done = false;

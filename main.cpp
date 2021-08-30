@@ -59,9 +59,9 @@ int main () {
     load_json(gst);
     
     gst.players.emplace_back(255, 0, 0);
-    gst.players[0].res = std::vector<int> { 1000, 1000 };
+    gst.players[0].res = std::vector<int> { 1500, 1500 };
     gst.players.emplace_back(0, 0, 255);
-    gst.players[1].res = std::vector<int> { 1000, 1000 };
+    gst.players[1].res = std::vector<int> { 1500, 1500 };
     
     gst.ground.tiles[1] = 1;
     gst.ground.tiles[8] = 1;
@@ -87,6 +87,9 @@ int main () {
     gst.entities.emplace_back(1, 5, gst.get_info("Villager"), 1);
     gst.entities.emplace_back(2, 5, gst.get_info("Militia"), 1);
     gst.entities.emplace_back(0, 0, gst.get_info("Scout Cavalry"), 0);
+    gst.entities.emplace_back(1, 0, gst.get_info("Persian War Elephants"), 0);
+    gst.entities.emplace_back(0, 1, gst.get_info("Scorpions"), 1);
+    gst.entities.emplace_back(1, 2, gst.get_info("Archers"), 1);
     
     View view (vec2 { (float)graphics.resx, (float)graphics.resy });
     

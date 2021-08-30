@@ -13,6 +13,7 @@ class View {
     
     vec2 res;
     
+    int hover_ground {-1};
     int selected_ground {-1};
     int selected_entity {-1};
     int cursor_ground {-1};
@@ -27,6 +28,7 @@ class View {
     Menu_day menu_day;
     Menu_build menu_build;
     Menu_train menu_train;
+    Menu_tech menu_tech;
     
     void process (Gst &gst, vec2 cam, vec2 mouse, int *mheld);
 };

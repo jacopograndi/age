@@ -24,6 +24,21 @@ class Bonus {
     Bonus(float amt, int id, bool atk) : amt(amt), id(id), atk(atk) {}
     float amt; int id; bool atk;
     enum Id { ground, type, ability, tech };
+    std::string id_string () {
+        switch (id) {
+            case ground: return "Ground";
+            case type: return "Class";
+            case ability: return "Ability";
+            case tech: return "Tech";
+        }
+    }
+};
+
+class BattleResult {
+    public:
+    BattleResult(float atk_hp, float def_hp) 
+        : atk_hp(atk_hp), def_hp(def_hp) {}
+    float atk_hp, def_hp;
 };
 
 class Gst {
@@ -47,9 +62,12 @@ class Gst {
     float get_type_bonus (Entity &atk, Entity &def);
     std::vector<Bonus> get_bonuses (Entity &atk, Entity &def);
     float get_damage (Entity &atk, Entity &def);
+    float get_damage (Entity &atk, Entity &def, float atk_hp);
     bool get_first_strike (Entity &atk, Entity &def);
+    BattleResult battle_res (Entity &atk, Entity &def);
     void battle (Entity &atk, Entity &def);
     void clear_dead();    
+    int get_range(Entity &ent);
     
     std::vector<int> get_possible_builds (Entity &ent);
     

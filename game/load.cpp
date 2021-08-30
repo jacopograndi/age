@@ -41,6 +41,8 @@ void load_json (Gst &gst) {
         Tile tile;
         tile.name = it["name"];
         tile.move_cost = it["move_cost"];
+        tile.defence_bonus = it["defence_bonus"];
+        tile.range_bonus = it["range_bonus"];
         tile.spritebounds = vec2 { it["spritebounds"][0], it["spritebounds"][1] };
         gst.tiles.push_back(tile);
     }
@@ -87,5 +89,19 @@ void load_json (Gst &gst) {
         }
         ent.spritebounds = vec2 { it["spritebounds"][0], it["spritebounds"][1] };
         gst.infos.push_back(ent);
+    }
+    
+    std::ifstream file_techs("content/techs.json");
+    json j_techs; file_techs >> j_techs;
+    for (auto it : j_techs) {
+        Tech tech;
+        tech.name = it["name"];
+        tech.id = it["id"];
+        tech.level = it["level"];
+        tech.req_id = it["req_id"];
+        for (int i=0; i<it["cost"].size(); i++) {
+            tech.cost[i] = it["cost"][i];
+        }
+        gst.techs.push_back(tech);
     }
 }

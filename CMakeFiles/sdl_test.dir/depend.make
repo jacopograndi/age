@@ -85,6 +85,7 @@ CMakeFiles/sdl_test.dir/game/load.cpp.obj: umath/vec2.h
 
 CMakeFiles/sdl_test.dir/game/menu.cpp.obj: game/menu.cpp
 CMakeFiles/sdl_test.dir/game/menu.cpp.obj: game/menu.h
+CMakeFiles/sdl_test.dir/game/menu.cpp.obj: game/tech.h
 CMakeFiles/sdl_test.dir/game/menu.cpp.obj: umath/vec2.h
 
 CMakeFiles/sdl_test.dir/game/playercontrol.cpp.obj: game/entity.h

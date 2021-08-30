@@ -88,9 +88,7 @@ std::vector<int> Ground::move_area (Gst &gst, Entity &ent) {
 
 std::vector<int> Ground::attack_targets (Gst &gst, Entity &ent) {
     std::vector<int> attacks;
-    int range = ent.info->range;
-    range += gst.tiles[gst.ground.tiles[gst.ground.at(ent.x, ent.y)]]
-        .range_bonus;
+    int range = gst.get_range(ent);
     bool builds = !gst.info_has_ability(ent.info, "Units Only");
     bool units = !gst.info_has_ability(ent.info, "Buildings Only");
     for (Entity &e : gst.entities) {
