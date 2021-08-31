@@ -38,9 +38,13 @@ class step { public:
 };
 
 std::vector<int> Ground::move_area (Gst &gst, Entity &ent) {
+    Player &player = gst.players[ent.owner];
+    int move_num = ent.info->move;
+    move_num += player.tech_lookup.id(ent.info->id).move;
+    
     std::vector<int> moves;
     std::vector<int> visited { at(ent.x, ent.y) };
-    std::vector<step> frontier { step { at(ent.x, ent.y), ent.info->move } };
+    std::vector<step> frontier { step { at(ent.x, ent.y), move_num } };
     
     int maxcost = 99;
     if (gst.info_has_ability(ent.info, "Scout")) maxcost = 2;

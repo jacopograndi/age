@@ -1,0 +1,30 @@
+[x] level restrict train and build
+[x] current tech gui
+[x] tech bonus addition
+[x] some tech effects
+[x] tc and market trade
+[x] age up menu
+[x] end day upgrade on age up
+[x] end day heal when on bld
+[ ] bld ages upgrades
+[ ] train problem
+[ ] heal
+[ ] convert
+[ ] relics
+[ ] tower diagonal constraint
+[ ] tower defence effect -> new bonus type
+[ ] castle
+[ ] veterancy ranks
+[ ] frenzy special case
+[ ] gui production
+[ ] gui train build
+[ ] tech effects
+[ ] unit tech requirement (paladin, champion, imp siege)
+[ ] fsm back
+[ ] undo
+
+[ ] imp unit sprites 
+[x] sprites stable, castle, uni, market, church, tower and bld upgrade
+
+[ ] wheelbarrow doesn't work
+[ ] search player by id, not by index

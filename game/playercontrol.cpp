@@ -6,37 +6,48 @@
 
 void open_unit_menu (Gst &gst, View &view, Fsm &fsm, int p) {
     Entity &ent = gst.entities[view.selected_entity];
+    Player &player = gst.players[ent.owner];
     view.menu_unit.options.clear();
     if (ent.info->unit == 1) {
         if (gst.ground.move_area(gst, ent).size() > 0 
             && ent.moved == 0) 
         {
-            view.menu_unit.options.emplace_back("Move", Menu_unit::Opts::move);
+            view.menu_unit.options.emplace_back("Move", 
+                Menu_unit::Opts::move);
         }
         if (gst.ground.attack_targets(gst, ent).size() > 0
             && (!gst.info_has_ability(ent.info, "No Move & Attack") 
                 || ent.moved == 0)) {
-            view.menu_unit.options.emplace_back("Attack", Menu_unit::Opts::attack);
+            view.menu_unit.options.emplace_back("Attack", 
+                Menu_unit::Opts::attack);
         }
         if (ent.info->build.size() > 0
             && !gst.check_obstructed(ent)
             && gst.get_possible_builds(ent).size() > 0) 
         {
-            view.menu_unit.options.emplace_back("Build", Menu_unit::Opts::build);
+            view.menu_unit.options.emplace_back("Build", 
+                Menu_unit::Opts::build);
         }
-        view.menu_unit.options.emplace_back("Done", Menu_unit::Opts::done);
+        view.menu_unit.options.emplace_back("Done",
+            Menu_unit::Opts::done);
     } else {
         if (ent.info->train.size() 
             && !gst.check_obstructed(ent))
         {
-            view.menu_unit.options.emplace_back("Train", Menu_unit::Opts::train);
+            view.menu_unit.options.emplace_back("Train",
+                Menu_unit::Opts::train);
         }
         if (ent.info->id == 100 
             || ent.info->id == 101) {
-            view.menu_unit.options.emplace_back("Trade", Menu_unit::Opts::trade);
+            int rate = (int)gst.get_trade_rate(player);
+            if (player.res[0] >= rate || player.res[1] >= rate) {
+                view.menu_unit.options.emplace_back("Trade", 
+                    Menu_unit::Opts::trade);
+            }
         }
         if (ent.info->id == 100) {
-            view.menu_unit.options.emplace_back("Age Up", Menu_unit::Opts::age_up);
+            view.menu_unit.options.emplace_back("Age Up",
+                Menu_unit::Opts::age_up);
         }
     }
     view.menu_unit.open(view.res);
@@ -49,10 +60,14 @@ Player_control::Player_control () {
             view.selected_ground = p;
             std::cout << "selected ground " << p << "\n";
             view.menu_day.options.clear();
-            view.menu_day.options.emplace_back("End Day", Menu_day::Opts::end_day);
-            view.menu_day.options.emplace_back("Research", Menu_day::Opts::tech);
-            view.menu_day.options.emplace_back("Empire Review", Menu_day::Opts::empire_review);
-            view.menu_day.options.emplace_back("Scoring", Menu_day::Opts::scoring);
+            view.menu_day.options.emplace_back("End Day",
+                Menu_day::Opts::end_day);
+            view.menu_day.options.emplace_back("Research", 
+                Menu_day::Opts::tech);
+            view.menu_day.options.emplace_back("Empire Review", 
+                Menu_day::Opts::empire_review);
+            view.menu_day.options.emplace_back("Scoring",
+                Menu_day::Opts::scoring);
             view.menu_day.open(view.res);
             return menu_day;
         }
@@ -91,6 +106,18 @@ Player_control::Player_control () {
     fsm.arcs.emplace_back(
         menu_tech, opt, -1,
         [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            if (p == -1) 
+                return menu_tech;
+            Player &player = gst.players[gst.turn];
+            Tech *tech = gst.get_tech(p);
+            if (!gst.check_req_tech(tech, player)) {
+                return menu_tech;
+            }
+            if (player.researching != -1) {
+                player.gain(tech->cost);
+            }
+            player.researching = p;
+            player.pay(tech->cost);
             view.menu_tech.close();
             view.selected_ground = -1; 
             std::cout << "selected tech " << p << "\n";
@@ -128,13 +155,16 @@ Player_control::Player_control () {
             view.menu_unit.close();
             std::cout << "train " << p << "\n";
             Entity &ent = gst.entities[view.selected_entity];
+            Player &player = gst.players[ent.owner];
             view.menu_train.options.clear();
             for (int id : ent.info->train) {
-                std::cout << id << " " << gst.get_info(id)->name << "\n";
                 EntityInfo *info = gst.get_info(id);
-                Option opt { info->name, id };
-                opt.cost = info->cost;
-                view.menu_train.options.push_back(opt);
+                if (gst.check_req_train(ent, info)) {
+                    std::cout << id << " " << gst.get_info(id)->name << "\n";
+                    Option opt { info->name, id };
+                    opt.cost = gst.get_cost(info, player);
+                    view.menu_train.options.push_back(opt);
+                }
             }
             view.menu_train.open(view.res);
             return menu_train;
@@ -152,9 +182,7 @@ Player_control::Player_control () {
             entb.hp = 50;
             gst.entities.push_back(entb);
             Player &player = gst.players[gst.turn];
-            for (int i=0; i<player.res.size(); i++) {
-                player.res[i] -= entb.info->cost[i];
-            } 
+            player.pay(gst.get_cost(entb.info, player));
             view.selected_entity = -1;
             return select;
         }
@@ -165,13 +193,14 @@ Player_control::Player_control () {
             view.menu_unit.close();
             std::cout << "build " << p << "\n";
             Entity &ent = gst.entities[view.selected_entity];
+            Player &player = gst.players[ent.owner];
             view.menu_build.options.clear();
             for (int id : ent.info->build) {
                 EntityInfo *info = gst.get_info(id);
                 if(!gst.check_req_build(ent, info)) continue;
                 std::cout << id << " " << gst.get_info(id)->name << "\n";
                 Option opt { info->name, id };
-                opt.cost = info->cost;
+                opt.cost = gst.get_cost(info, player);
                 view.menu_build.options.push_back(opt);
             }
             view.menu_build.open(view.res);
@@ -191,9 +220,7 @@ Player_control::Player_control () {
             entb.hp = 50;
             gst.entities.push_back(entb);
             Player &player = gst.players[gst.turn];
-            for (int i=0; i<player.res.size(); i++) {
-                player.res[i] -= entb.info->cost[i];
-            } 
+            player.pay(gst.get_cost(entb.info, player));
             view.selected_entity = -1;
             return select;
         }
@@ -244,6 +271,82 @@ Player_control::Player_control () {
             gst.battle(atk, def);
             view.attacks.clear();
             view.selected_entity = -1;
+            return select;
+        }
+    ); 
+    fsm.arcs.emplace_back(
+        menu_unit, opt, Menu_unit::Opts::trade,
+        [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            Player &player = gst.players[gst.turn];
+            view.menu_unit.close();
+            view.menu_trade.options.clear();
+            int rate = (int)gst.get_trade_rate(player);
+            if (player.res[0] >= rate) {
+                view.menu_trade.options.emplace_back(
+                    std::to_string(rate) + " Food for 100 Gold", 
+                    Menu_trade::Opts::food);
+            }
+            if (player.res[1] >= rate) {
+                view.menu_trade.options.emplace_back(
+                    std::to_string(rate) + " Gold for 100 Food", 
+                    Menu_trade::Opts::gold);
+            }
+            view.menu_trade.open(view.res);
+            std::cout << "trade open " << p << "\n";
+            return menu_trade;
+        }
+    ); 
+    fsm.arcs.emplace_back(
+        menu_trade, opt, -1,
+        [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            Player &player = gst.players[gst.turn];
+            view.menu_trade.close();
+            int rate = (int)gst.get_trade_rate(player);
+            int sel = p;
+            player.pay(std::vector<float> 
+                { (float)rate*(1-sel), (float)rate*sel });
+            player.gain(std::vector<float> 
+                { 100.0f*sel, 100.0f*(1-sel) });
+            gst.entities[view.selected_entity].done = true;
+            view.selected_entity = -1;
+            std::cout << "done trading " << p << "\n";
+            return select;
+        }
+    ); 
+    fsm.arcs.emplace_back(
+        menu_unit, opt, Menu_unit::Opts::age_up,
+        [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            Player &player = gst.players[gst.turn];
+            view.menu_unit.close();
+            view.menu_age_up.options.clear();
+            if (gst.check_req_level(player)) {
+                view.menu_age_up.options.emplace_back("Age Up", 0);
+            } 
+            view.menu_age_up.open(view.res);
+            std::cout << "age up open " << p << "\n";
+            return menu_age_up;
+        }
+    ); 
+    fsm.arcs.emplace_back(
+        menu_age_up, opt, 0,
+        [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            Player &player = gst.players[gst.turn];
+            player.leveling_up = 1;
+            float cost = (player.level+1)*500;
+            player.pay(std::vector<float>{ cost, cost });
+            view.menu_age_up.close();
+            gst.entities[view.selected_entity].done = true;
+            view.selected_entity = -1;
+            std::cout << "aged up " << p << "\n";
+            return select;
+        }
+    ); 
+    fsm.arcs.emplace_back(
+        menu_age_up, back, -1,
+        [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            view.menu_age_up.close();
+            view.selected_entity = -1;
+            std::cout << "closed ageup " << p << "\n";
             return select;
         }
     ); 

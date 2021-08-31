@@ -54,10 +54,14 @@ class Gst {
     
     std::vector<Player> players;
     
+    Player& get_player (int id);
+    Tech* get_tech (int id);
     EntityInfo* get_info (std::string name);
     EntityInfo* get_info (int id);
     bool info_has_ability (EntityInfo* info, std::string name);
     Entity& get_at (int x, int y);
+    std::vector<float> get_cost (EntityInfo *info, Player &player);
+    float get_trade_rate (Player &player);
     
     float get_type_bonus (Entity &atk, Entity &def);
     std::vector<Bonus> get_bonuses (Entity &atk, Entity &def);
@@ -71,14 +75,19 @@ class Gst {
     
     std::vector<int> get_possible_builds (Entity &ent);
     
-    bool check_req_build(Entity &ent, EntityInfo *info);
-    
+    bool check_req_build (Entity &ent, EntityInfo *info);
+    bool check_req_train (Entity &ent, EntityInfo *info);
+    bool check_req_tech (Tech *tech, Player &player); 
+    bool check_req_level (Player &player); 
     bool check_obstructed (Entity &ent);
     
     int turn { 0 };
     int day { 0 };
     
     void end_day ();
+    void level_upgrade (Player &player);
+    
+    void update_tech_lookup (Player &player);
 };
 
 #endif

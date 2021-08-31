@@ -23,6 +23,7 @@ add_executable(sdl_test
     game/load.cpp game/load.h
     game/tech.cpp game/tech.h
     game/player.h
+    game/constants.h
     umath/vec2.h)
 
 target_include_directories(sdl_test PUBLIC "C:/MinGW_libs/include")

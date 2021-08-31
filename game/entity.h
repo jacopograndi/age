@@ -16,6 +16,7 @@ class EntityInfo {
     std::string name;
     
     int id;
+    int level;
     
     float hp;
     float attack;
@@ -28,10 +29,12 @@ class EntityInfo {
     std::vector<int> build;
     std::vector<int> train;
     
-    std::vector<int> prod { 0, 0 };
-    std::vector<int> cost { 0, 0 };
+    std::vector<float> prod { 0, 0 };
+    std::vector<float> cost { 0, 0 };
     
     std::vector<int> adjacent;
+    
+    int upgrade { -1 };
     
     enum Class { inf, cav, ran, sie, bld };
     Class ent_class;

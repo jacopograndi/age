@@ -48,7 +48,7 @@
         "id": 105, "unit": 0, "class": "bld", "level": 1,
         "move" : 0, "attack": 0, "defence": 300,
         "range": 0, "sight": 7,
-        "spritebounds": [ 608, 16 ], 
+        "spritebounds": [ 608, 32 ], 
         "train": [ 5 ], 
         "prod": [ 0, 0 ], 
         "cost": [ 360, 240 ],
@@ -58,7 +58,7 @@
         "id": 106, "unit": 0, "class": "bld", "level": 1,
         "move" : 0, "attack": 0, "defence": 300,
         "range": 0, "sight": 7,
-        "spritebounds": [ 624, 16 ],
+        "spritebounds": [ 624, 32 ],
         "prod": [ 0, 0 ], 
         "cost": [ 285, 165 ],
         "adjacent": [ 100 ]
@@ -67,7 +67,7 @@
         "id": 107, "unit": 0, "class": "bld", "level": 1,
         "move" : 0, "attack": 0, "defence": 300,
         "range": 0, "sight": 7,
-        "spritebounds": [ 640, 16 ],
+        "spritebounds": [ 640, 32 ],
         "prod": [ 0, 0 ], 
         "cost": [ 360, 240 ],
         "adjacent": [ 100 ]
@@ -85,7 +85,7 @@
         "id": 109, "unit": 0, "class": "bld", "level": 2,
         "move" : 0, "attack": 0, "defence": 300,
         "range": 0, "sight": 7,
-        "spritebounds": [ 672, 16 ],
+        "spritebounds": [ 672, 48 ],
         "prod": [ 0, 0 ], 
         "cost": [ 360, 240 ],
         "adjacent": [ 100 ]
@@ -94,7 +94,7 @@
         "id": 110, "unit": 0, "class": "bld", "level": 2,
         "move" : 0, "attack": 0, "defence": 300,
         "range": 0, "sight": 7,
-        "spritebounds": [ 688, 16 ],
+        "spritebounds": [ 688, 48 ],
         "prod": [ 0, 0 ], 
         "cost": [ 360, 240 ],
         "adjacent": [ 100 ]
@@ -103,16 +103,16 @@
         "id": 111, "unit": 0, "class": "bld", "level": 2,
         "move" : 0, "attack": 0, "defence": 300,
         "range": 0, "sight": 7,
-        "spritebounds": [ 704, 16 ],
+        "spritebounds": [ 704, 48 ],
         "prod": [ 0, 0 ], 
         "cost": [ 360, 240 ],
         "adjacent": [ 100 ]
     },{
         "name": "Tower",
-        "id": 112, "unit": 0, "class": "bld", "level": 2,
+        "id": 112, "unit": 0, "class": "bld", "level": 1,
         "move" : 0, "attack": 0, "defence": 300,
         "range": 0, "sight": 7,
-        "spritebounds": [ 720, 16 ],
+        "spritebounds": [ 720, 48 ],
         "prod": [ 0, 0 ], 
         "cost": [ 360, 240 ],
         "diagonal": [ 100 ]
@@ -121,18 +121,19 @@
         "id": 113, "unit": 0, "class": "bld", "level": 2,
         "move" : 0, "attack": 0, "defence": 300,
         "range": 0, "sight": 7,
-        "spritebounds": [ 720, 16 ],
+        "spritebounds": [ 720, 48 ],
         "prod": [ 0, 0 ], 
         "cost": [ 360, 240 ],
         "diagonal": [ 100 ]
     },{
         "name": "Villager",
-        "id": 0, "unit": 1, "class": "inf", "level": -1,
+        "id": 0, "unit": 1, "class": "inf", "level": -1, 
         "move" : 7, "attack": 50, "defence": 50,
         "range": 1, "sight": 7,
         "spritebounds": [ 96, 16 ],
         "build": [
-            100, 101, 102, 103, 104, 105, 106, 107
+            100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 
+            111, 112, 113
         ], 
         "cost": [ 100, 100 ]
     },{

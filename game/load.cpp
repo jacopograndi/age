@@ -53,6 +53,7 @@ void load_json (Gst &gst) {
         EntityInfo ent;
         ent.id = it["id"];
         ent.name = it["name"];
+        ent.level = it["level"];
         ent.range = it["range"];
         ent.move = it["move"];
         ent.attack = it["attack"];
@@ -88,6 +89,7 @@ void load_json (Gst &gst) {
             ent.abilities.push_back(index);
         }
         ent.spritebounds = vec2 { it["spritebounds"][0], it["spritebounds"][1] };
+        if (it.contains("upgrade")) { ent.upgrade = it["upgrade"]; }
         gst.infos.push_back(ent);
     }
     
@@ -101,6 +103,43 @@ void load_json (Gst &gst) {
         tech.req_id = it["req_id"];
         for (int i=0; i<it["cost"].size(); i++) {
             tech.cost[i] = it["cost"][i];
+        }
+        auto b = it["bonus"];
+        if (b != nullptr) {
+            if (b.contains("attack")) { tech.bonus.attack = b["attack"]; }
+            if (b.contains("defence")) { tech.bonus.defence = b["defence"]; }
+            if (b.contains("sight")) { tech.bonus.sight = b["sight"]; }
+            if (b.contains("move")) { tech.bonus.move = b["move"]; }
+            if (b.contains("trade")) { tech.bonus.trade = b["trade"]; }
+            if (b.contains("req_range")) { 
+                tech.bonus.req_range = b["req_range"];
+            }
+            if (b.contains("improved_heal")) {
+                tech.bonus.attack = b["improved_heal"]; 
+            }
+            if (b.contains("improved_convert")) {
+                tech.bonus.attack = b["improved_convert"]; 
+            }
+            for (auto v : b["cost"]) { tech.bonus.cost.push_back(v); }
+            for (auto v : b["cost_abs"]) { tech.bonus.cost_abs.push_back(v); }
+            for (auto v : b["prod"]) { tech.bonus.prod.push_back(v); }
+            
+            for (auto v : b["aff_id"]) { tech.bonus.aff_id.push_back(v); }
+            for (auto v : b["aff_class"]) { 
+                int w = -1;
+                if (v == "inf") w = EntityInfo::Class::inf;
+                if (v == "cav") w = EntityInfo::Class::cav;
+                if (v == "ran") w = EntityInfo::Class::ran;
+                if (v == "sie") w = EntityInfo::Class::sie;
+                if (v == "bld") w = EntityInfo::Class::bld;
+                tech.bonus.aff_class.push_back(w); 
+            }
+            if (b.contains("aff_level")) { 
+                tech.bonus.aff_level = b["aff_level"]; 
+            }
+            if (b.contains("aff_all")) { 
+                tech.bonus.aff_all = b["aff_all"]; 
+            }
         }
         gst.techs.push_back(tech);
     }

@@ -1,7 +1,20 @@
 #include "gst.h"
 
+#include <map>
 #include <iostream>
 
+Player& Gst::get_player (int id) {
+    for (auto &player : players) {
+        if (id == player.id) return player;
+    }
+}
+
+Tech* Gst::get_tech (int id) {
+    for (auto &tech : techs) {
+        if (id == tech.id) return &tech;
+    }
+}
+    
 EntityInfo* Gst::get_info (std::string name) {
     for (EntityInfo &info : infos) {
         if (name == info.name) return &info;
@@ -25,6 +38,21 @@ Entity& Gst::get_at (int x, int y) {
     for (Entity &e : entities) {
         if (e.x ==x && e.y == y) return e;
     }
+}
+
+std::vector<float> Gst::get_cost (EntityInfo *info, Player &player) {
+    std::vector<float> cost = info->cost;
+    for (int i=0; i<info->cost.size(); i++) {
+        cost[i] *= 1+player.tech_lookup.id(info->id).cost[i];
+        cost[i] += player.tech_lookup.id(info->id).cost_abs[i];
+    }
+    return cost;
+}
+
+float Gst::get_trade_rate (Player &player) {
+    float rate = 250;
+    rate -= player.tech_lookup.id(0).trade * 25;
+    return rate;
 }
 
 float Gst::get_type_bonus (Entity &atk, Entity &def) {
@@ -104,6 +132,16 @@ std::vector<Bonus> Gst::get_bonuses (Entity &atk, Entity &def) {
     if (info_has_ability(atk.info, "Frenzy")) 
         bs.emplace_back(1/atk.hp, Bonus::Id::ability, true);
     
+    
+    Player &player_atk = players[atk.owner];
+    Player &player_def = players[def.owner];
+    float tech_attack = player_atk.tech_lookup.id(atk.info->id).attack;
+    if (tech_attack != 0)
+        bs.emplace_back(tech_attack, Bonus::Id::tech, true);
+    float tech_defence = player_def.tech_lookup.id(def.info->id).defence;
+    if (tech_defence != 0)
+        bs.emplace_back(tech_defence, Bonus::Id::tech, false);
+    
     return bs;
 }
 
@@ -133,7 +171,7 @@ bool Gst::get_first_strike (Entity &atk, Entity &def) {
     return fs;
 }
 
-float clamp (float hp) { 
+float clamp_hp (float hp) { 
     if (hp > 100) hp = 100; 
     if (hp < 0) hp = 0;
     return hp; 
@@ -163,36 +201,36 @@ BattleResult Gst::battle_res (Entity &atk, Entity &def) {
     if (first_strike_def && !first_strike_atk) swap = true;
     if (swap) {
         if (def_inrange) {
-            result.atk_hp = clamp(
+            result.atk_hp = clamp_hp(
                 result.atk_hp - get_damage(def, atk, result.def_hp));
         }
         if (!info_has_ability(atk.info, "No Counter")) 
             if (result.atk_hp > 0) 
-                result.def_hp = clamp(
+                result.def_hp = clamp_hp(
                     result.def_hp - get_damage(atk, def, result.atk_hp));
     } else {
-        result.def_hp = clamp(
+        result.def_hp = clamp_hp(
             result.def_hp - get_damage(atk, def, result.atk_hp));
         if (!info_has_ability(def.info, "No Counter") && def_inrange) 
             if (result.def_hp > 0) 
-                result.atk_hp = clamp(
+                result.atk_hp = clamp_hp(
                     result.atk_hp - get_damage(def, atk, result.def_hp));
     }
     
     if (info_has_ability(atk.info, "Rapid Fire")) 
         if (result.def_hp > 0) 
-            result.def_hp = clamp(
+            result.def_hp = clamp_hp(
                 result.def_hp - get_damage(atk, def, result.def_hp));
     
     if (info_has_ability(def.info, "Rapid Fire") && def_inrange)
         if (result.atk_hp > 0) 
-            result.atk_hp = clamp(
+            result.atk_hp = clamp_hp(
                 result.atk_hp - get_damage(def, atk, result.def_hp));
     
     if (result.atk_hp > 0 && info_has_ability(atk.info, "Zeal")) 
-        result.atk_hp = clamp(result.atk_hp + 20);
+        result.atk_hp = clamp_hp(result.atk_hp + 20);
     if (result.def_hp > 0 && info_has_ability(def.info, "Zeal")) 
-        result.def_hp = clamp(result.def_hp + 20);
+        result.def_hp = clamp_hp(result.def_hp + 20);
     
     return result;
 }
@@ -239,7 +277,10 @@ std::vector<int> Gst::get_possible_builds (Entity &ent) {
     return builds;
 }
 
+
 bool Gst::check_req_build(Entity &ent, EntityInfo *info) {
+    Player &player = players[ent.owner];
+    if (player.level < info->level) return false;
     for (int id : info->adjacent) {
         bool adj = false;
         for (Entity &e : entities) {
@@ -294,6 +335,63 @@ bool Gst::check_req_build(Entity &ent, EntityInfo *info) {
     return true;
 }
 
+bool Gst::check_req_train (Entity &ent, EntityInfo *info) {
+    Player &player = players[ent.owner];
+    if (player.level < info->level) return false;
+    return true;
+}
+
+
+bool Gst::check_req_tech (Tech *tech, Player &player) {
+    if (player.leveling_up == 1) return false;
+    if (tech->level > player.level) {
+        return false;
+    }
+    if (tech->cost[0] > player.res[0]
+        || tech->cost[1] > player.res[1] ) 
+    {
+        return false;
+    }
+    if (player.has_tech(tech->id)) {
+        return false;
+    }
+    bool req_id = false;
+    for (auto &ent : entities) {
+        if (ent.owner == turn // WARNING: turn is not player.id
+        && ent.info->id == tech->req_id
+        && ent.building == 0) 
+        {
+            req_id = true;
+            break;
+        }
+    }
+    if (!req_id) {
+        return false;
+    }
+    return true;
+}
+
+bool Gst::check_req_level (Player &player) {
+    if (player.leveling_up == 1) return false;
+    
+    for (float v : player.res) {
+        if (v <= (player.level+1)*500) return false;
+    }
+    
+    std::map<int, int> lv_techs;
+    for (int id : player.techs) lv_techs[get_tech(id)->level] ++;
+    if (player.level == 0) {
+        if (lv_techs[0] >= 3) return true;
+    }
+    if (player.level == 1) {
+        if (lv_techs[1] >= 7) return true;
+    }
+    if (player.level == 2) {
+        if (lv_techs[2] >= 11) return true;
+    }
+    return false;
+}
+
 bool Gst::check_obstructed (Entity &ent) {
     for (Entity &e : entities) {
         if (&ent != &e && e.x == ent.x && ent.y == e.y) return true;
@@ -307,21 +405,83 @@ void Gst::end_day () {
         turn = 0;
         day++;
     }
+    Player &player = players[turn];
+    if (player.leveling_up != -1) {
+        level_upgrade(player);
+        player.level ++;
+        player.leveling_up = -1;
+    }
     for (Entity &e : entities) {
         e.done = false;
         e.moved = 0;
-        if (e.owner == turn) {
-            Player &player = players[e.owner];
+        if (get_player(e.owner) == player) {
             for (int i=0; i<player.res.size(); i++) {
-                player.res[i] += e.info->prod[i];
+                player.res[i] += e.info->prod[i] * 
+                    (1+player.tech_lookup.id(e.info->id).prod[i]);
             } 
-            // todo heal when on top of building
             if (e.building < 0) {
                 e.building++;
                 if (e.building == 0) {
-                    e.hp += 50; if (e.hp > 100) e.hp = 100;
+                    e.hp = clamp_hp(e.hp + 50); 
                 }
             }
+            if (e.info->unit == 1 && check_obstructed(e)) {
+                e.hp = clamp_hp(e.hp + 20); 
+            }
+        }
+    }
+    if (player.researching != -1) {
+        player.techs.push_back(player.researching);
+        update_tech_lookup(player);
+        player.researching = -1;
+    }
+}
+
+void Gst::level_upgrade (Player &player) {
+    for (Entity &e : entities) {
+        if (get_player(e.owner) == player) {
+            if (e.info->upgrade != -1 && e.info->level == player.level) {
+                e.info = get_info(e.info->upgrade);
+            }
+        }
+    }
+}
+
+
+void Gst::update_tech_lookup (Player &player) {
+    player.tech_lookup.map_id.clear();
+    for (int i : player.techs) {
+        Tech *tech = get_tech(i);
+        std::vector<int> ids { };
+        if (tech->bonus.aff_id.size() > 0) {
+            ids = tech->bonus.aff_id;
+        } else {
+            if (tech->bonus.aff_level != -1) {
+                for (EntityInfo info : infos) {
+                    if (info.level == tech->bonus.aff_level) {
+                        ids.push_back(info.id);
+                    }
+                }
+            }
+            if (tech->bonus.aff_class.size() > 0) {
+                for (EntityInfo info : infos) {
+                    auto &cls = tech->bonus.aff_class;
+                    if (std::find(cls.begin(), cls.end(), 
+                        info.ent_class) != cls.end())                        
+                    {
+                        ids.push_back(info.id);
+                    }
+                }
+            }
+            if (tech->bonus.aff_all == 1) {
+                for (EntityInfo info : infos) {
+                    ids.push_back(info.id);
+                }
+            }
+        }
+        for (int id : ids) {
+            player.tech_lookup.map_id[id] = 
+                player.tech_lookup.map_id[id] + tech->bonus;
         }
     }
 }

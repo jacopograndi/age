@@ -41,6 +41,12 @@ void View::process (Gst &gst, vec2 cam, vec2 mouse, int *mheld) {
     if (menu_tech.active) {
         menu_tech.over = menu_tech.mouse_option(mouse);
     }
+    if (menu_trade.active) {
+        menu_trade.over = menu_trade.mouse_option(mouse);
+    }
+    if (menu_age_up.active) {
+        menu_age_up.over = menu_age_up.mouse_option(mouse);
+    }
     
     if (mheld[0] == 1) {
         bool found = false;  
@@ -118,6 +124,24 @@ void View::process (Gst &gst, vec2 cam, vec2 mouse, int *mheld) {
 
         if (menu_tech.active && !found) {
             int selected = menu_tech.mouse_option(mouse);
+            if (selected != -1) {
+                opt = selected; found = true;
+            } else {
+                back = 1; found = 1;
+            }
+        }
+
+        if (menu_trade.active && !found) {
+            int selected = menu_trade.mouse_option(mouse);
+            if (selected != -1) {
+                opt = selected; found = true;
+            } else {
+                back = 1; found = 1;
+            }
+        }
+
+        if (menu_age_up.active && !found) {
+            int selected = menu_age_up.mouse_option(mouse);
             if (selected != -1) {
                 opt = selected; found = true;
             } else {

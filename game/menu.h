@@ -14,7 +14,7 @@ class Option {
     std::string name;
     int id;
     
-    std::vector<int> cost;
+    std::vector<float> cost;
 };
 
 
@@ -56,7 +56,18 @@ class Menu_train : public Menu {
     public:
     Menu_train () {}
 };
-
+class Menu_trade : public Menu {
+    public:
+    Menu_trade () {}
+    
+    enum Opts {
+        food, gold
+    };
+};
+class Menu_age_up : public Menu {
+    public:
+    Menu_age_up () {}
+};
 
 class OptionTech {
     public:

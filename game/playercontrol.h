@@ -32,6 +32,8 @@ enum pc_state {
     menu_unit,
     menu_day,
     menu_tech,
+    menu_trade,
+    menu_age_up,
     end
 };
 

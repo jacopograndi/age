@@ -7,6 +7,7 @@
 #include "graphics.h"
 #include "../game/menu.h"
 #include "../game/tile.h"
+#include "../game/constants.h"
 
 Graphics::~Graphics () {
 }
@@ -15,29 +16,39 @@ void Graphics::present () {
     backend.present();
 }
 
+void render_ent (Graphics *graphics, Gst &gst, Entity &ent, 
+    vec2 pos, int dflag) 
+{
+    Player &player = gst.players[ent.owner];
+    int done = 0;
+    if (dflag == 1) done = 512;
+    graphics->backend.render_sprite(
+        (int)ent.info->spritebounds.x,
+        (int)ent.info->spritebounds.y+done, 16, 16,
+        (int)pos.x, (int)pos.y, 32, 32
+    );
+    if (dflag == 0) {
+        graphics->backend.render_sprite(
+            (int)ent.info->spritebounds.x,
+            (int)ent.info->spritebounds.y+768, 16, 16,
+            (int)pos.x, (int)pos.y, 32, 32,
+            player.r, player.g, player.b
+        );
+    }
+}
+
 void render_ents (Graphics *graphics, Gst &gst, int unit) {
     std::vector<Entity> &entities = gst.entities;
     for (int i=0; i<entities.size(); i++) {
         if (entities[i].info->unit != unit) continue;
-        int done = 0;
-        if (unit == 1) done += 512 * entities[i].done;
-        
         Player &player = gst.players[entities[i].owner];
-        graphics->backend.render_sprite(
-            (int)entities[i].info->spritebounds.x,
-            (int)entities[i].info->spritebounds.y+done, 16, 16,
-            (int)graphics->cam.pos.x + (int)entities[i].x*32, 
-            (int)graphics->cam.pos.y + (int)entities[i].y*32, 32, 32
-        );
-        if (done == 0) {
-            graphics->backend.render_sprite(
-                (int)entities[i].info->spritebounds.x,
-                (int)entities[i].info->spritebounds.y+768, 16, 16,
-                (int)graphics->cam.pos.x + (int)entities[i].x*32, 
-                (int)graphics->cam.pos.y + (int)entities[i].y*32, 32, 32,
-                player.r, player.g, player.b
-            );
-        }
+        int dflag = 0;
+        if (unit) dflag = entities[i].done;
+        vec2 pos {
+            graphics->cam.pos.x + entities[i].x*32, 
+            graphics->cam.pos.y + entities[i].y*32
+        };
+        render_ent(graphics, gst, entities[i], pos, dflag);
     }
 }
 
@@ -65,10 +76,10 @@ void render_menu (Graphics *graphics, Gst &gst, Menu &menu) {
             float width = graphics->backend.txt.get_width(opt.name);
             if (opt.cost.size() > 0) {
                 graphics->backend.txt.render_text(
-                    std::to_string (opt.cost[0]) + "f", 
+                    std::to_string((int)roundf(opt.cost[0])) + "f", 
                     menu.pos + vec2 { width + 20, 10 + acc });
                 graphics->backend.txt.render_text(
-                    std::to_string (opt.cost[1]) + "g", 
+                    std::to_string((int)roundf(opt.cost[1])) + "g", 
                     menu.pos + vec2 { width + 50, 10 + acc });
             }
             acc += 20;
@@ -98,25 +109,13 @@ void render_menu_tech (Graphics *graphics, Gst &gst, View &view) {
                 if (opt.tech->id == view.menu_tech.over) {
                     r = player.r; g = player.g; b = player.b;
                 }
-                if (opt.tech->level > player.level) {
+                if (!gst.check_req_tech(opt.tech, player)) {
                     r = 100; g = 100; b = 100;
                 }
-                if (opt.tech->cost[0] > player.res[0]
-                || opt.tech->cost[1] > player.res[1] ) 
-                {
-                    r = 100; g = 100; b = 100;
-                }
-                bool req_id = false;
-                for (auto &ent : gst.entities) {
-                    if (ent.owner == gst.turn 
-                    && ent.info->id == opt.tech->req_id
-                    && ent.building == 0) 
-                    {
-                        req_id = true;
-                    }
-                }
-                if (!req_id) {
-                    r = 100; g = 100; b = 100;
+                if (player.has_tech(opt.tech->id)) {
+                    r = constants::col_gud_r; 
+                    g = constants::col_gud_g; 
+                    b = constants::col_gud_b;
                 }
                 graphics->backend.txt.render_text(opt.name, 
                     view.menu_tech.pos + vec2 {10 + x, 10 + y}, r, g, b);
@@ -144,6 +143,9 @@ int get_entity_info_height (Entity &ent) {
 
 void render_entity_info (Graphics *graphics, Gst &gst, vec2 pos, int i) {
     Entity &ent = gst.entities[i];
+    Player &player = gst.players[ent.owner];
+    auto &tech = player.tech_lookup;
+    int id = ent.info->id;
     int w = 200, h = get_entity_info_height(ent);
     
     graphics->backend.render_rect (0,0,0,255,
@@ -156,29 +158,29 @@ void render_entity_info (Graphics *graphics, Gst &gst, vec2 pos, int i) {
     graphics->backend.render_rect (
         255,255,255,255, (int)pos.x+w-32-10, (int)pos.y+10,32,32);
     
-    graphics->backend.render_sprite (
-        (int)gst.entities[i].info->spritebounds.x,
-        (int)gst.entities[i].info->spritebounds.y, 16, 16, 
-        (int)pos.x + w-32-10, 
-        (int)pos.y + 10, 32, 32
-    );
+    render_ent(graphics, gst, ent, vec2 { w-32-10.0f, 10 } + pos, 0);
     
     graphics->backend.txt.render_text(ent.info->name, pos + vec2 { 10, 10 });
     graphics->backend.txt.render_text("Attack", pos + vec2 { 10, 30 });
+    float attack = ent.info->attack * (1+tech.id(id).attack);
     graphics->backend.txt.render_text(
-        std::to_string((int)roundf(ent.info->attack)), pos + vec2 { 90, 30 });
+        std::to_string((int)roundf(attack)), pos + vec2 { 90, 30 });
     graphics->backend.txt.render_text("Defence", pos + vec2 { 10, 45 });
+    float defence = ent.info->defence * (1+tech.id(id).defence);
     graphics->backend.txt.render_text(
-        std::to_string((int)roundf(ent.info->defence)), pos + vec2 { 90, 45 });
+        std::to_string((int)roundf(defence)), pos + vec2 { 90, 45 });
     graphics->backend.txt.render_text("Move", pos + vec2 { 10, 60 });
+    int move = ent.info->move + tech.id(id).move;
     graphics->backend.txt.render_text(
-        std::to_string((int)roundf(ent.info->move)), pos + vec2 { 90, 60 });
+        std::to_string(move), pos + vec2 { 90, 60 });
     graphics->backend.txt.render_text("Range", pos + vec2 { 10, 75 });
+    int range = ent.info->range + tech.id(id).range;
     graphics->backend.txt.render_text(
-        std::to_string((int)roundf(ent.info->range)), pos + vec2 { 90, 75 });
+        std::to_string(range), pos + vec2 { 90, 75 });
     graphics->backend.txt.render_text("Sight", pos + vec2 { 10, 90 });
+    int sight = ent.info->sight + tech.id(id).sight;
     graphics->backend.txt.render_text(
-        std::to_string((int)roundf(ent.info->sight)), pos + vec2 { 90, 90 });
+        std::to_string(sight), pos + vec2 { 90, 90 });
     graphics->backend.txt.render_text("Health", pos + vec2 { 10, 105 });
     graphics->backend.txt.render_text(
         std::to_string((int)roundf(ent.hp)), pos + vec2 { 90, 105 });
@@ -499,6 +501,8 @@ void Graphics::render (Gst &gst, View &view)
     render_menu(this, gst, view.menu_day);
     render_menu(this, gst, view.menu_build);
     render_menu(this, gst, view.menu_train);
+    render_menu(this, gst, view.menu_trade);
+    render_menu(this, gst, view.menu_age_up);
     render_menu_tech(this, gst, view);
     
     if (view.moves.size() > 0) {
@@ -534,15 +538,19 @@ void Graphics::render (Gst &gst, View &view)
         player.r, player.g, player.b, 255,
         (int)pos.x+5,(int)pos.y+5, 20, 20
     );
-    
-    std::string txtfood = std::to_string (player.res[0]) + "f";
-    std::string txtgold = std::to_string (player.res[1]) + "g";
+    std::string txtfood = std::to_string((int)roundf(player.res[0])) + "f";
+    std::string txtgold = std::to_string((int)roundf(player.res[1])) + "g";
     backend.txt.render_text(
         txtfood, pos + vec2 { -backend.txt.get_width(txtfood) + res.x/2-10, 10 }
     );
-    backend.txt.render_text(
-        txtgold, pos + vec2 { res.x/2+10, 10 }
-    );
+    backend.txt.render_text(txtgold, pos + vec2 { res.x/2+10, 10 });
+    std::string txtres = "Researching: ";
+    if (player.researching != -1) { 
+        txtres += gst.get_tech(player.researching)->name; 
+    } else { txtres += "None"; }
+    float reswidth = backend.txt.get_width(txtres);
+    backend.txt.render_text(txtres, pos + vec2 { res.x-reswidth-10, 10 });
+    
     // low bar
     backend.render_rect (
         255,255,255,255,

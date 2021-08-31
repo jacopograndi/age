@@ -29,6 +29,8 @@ class View {
     Menu_build menu_build;
     Menu_train menu_train;
     Menu_tech menu_tech;
+    Menu_trade menu_trade;
+    Menu_age_up menu_age_up;
     
     void process (Gst &gst, vec2 cam, vec2 mouse, int *mheld);
 };

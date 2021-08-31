@@ -165,6 +165,7 @@ CMakeFiles/sdl_test.dir/graphics/graphics.cpp.obj: C:/MinGW_libs/include/SDL2/SD
 CMakeFiles/sdl_test.dir/graphics/graphics.cpp.obj: C:/MinGW_libs/include/SDL2/SDL_video.h
 CMakeFiles/sdl_test.dir/graphics/graphics.cpp.obj: C:/MinGW_libs/include/SDL2/begin_code.h
 CMakeFiles/sdl_test.dir/graphics/graphics.cpp.obj: C:/MinGW_libs/include/SDL2/close_code.h
+CMakeFiles/sdl_test.dir/graphics/graphics.cpp.obj: game/constants.h
 CMakeFiles/sdl_test.dir/graphics/graphics.cpp.obj: game/entity.h
 CMakeFiles/sdl_test.dir/graphics/graphics.cpp.obj: game/ground.h
 CMakeFiles/sdl_test.dir/graphics/graphics.cpp.obj: game/gst.h
