@@ -3,6 +3,7 @@
 #include <map>
 #include <iostream>
 
+
 Player& Gst::get_player (int id) {
     for (auto &player : players) {
         if (id == player.id) return player;
@@ -80,6 +81,8 @@ float Gst::get_type_bonus (Entity &atk, Entity &def) {
     return b;
 }
 
+int Gst::get_vet_level (Entity &ent) { return std::min(3, ent.fights/3); }
+
 std::vector<Bonus> Gst::get_bonuses (Entity &atk, Entity &def) {
     std::vector<Bonus> bs;
     if (tiles[ground.tiles[ground.at(atk.x, atk.y)]].attack_bonus != 0) {
@@ -93,13 +96,23 @@ std::vector<Bonus> Gst::get_bonuses (Entity &atk, Entity &def) {
             tiles[ground.tiles[ground.at(def.x, def.y)]].defence_bonus, 
             Bonus::Id::ground, false);
     }
+    
+    if (check_obstructed(def)) {
+        for (Entity &e : entities) {
+            if (&def != &e && e.x == def.x && def.y == e.y) {
+                bs.emplace_back(e.info->defence_bonus, 
+                    Bonus::Id::on_bld, false);
+            }
+        }
+    }
         
     if (get_type_bonus(atk, def) != 0) {
         bs.emplace_back(get_type_bonus(atk, def), Bonus::Id::type, true);
     }
+    /* only attack bonuses
     if (get_type_bonus(def, atk) != 0) {
         bs.emplace_back(get_type_bonus(def, atk), Bonus::Id::type, false);
-    }
+    }*/
     
     if (info_has_ability(atk.info, "Causes Fear")) 
         bs.emplace_back(-1.0f/3, Bonus::Id::ability, false);
@@ -132,7 +145,6 @@ std::vector<Bonus> Gst::get_bonuses (Entity &atk, Entity &def) {
     if (info_has_ability(atk.info, "Frenzy")) 
         bs.emplace_back(1/atk.hp, Bonus::Id::ability, true);
     
-    
     Player &player_atk = players[atk.owner];
     Player &player_def = players[def.owner];
     float tech_attack = player_atk.tech_lookup.id(atk.info->id).attack;
@@ -141,6 +153,13 @@ std::vector<Bonus> Gst::get_bonuses (Entity &atk, Entity &def) {
     float tech_defence = player_def.tech_lookup.id(def.info->id).defence;
     if (tech_defence != 0)
         bs.emplace_back(tech_defence, Bonus::Id::tech, false);
+    
+    float atk_vet = get_vet_level(atk) * 0.15f;
+    if (atk_vet > 0) 
+        bs.emplace_back(atk_vet, Bonus::Id::veteran, true);
+    float def_vet = get_vet_level(def) * 0.15f;
+    if (def_vet > 0) 
+        bs.emplace_back(def_vet, Bonus::Id::veteran, false);
     
     return bs;
 }
@@ -243,6 +262,9 @@ void Gst::battle (Entity &atk, Entity &def) {
     atk.hp = result.atk_hp;
     def.hp = result.def_hp;
     
+    if (atk.info->unit == 1) atk.fights += 1;
+    if (def.info->unit == 1) def.fights += 1;
+    
     std::cout << "! result " << atk.info->name << "(hp:" << atk.hp << "), "
     << def.info->name << "(hp:" << def.hp << ") \n";
     clear_dead();
@@ -265,6 +287,49 @@ int Gst::get_range (Entity &ent) {
     }
     if (range < 1) range = 1;
     return range;
+}
+
+std::vector<int> Gst::get_possible_trains (Entity &ent) {
+    Player &player = get_player(ent.owner);
+    auto &cls = ent.info->train_class;
+    std::vector<int> trains;
+    if (ent.info->id == 107) { // market special case
+        std::vector<int> candidates;
+        for (EntityInfo &info : infos) {
+            if (info.id == 0) continue; // villager only in train_id
+            if (info.level > player.level) continue;
+            if (info.level < player.level && info.upgrade != -1) continue;
+            if (std::find(cls.begin(), cls.end(), info.ent_class) != cls.end()) 
+            {
+                candidates.push_back(info.id);
+            }
+        }
+        std::shuffle(candidates.begin(), candidates.end(), engine);
+        // pick 3 cands at random
+        for (int i=0; i<3; i++) trains.push_back(candidates[i]);
+        return trains;
+    }
+        
+    for (int id : ent.info->train_id) {
+        if (get_info(id)->level > player.level) {
+            trains.push_back(id);
+        }
+    }
+    
+    // get all train class ids, highest upgrade level
+    for (EntityInfo &info : infos) {
+        if (info.id == 0) continue; // villager only in train_id
+        if (info.level > player.level) continue;
+        if (info.level < player.level && info.upgrade != -1) continue;
+        if (std::find(cls.begin(), cls.end(), info.ent_class) != cls.end()) {
+            if (std::find(trains.begin(), trains.end(), info.id) 
+                    == trains.end())
+            {
+                trains.push_back(info.id);
+            }
+        }
+    }
+    return trains;
 }
 
 std::vector<int> Gst::get_possible_builds (Entity &ent) {
@@ -308,7 +373,6 @@ bool Gst::check_req_build(Entity &ent, EntityInfo *info) {
                 }
             }
         }
-        std::cout << "  " << mindist;
         if (mindist < 5) {
             return false;
         }
@@ -332,12 +396,6 @@ bool Gst::check_req_build(Entity &ent, EntityInfo *info) {
         }
         return false;
     }
-    return true;
-}
-
-bool Gst::check_req_train (Entity &ent, EntityInfo *info) {
-    Player &player = players[ent.owner];
-    if (player.level < info->level) return false;
     return true;
 }
 

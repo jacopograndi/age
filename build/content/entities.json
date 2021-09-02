@@ -2,12 +2,13 @@
     {
         "name": "Town Center",
         "id": 100, "unit": 0, "class": "bld", "level": 0,
-        "move" : 0, "attack": 0, "defence": 600,
+        "move" : 0, "attack": 0, "defence": 500,
         "range": 0, "sight": 10,
         "spritebounds": [ 528, 16 ],
-        "train": [ 0 ], 
+        "train_id": [ 0 ], 
         "prod": [ 30, 25 ], 
-        "cost": [ 600, 400 ]
+        "cost": [ 600, 400 ],
+        "defence_bonus": 0.2
     },{
         "name": "Mill",
         "id": 101, "unit": 0, "class": "bld", "level": 0,
@@ -15,7 +16,8 @@
         "range": 0, "sight": 7,
         "spritebounds": [ 544, 16 ], 
         "prod": [ 50, 0 ], 
-        "cost": [ 120, 90 ]
+        "cost": [ 120, 90 ],
+        "defence_bonus": 0.2
     },{
         "name": "Mine",
         "id": 102, "unit": 0, "class": "bld", "level": 0,
@@ -23,36 +25,40 @@
         "range": 0, "sight": 7,
         "spritebounds": [ 560, 16 ], 
         "prod": [ 0, 150 ], 
-        "cost": [ 360, 240 ]
+        "cost": [ 360, 240 ],
+        "defence_bonus": 0.2
     },{
         "name": "Farm",
         "id": 103, "unit": 0, "class": "bld", "level": 0,
-        "move" : 0, "attack": 0, "defence": 150,
+        "move" : 0, "attack": 0, "defence": 100,
         "range": 0, "sight": 7,
         "spritebounds": [ 576, 16 ], 
         "prod": [ 50, 0 ], 
         "cost": [ 90, 60 ],
-        "adjacent": [ 101 ]
+        "adjacent": [ 101 ],
+        "defence_bonus": 0.1
     },{
         "name": "Barracks",
         "id": 104, "unit": 0, "class": "bld", "level": 0,
         "move" : 0, "attack": 0, "defence": 300,
         "range": 0, "sight": 7,
         "spritebounds": [ 592, 16 ],
-        "train": [ 1 ], 
+        "train_class": [ "inf" ], 
         "prod": [ 0, 0 ], 
         "cost": [ 360, 240 ],
-        "adjacent": [ 100 ]
+        "adjacent": [ 100 ],
+        "defence_bonus": 0.2
     },{
         "name": "Archery Range",
         "id": 105, "unit": 0, "class": "bld", "level": 1,
         "move" : 0, "attack": 0, "defence": 300,
         "range": 0, "sight": 7,
         "spritebounds": [ 608, 32 ], 
-        "train": [ 5 ], 
+        "train_class": [ "ran" ], 
         "prod": [ 0, 0 ], 
         "cost": [ 360, 240 ],
-        "adjacent": [ 100 ]
+        "adjacent": [ 100 ],
+        "defence_bonus": 0.2
     },{
         "name": "Blacksmith",
         "id": 106, "unit": 0, "class": "bld", "level": 1,
@@ -61,43 +67,52 @@
         "spritebounds": [ 624, 32 ],
         "prod": [ 0, 0 ], 
         "cost": [ 285, 165 ],
-        "adjacent": [ 100 ]
+        "adjacent": [ 100 ],
+        "defence_bonus": 0.2
     },{
         "name": "Market",
         "id": 107, "unit": 0, "class": "bld", "level": 1,
         "move" : 0, "attack": 0, "defence": 300,
         "range": 0, "sight": 7,
         "spritebounds": [ 640, 32 ],
+        "train_class": [ "inf", "cav", "ran", "sie" ], 
         "prod": [ 0, 0 ], 
         "cost": [ 360, 240 ],
-        "adjacent": [ 100 ]
+        "adjacent": [ 100 ],
+        "defence_bonus": 0.2
     },{
         "name": "Stable",
         "id": 108, "unit": 0, "class": "bld", "level": 0,
         "move" : 0, "attack": 0, "defence": 300,
         "range": 0, "sight": 7,
         "spritebounds": [ 656, 16 ],
+        "train_class": [ "cav" ], 
         "prod": [ 0, 0 ], 
         "cost": [ 360, 240 ],
-        "adjacent": [ 100 ]
+        "adjacent": [ 100 ],
+        "defence_bonus": 0.2
     },{
         "name": "Siege Workshop",
         "id": 109, "unit": 0, "class": "bld", "level": 2,
         "move" : 0, "attack": 0, "defence": 300,
         "range": 0, "sight": 7,
         "spritebounds": [ 672, 48 ],
+        "train_class": [ "sie" ], 
         "prod": [ 0, 0 ], 
-        "cost": [ 360, 240 ],
-        "adjacent": [ 100 ]
+        "cost": [ 450, 300 ],
+        "adjacent": [ 100 ],
+        "defence_bonus": 0.2
     },{
         "name": "Church",
         "id": 110, "unit": 0, "class": "bld", "level": 2,
         "move" : 0, "attack": 0, "defence": 300,
         "range": 0, "sight": 7,
         "spritebounds": [ 688, 48 ],
+        "train_id": [ 23 ], 
         "prod": [ 0, 0 ], 
         "cost": [ 360, 240 ],
-        "adjacent": [ 100 ]
+        "adjacent": [ 100 ],
+        "defence_bonus": 0.2
     },{
         "name": "University",
         "id": 111, "unit": 0, "class": "bld", "level": 2,
@@ -105,8 +120,9 @@
         "range": 0, "sight": 7,
         "spritebounds": [ 704, 48 ],
         "prod": [ 0, 0 ], 
-        "cost": [ 360, 240 ],
-        "adjacent": [ 100 ]
+        "cost": [ 450, 300 ],
+        "adjacent": [ 100 ],
+        "defence_bonus": 0.2
     },{
         "name": "Tower",
         "id": 112, "unit": 0, "class": "bld", "level": 1,
@@ -115,16 +131,19 @@
         "spritebounds": [ 720, 48 ],
         "prod": [ 0, 0 ], 
         "cost": [ 360, 240 ],
-        "diagonal": [ 100 ]
+        "diagonal": [ 100 ],
+        "defence_bonus": 0.4
     },{
         "name": "Castle",
         "id": 113, "unit": 0, "class": "bld", "level": 2,
         "move" : 0, "attack": 0, "defence": 300,
         "range": 0, "sight": 7,
         "spritebounds": [ 720, 48 ],
+        "train_class": [ "inf" ], 
         "prod": [ 0, 0 ], 
-        "cost": [ 360, 240 ],
-        "diagonal": [ 100 ]
+        "cost": [ 900, 600 ],
+        "diagonal": [ 100 ],
+        "defence_bonus": 0.4
     },{
         "name": "Villager",
         "id": 0, "unit": 1, "class": "inf", "level": -1, 
@@ -150,16 +169,15 @@
         "move" : 12, "attack": 100, "defence": 100,
         "range": 1, "sight": 7,
         "spritebounds": [ 128, 16 ], 
-        "cost": [ 100, 50 ],
-        "abilities": [ "Scout" ],
-        "upgrade": 5
+        "cost": [ 120, 30 ],
+        "abilities": [ "Scout" ]
     },{
         "name": "Archers",
         "id": 3, "unit": 1, "class": "ran", "level": 1,
         "move" : 7, "attack": 150, "defence": 100,
         "range": 3, "sight": 7,
         "spritebounds": [ 160, 32 ], 
-        "cost": [ 125, 50 ],
+        "cost": [ 105, 45 ],
         "upgrade": 24
     },{
         "name": "Skirmishers",
@@ -167,7 +185,7 @@
         "move" : 7, "attack": 110, "defence": 110,
         "range": 2, "sight": 7,
         "spritebounds": [ 176, 32 ], 
-        "cost": [ 125, 50 ],
+        "cost": [ 95, 40 ],
         "abilities": [ "Skirmish" ],
         "upgrade": 14
     },{
@@ -176,7 +194,7 @@
         "move" : 10, "attack": 150, "defence": 150,
         "range": 1, "sight": 7,
         "spritebounds": [ 128, 32 ], 
-        "cost": [ 125, 50 ],
+        "cost": [ 140, 35 ],
         "abilities": [ "Plains Charge" ],
         "upgrade": 8
     },{
@@ -185,7 +203,7 @@
         "move" : 7, "attack": 150, "defence": 150,
         "range": 1, "sight": 7,
         "spritebounds": [ 112, 32 ], 
-        "cost": [ 125, 50 ],
+        "cost": [ 95, 30 ],
         "upgrade": 10
     },{
         "name": "Spearmen",
@@ -193,7 +211,7 @@
         "move" : 7, "attack": 150, "defence": 150,
         "range": 1, "sight": 7,
         "spritebounds": [ 144, 32 ], 
-        "cost": [ 125, 50 ],
+        "cost": [ 115, 40 ],
         "abilities": [ "Anti-Cavalry" ],
         "upgrade": 11
     },{
@@ -202,7 +220,7 @@
         "move" : 10, "attack": 200, "defence": 200,
         "range": 1, "sight": 7,
         "spritebounds": [ 128, 48 ], 
-        "cost": [ 125, 50 ],
+        "cost": [ 190, 45 ],
         "abilities": [ "Plains Charge" ]
     },{
         "name": "Camels",
@@ -210,7 +228,7 @@
         "move" : 10, "attack": 200, "defence": 200,
         "range": 1, "sight": 7,
         "spritebounds": [ 192, 48 ], 
-        "cost": [ 125, 50 ],
+        "cost": [ 200, 50 ],
         "abilities": [ "Desert Charge", "Scares Horses" ]
     },{
         "name": "Longswordmen",
@@ -218,14 +236,14 @@
         "move" : 7, "attack": 200, "defence": 200,
         "range": 1, "sight": 7,
         "spritebounds": [ 112, 48 ], 
-        "cost": [ 125, 50 ]
+        "cost": [ 130, 45 ]
     },{
         "name": "Pikemen",
         "id": 11, "unit": 1, "class": "inf", "level": 2,
         "move" : 7, "attack": 150, "defence": 200,
         "range": 1, "sight": 7,
         "spritebounds": [ 144, 48 ], 
-        "cost": [ 125, 50 ],
+        "cost": [ 160, 55 ],
         "abilities": [ "Anti-Cavalry" ]
     },{
         "name": "Viking Berserkers",
@@ -233,7 +251,7 @@
         "move" : 7, "attack": 200, "defence": 200,
         "range": 1, "sight": 7,
         "spritebounds": [ 208, 48 ], 
-        "cost": [ 125, 50 ],
+        "cost": [ 170, 55 ],
         "abilities": [ "Frenzy" ]
     },{
         "name": "Crossbowmen",
@@ -272,7 +290,7 @@
         "move" : 7, "attack": 200, "defence": 250,
         "range": 1, "sight": 7,
         "spritebounds": [ 272, 48 ], 
-        "cost": [ 125, 50 ],
+        "cost": [ 210, 55 ],
         "abilities": [ "Causes Fear" ]
     },{
         "name": "Celtic Woad Raiders",
@@ -280,7 +298,7 @@
         "move" : 7, "attack": 200, "defence": 200,
         "range": 1, "sight": 7,
         "spritebounds": [ 288, 48 ], 
-        "cost": [ 125, 50 ],
+        "cost": [ 200, 65 ],
         "abilities": [ "Causes Fear" ]
     },{
         "name": "Knights Templar",
@@ -288,7 +306,7 @@
         "move" : 7, "attack": 200, "defence": 200,
         "range": 1, "sight": 7,
         "spritebounds": [ 304, 48 ], 
-        "cost": [ 125, 50 ],
+        "cost": [ 215, 55 ],
         "abilities": [ "Plains Charge", "Zeal" ]
     },{
         "name": "Scorpions",
@@ -296,7 +314,7 @@
         "move" : 7, "attack": 350, "defence": 250,
         "range": 3, "sight": 7,
         "spritebounds": [ 320, 48 ], 
-        "cost": [ 125, 50 ],
+        "cost": [ 65, 190 ],
         "abilities": [ "Units Only", "No Counter", "No Move & Attack" ]
     },{
         "name": "Battering Rams",
@@ -304,7 +322,7 @@
         "move" : 7, "attack": 400, "defence": 325,
         "range": 1, "sight": 7,
         "spritebounds": [ 336, 48 ], 
-        "cost": [ 125, 50 ],
+        "cost": [ 50, 155 ],
         "abilities": [ "Buildings Only", "No Counter" ]
     },{
         "name": "Onagers",
@@ -312,7 +330,7 @@
         "move" : 7, "attack": 275, "defence": 275,
         "range": 1, "sight": 7,
         "spritebounds": [ 352, 48 ], 
-        "cost": [ 125, 50 ],
+        "cost": [ 60, 180 ],
         "abilities": [ "No Move & Attack", "No Counter" ]
     },{
         "name": "Monks",
@@ -320,7 +338,7 @@
         "move" : 7, "attack": 50, "defence": 200,
         "range": 1, "sight": 7,
         "spritebounds": [ 368, 48 ], 
-        "cost": [ 125, 50 ],
+        "cost": [ 50, 155 ],
         "abilities": [ "Heal", "Convert" ]
     },{
         "name": "Archers",

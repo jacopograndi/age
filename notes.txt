@@ -1,3 +1,4 @@
+DEV
 [x] level restrict train and build
 [x] current tech gui
 [x] tech bonus addition
@@ -6,25 +7,35 @@
 [x] age up menu
 [x] end day upgrade on age up
 [x] end day heal when on bld
-[ ] bld ages upgrades
-[ ] train problem
+[x] bld ages upgrades (just graphical)
+[x] train problem
+[x] market (+50g mercs)
+[x] tech effects
+[x] veterancy ranks
 [ ] heal
 [ ] convert
 [ ] relics
 [ ] tower diagonal constraint
 [ ] tower defence effect -> new bonus type
 [ ] castle
-[ ] veterancy ranks
 [ ] frenzy special case
 [ ] gui production
 [ ] gui train build
-[ ] tech effects
 [ ] unit tech requirement (paladin, champion, imp siege)
 [ ] fsm back
 [ ] undo
+[x] bld defence bonus
+[ ] demolish
+[ ] imp entities
 
+[ ] use maps to speed up lookups (even in ground.pos -> ent)
+
+ART
 [ ] imp unit sprites 
 [x] sprites stable, castle, uni, market, church, tower and bld upgrade
 
+BUGS
 [ ] wheelbarrow doesn't work
 [ ] search player by id, not by index
+
+[x] trained man at arms, bad alloc

@@ -229,11 +229,7 @@
         }
     },{
         "name": "Merchant Network", "id": 31, "level": 2,
-        "cost": [ 150, 450 ], "req_id": 107,
-        "bonus": {
-            "aff_mercs": 1,
-            "cost_abs": [ 0, -25 ]
-        }
+        "cost": [ 150, 450 ], "req_id": 107
     },{
         "name": "Redemption", "id": 32, "level": 2,
         "cost": [ 150, 450 ], "req_id": 110,

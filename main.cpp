@@ -62,6 +62,7 @@ int main () {
     gst.players[0].res = std::vector<float> { 1500, 1500 };
     gst.players.emplace_back(0, 0, 255, 1);
     gst.players[1].res = std::vector<float> { 1500, 1500 };
+    gst.players[0].level = 2;
     
     gst.ground.tiles[1] = 1;
     gst.ground.tiles[8] = 1;
@@ -83,8 +84,10 @@ int main () {
     gst.entities.emplace_back(5, 1, gst.get_info("Town Center"), 0);
     gst.entities.emplace_back(6, 1, gst.get_info("Barracks"), 0);
     gst.entities.emplace_back(5, 0, gst.get_info("Stable"), 0);
+    gst.entities.emplace_back(4, 1, gst.get_info("Market"), 0);
     gst.entities.emplace_back(1, 1, gst.get_info("Villager"), 0);
     gst.entities.emplace_back(2, 1, gst.get_info("Light Cavalry"), 0);
+    gst.entities.emplace_back(4, 2, gst.get_info("Light Cavalry"), 1);
     gst.entities.emplace_back(10, 10, gst.get_info("Villager"), 1);
     gst.entities.emplace_back(1, 5, gst.get_info("Villager"), 1);
     gst.entities.emplace_back(2, 5, gst.get_info("Militia"), 1);

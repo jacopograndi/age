@@ -20,17 +20,19 @@ void render_ent (Graphics *graphics, Gst &gst, Entity &ent,
     vec2 pos, int dflag) 
 {
     Player &player = gst.players[ent.owner];
+    float bound_y = ent.info->spritebounds.y;
+    if (ent.info->unit == 0) { bound_y = player.level*16+16; }
     int done = 0;
     if (dflag == 1) done = 512;
     graphics->backend.render_sprite(
         (int)ent.info->spritebounds.x,
-        (int)ent.info->spritebounds.y+done, 16, 16,
+        (int)bound_y+done, 16, 16,
         (int)pos.x, (int)pos.y, 32, 32
     );
     if (dflag == 0) {
         graphics->backend.render_sprite(
             (int)ent.info->spritebounds.x,
-            (int)ent.info->spritebounds.y+768, 16, 16,
+            (int)bound_y+768, 16, 16,
             (int)pos.x, (int)pos.y, 32, 32,
             player.r, player.g, player.b
         );
@@ -243,6 +245,10 @@ void render_tile_info (Graphics *graphics, Gst &gst, vec2 pos, int i) {
 int render_attack_info_bonus (Graphics *graphics, Gst &gst, vec2 pos, 
     Entity &atk, Entity &def, bool attack, int rtl) 
 {
+    float margin_amt = constants::menu_attack_margin_amt;
+    float margin_arrow = constants::menu_attack_margin_arrow;
+    float margin_mod = constants::menu_attack_margin_mod;
+    
     std::vector<Bonus> bonuses;
     if (attack) { bonuses = gst.get_bonuses(atk, def); }
     else { bonuses = gst.get_bonuses(def, atk); }
@@ -258,7 +264,7 @@ int render_attack_info_bonus (Graphics *graphics, Gst &gst, vec2 pos,
         std::string nlabel = std::to_string((int)roundf(value));
         float labw = graphics->backend.txt.get_width(nlabel);
         graphics->backend.txt.render_text(nlabel, 
-            pos + vec2 { 50*(1-rtl*2)-labw*rtl, 0 });
+            pos + vec2 { margin_amt*(1-rtl*2)-labw*rtl, 0 });
     }
     
     int bonusnum = 0; float atk_mod = 1;
@@ -273,7 +279,9 @@ int render_attack_info_bonus (Graphics *graphics, Gst &gst, vec2 pos,
             amt += std::to_string((int)roundf(b.amt*100)) + "%";
             float labw = graphics->backend.txt.get_width(amt);
             graphics->backend.txt.render_text(
-                amt, pos + vec2 { 50*(1-rtl*2)-labw*rtl, 10.0f+bonusnum*10 });
+                amt, pos + vec2 { 
+                    margin_amt*(1-rtl*2)-labw*rtl, 
+                    10.0f+bonusnum*10 });
             atk_mod += b.amt;
             bonusnum ++;
         }
@@ -281,16 +289,16 @@ int render_attack_info_bonus (Graphics *graphics, Gst &gst, vec2 pos,
     
     if (bonusnum > 0) {
         {
-            std::string label = attack ? "->" : "<-";
+            std::string label = rtl ? "<-" : "->";
             float labw = graphics->backend.txt.get_width(label);
             graphics->backend.txt.render_text(label, 
-                pos + vec2 { 70*(1-rtl*2)-labw*rtl, 0 });
+                pos + vec2 { margin_arrow*(1-rtl*2)-labw*rtl, 0 });
         }
         {
             std::string label = std::to_string((int)roundf(value * atk_mod));
             float labw = graphics->backend.txt.get_width(label);
             graphics->backend.txt.render_text(label, 
-                pos + vec2 { 83*(1-rtl*2)-labw*rtl, 0 });
+                pos + vec2 { margin_mod*(1-rtl*2)-labw*rtl, 0 });
         }
     }
     
@@ -299,6 +307,10 @@ int render_attack_info_bonus (Graphics *graphics, Gst &gst, vec2 pos,
 
 
 void render_attack_info (Graphics *graphics, Gst &gst, vec2 pos, int i, int j) {
+    float margin_amt = constants::menu_attack_margin_amt;
+    float margin_arrow = constants::menu_attack_margin_arrow;
+    float margin_mod = constants::menu_attack_margin_mod;
+    
     Entity &atk = gst.entities[i];
     Entity &def = gst.entities[j];
     int w = 300, h = 250;
@@ -374,11 +386,16 @@ void render_attack_info (Graphics *graphics, Gst &gst, vec2 pos, int i, int j) {
     
     graphics->backend.txt.render_text("Health", pos + vec2 { 10, 80 });
     graphics->backend.txt.render_text(
-        std::to_string((int)roundf(atk.hp)), pos + vec2 { 60, 80 });
-    graphics->backend.txt.render_text("->", pos + vec2 { 80, 80 });
+        std::to_string((int)roundf(atk.hp)), 
+        pos + vec2 { 10+margin_amt, 80 });
+    graphics->backend.txt.render_text("->", 
+        pos + vec2 { 10+margin_arrow, 80 });
     graphics->backend.txt.render_text(
-        std::to_string((int)roundf(result.atk_hp)), pos + vec2 { 93, 80 });
-    graphics->backend.txt.render_text(sres[atk_res], pos + vec2 { 115, 80 });
+        std::to_string((int)roundf(result.atk_hp)), 
+        pos + vec2 { 10+margin_mod, 80 });
+    graphics->backend.txt.render_text(
+        sres[atk_res],
+        pos + vec2 { 10+margin_mod+20, 80 });
     {
         int txtwidth = graphics->backend.txt.get_width("Health");
         graphics->backend.txt.render_text("Health", 
@@ -386,20 +403,20 @@ void render_attack_info (Graphics *graphics, Gst &gst, vec2 pos, int i, int j) {
         std::string label = std::to_string((int)roundf(def.hp));
         int txtwidthlabel = graphics->backend.txt.get_width(label);
         graphics->backend.txt.render_text(label, 
-            pos + vec2 { w-60.0f-txtwidthlabel, 80 });
+            pos + vec2 { w-10.0f-margin_amt-txtwidthlabel, 80 });
     } {
         int txtwidth = graphics->backend.txt.get_width("<-");
         graphics->backend.txt.render_text("<-", 
-            pos + vec2 { w-80.0f-txtwidth, 80 });
+            pos + vec2 { w-10.0f-margin_arrow-txtwidth, 80 });
     } {
         std::string label = std::to_string((int)roundf(result.def_hp));
         int txtwidth = graphics->backend.txt.get_width(label);
         graphics->backend.txt.render_text(label, 
-            pos + vec2 { w-93.0f-txtwidth, 80 });
+            pos + vec2 { w-10.0f-margin_mod-txtwidth, 80 });
     } {
         int txtwidth = graphics->backend.txt.get_width(sres[def_res]);
         graphics->backend.txt.render_text(sres[def_res], 
-            pos + vec2 { w-115.0f-txtwidth, 80 });
+            pos + vec2 { w-10.0f-margin_mod-20-txtwidth, 80 });
     }
     
     {
@@ -458,10 +475,14 @@ void Graphics::render (Gst &gst, View &view)
     
     if (view.selected_entity != -1) {
         int i = view.selected_entity;
-        vec2 pos { (float)entities[i].x*32, (float)entities[i].y*32 };
+        Entity &ent = entities[i];
+        Player &player = gst.get_player(ent.owner);
+        float bound_y = ent.info->spritebounds.y;
+        if (ent.info->unit == 0) { bound_y = player.level*16+16; }
+        vec2 pos { (float)ent.x*32, (float)ent.y*32 };
         backend.render_sprite (
-            (int)entities[i].info->spritebounds.x,
-            (int)entities[i].info->spritebounds.y+256, 16, 16, 
+            (int)ent.info->spritebounds.x,
+            (int)bound_y+256, 16, 16, 
             (int)cam.pos.x + (int)pos.x, 
             (int)cam.pos.y + (int)pos.y, 32, 32
         );
@@ -481,18 +502,19 @@ void Graphics::render (Gst &gst, View &view)
     } 
     
     for (int i=0; i<entities.size(); i++) {
-        if (entities[i].info->unit == 1) {
+        Entity &ent = entities[i];
+        if (ent.info->unit == 1) {
             backend.render_rect(
                 0, 0, 0, 255,
-                (int)cam.pos.x + (int)entities[i].x*32+2, 
-                (int)cam.pos.y + (int)entities[i].y*32+30, 28, 2
+                (int)cam.pos.x + (int)ent.x*32+2, 
+                (int)cam.pos.y + (int)ent.y*32+30, 28, 2
             );
             int amt = 28 * (entities[i].hp / 100);
-            Player &player = gst.players[entities[i].owner];
+            Player &player = gst.get_player(ent.owner);
             backend.render_rect(
                 player.r, player.g, player.b, 255,
-                (int)cam.pos.x + (int)entities[i].x*32+2, 
-                (int)cam.pos.y + (int)entities[i].y*32+30, amt, 2
+                (int)cam.pos.x + (int)ent.x*32+2, 
+                (int)cam.pos.y + (int)ent.y*32+30, amt, 2
             );
         }
     }

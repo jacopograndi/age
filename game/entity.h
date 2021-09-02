@@ -13,6 +13,9 @@ class EntityInfo {
     public:
     EntityInfo() { spritebounds = vec2 { 16*6, 16 }; }
     
+    enum Class { inf, cav, ran, sie, bld };
+    Class ent_class;
+    
     std::string name;
     
     int id;
@@ -27,20 +30,22 @@ class EntityInfo {
     int unit;
     std::vector<int> abilities;
     std::vector<int> build;
-    std::vector<int> train;
+    std::vector<int> train_id;
+    std::vector<Class> train_class;
     
     std::vector<float> prod { 0, 0 };
     std::vector<float> cost { 0, 0 };
     
     std::vector<int> adjacent;
-    
+    float defence_bonus { 0 };
     int upgrade { -1 };
-    
-    enum Class { inf, cav, ran, sie, bld };
-    Class ent_class;
     
     vec2 spritebounds;
 };
+
+namespace EntityClass {
+    int from_string(std::string str);
+}
 
 class Entity {
     public:
@@ -58,6 +63,7 @@ class Entity {
     bool done = false;
     int moved;
     EntityInfo *info;
+    int fights { 0 };
     
     int owner;
 };

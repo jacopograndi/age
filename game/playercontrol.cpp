@@ -31,7 +31,7 @@ void open_unit_menu (Gst &gst, View &view, Fsm &fsm, int p) {
         view.menu_unit.options.emplace_back("Done",
             Menu_unit::Opts::done);
     } else {
-        if (ent.info->train.size() 
+        if (gst.get_possible_trains(ent).size() 
             && !gst.check_obstructed(ent))
         {
             view.menu_unit.options.emplace_back("Train",
@@ -157,14 +157,17 @@ Player_control::Player_control () {
             Entity &ent = gst.entities[view.selected_entity];
             Player &player = gst.players[ent.owner];
             view.menu_train.options.clear();
-            for (int id : ent.info->train) {
+            auto trains = gst.get_possible_trains(ent);
+            for (int id : trains) {
                 EntityInfo *info = gst.get_info(id);
-                if (gst.check_req_train(ent, info)) {
-                    std::cout << id << " " << gst.get_info(id)->name << "\n";
-                    Option opt { info->name, id };
-                    opt.cost = gst.get_cost(info, player);
-                    view.menu_train.options.push_back(opt);
+                std::cout << id << " " << gst.get_info(id)->name << "\n";
+                Option opt { info->name, id };
+                opt.cost = gst.get_cost(info, player);
+                if (ent.info->id == 107) { // market
+                    // tech.id = 31 -> merc network
+                    opt.cost[1] += 50 - (int)player.has_tech(31)*25; 
                 }
+                view.menu_train.options.push_back(opt);
             }
             view.menu_train.open(view.res);
             return menu_train;
@@ -173,6 +176,10 @@ Player_control::Player_control () {
     fsm.arcs.emplace_back(
         menu_train, opt, -1,
         [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            std::vector<float> cost { -1, -1 };
+            for (auto o : view.menu_train.options) {
+                if (o.id == p) {cost = o.cost; break; }
+            }
             view.menu_train.close();
             Entity &ent = gst.entities[view.selected_entity];
             ent.done = true;
@@ -182,7 +189,7 @@ Player_control::Player_control () {
             entb.hp = 50;
             gst.entities.push_back(entb);
             Player &player = gst.players[gst.turn];
-            player.pay(gst.get_cost(entb.info, player));
+            player.pay(cost);
             view.selected_entity = -1;
             return select;
         }

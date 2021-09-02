@@ -69,18 +69,18 @@ void load_json (Gst &gst) {
         for (auto blds : it["build"]) {
             ent.build.push_back(blds);
         }
-        for (auto train : it["train"]) {
-            ent.train.push_back(train);
+        for (auto train : it["train_id"]) {
+            ent.train_id.push_back(train);
+        }
+        for (auto train : it["train_class"]) {
+            ent.train_class.push_back((EntityInfo::Class) 
+                EntityClass::from_string(train.get<std::string>()));
         }
         for (auto ad : it["adjacent"]) {
             ent.adjacent.push_back(ad);
         }
-        std::string cl = it["class"];
-        if (cl == "inf") ent.ent_class = EntityInfo::Class::inf;
-        if (cl == "cav") ent.ent_class = EntityInfo::Class::cav;
-        if (cl == "ran") ent.ent_class = EntityInfo::Class::ran;
-        if (cl == "sie") ent.ent_class = EntityInfo::Class::sie;
-        if (cl == "bld") ent.ent_class = EntityInfo::Class::bld;
+        ent.ent_class = (EntityInfo::Class) EntityClass::from_string(
+            it["class"].get<std::string>());
         for (auto ab : it["abilities"]) {
             int index = 0;
             for (int i=0; i<gst.abilities.size(); i++) {
@@ -90,6 +90,9 @@ void load_json (Gst &gst) {
         }
         ent.spritebounds = vec2 { it["spritebounds"][0], it["spritebounds"][1] };
         if (it.contains("upgrade")) { ent.upgrade = it["upgrade"]; }
+        if (it.contains("defence_bonus")) { 
+            ent.defence_bonus = it["defence_bonus"];
+        }
         gst.infos.push_back(ent);
     }
     
@@ -126,13 +129,8 @@ void load_json (Gst &gst) {
             
             for (auto v : b["aff_id"]) { tech.bonus.aff_id.push_back(v); }
             for (auto v : b["aff_class"]) { 
-                int w = -1;
-                if (v == "inf") w = EntityInfo::Class::inf;
-                if (v == "cav") w = EntityInfo::Class::cav;
-                if (v == "ran") w = EntityInfo::Class::ran;
-                if (v == "sie") w = EntityInfo::Class::sie;
-                if (v == "bld") w = EntityInfo::Class::bld;
-                tech.bonus.aff_class.push_back(w); 
+                tech.bonus.aff_class.push_back(EntityClass::from_string(
+                    v.get<std::string>())); 
             }
             if (b.contains("aff_level")) { 
                 tech.bonus.aff_level = b["aff_level"]; 
