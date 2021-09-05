@@ -43,6 +43,8 @@ Entity& Gst::get_at (int x, int y) {
 
 std::vector<float> Gst::get_cost (EntityInfo *info, Player &player) {
     std::vector<float> cost = info->cost;
+    
+    std::cout << "cost : " << player.tech_lookup.id(info->id).cost[0] << " " << player.tech_lookup.id(info->id).cost[1] << "\n";
     for (int i=0; i<info->cost.size(); i++) {
         cost[i] *= 1+player.tech_lookup.id(info->id).cost[i];
         cost[i] += player.tech_lookup.id(info->id).cost_abs[i];
@@ -289,6 +291,29 @@ int Gst::get_range (Entity &ent) {
     return range;
 }
 
+
+void Gst::heal (Entity &atk, Entity &def) {
+    Player &player = get_player(atk.owner);
+    float amt = 20;
+    if (atk.info->level == 3) { amt += 10; } // improved heal
+    if (player.has_tech(52)) { amt += 10; } // tech illumination
+    def.hp = clamp_hp(def.hp + amt);
+}
+
+void Gst::convert (Entity &atk, Entity &def) {
+    Player &player = get_player(atk.owner);
+    float amt = 0.20f;
+    if (player.has_tech(53)) { amt += 0.10f; } // tech faith
+    // caution, randomness
+    std::uniform_real_distribution<float> odds(0, 1);
+    float value = odds(engine);
+    std::cout << value << " / " << amt << " odds\n";
+    if (value < amt) {
+        def.owner = atk.owner;
+    }
+}
+
+
 std::vector<int> Gst::get_possible_trains (Entity &ent) {
     Player &player = get_player(ent.owner);
     auto &cls = ent.info->train_class;
@@ -309,13 +334,14 @@ std::vector<int> Gst::get_possible_trains (Entity &ent) {
         for (int i=0; i<3; i++) trains.push_back(candidates[i]);
         return trains;
     }
-        
-    for (int id : ent.info->train_id) {
-        if (get_info(id)->level > player.level) {
-            trains.push_back(id);
-        }
-    }
     
+    for (int id : ent.info->train_id) {
+        auto info = get_info(id);
+        if (info->level > player.level) continue;
+        if (info->level < player.level && info->upgrade != -1) continue;
+        trains.push_back(id);
+    }
+    /*
     // get all train class ids, highest upgrade level
     for (EntityInfo &info : infos) {
         if (info.id == 0) continue; // villager only in train_id
@@ -323,12 +349,12 @@ std::vector<int> Gst::get_possible_trains (Entity &ent) {
         if (info.level < player.level && info.upgrade != -1) continue;
         if (std::find(cls.begin(), cls.end(), info.ent_class) != cls.end()) {
             if (std::find(trains.begin(), trains.end(), info.id) 
-                    == trains.end())
+                    != trains.end())
             {
                 trains.push_back(info.id);
             }
         }
-    }
+    }*/
     return trains;
 }
 
@@ -357,6 +383,19 @@ bool Gst::check_req_build(Entity &ent, EntityInfo *info) {
             }
         }
         if (!adj) return false;
+    }
+    for (int id : info->diagonal) {
+        bool diag = false;
+        for (Entity &e : entities) {
+            if (e.info->id == id && ent.owner == e.owner) {
+                int dx = abs(e.x-ent.x), dy = abs(e.y-ent.y);
+                int dist = dx + dy;
+                if (dx == 1 && dy == 1) {
+                    diag = true;
+                }
+            }
+        }
+        if (!diag) return false;
     }
     if (info->id == 100) {
         for (Resource &r : ground.resources) {
@@ -511,8 +550,10 @@ void Gst::update_tech_lookup (Player &player) {
     for (int i : player.techs) {
         Tech *tech = get_tech(i);
         std::vector<int> ids { };
+        bool noaff = true;
         if (tech->bonus.aff_id.size() > 0) {
             ids = tech->bonus.aff_id;
+            noaff = false;
         } else {
             if (tech->bonus.aff_level != -1) {
                 for (EntityInfo info : infos) {
@@ -520,6 +561,7 @@ void Gst::update_tech_lookup (Player &player) {
                         ids.push_back(info.id);
                     }
                 }
+                noaff = false;
             }
             if (tech->bonus.aff_class.size() > 0) {
                 for (EntityInfo info : infos) {
@@ -530,13 +572,10 @@ void Gst::update_tech_lookup (Player &player) {
                         ids.push_back(info.id);
                     }
                 }
-            }
-            if (tech->bonus.aff_all == 1) {
-                for (EntityInfo info : infos) {
-                    ids.push_back(info.id);
-                }
+                noaff = false;
             }
         }
+        if (noaff) { for (auto info : infos) ids.push_back(info.id); }
         for (int id : ids) {
             player.tech_lookup.map_id[id] = 
                 player.tech_lookup.map_id[id] + tech->bonus;

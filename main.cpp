@@ -54,7 +54,8 @@ int main () {
     Player_control control;
     
     float ts = 16;
-    Gst gst (15,15);
+    Gst gst;
+    gst.inv.ground { 15,15 };
     
     load_json(gst);
     
@@ -95,6 +96,7 @@ int main () {
     gst.entities.emplace_back(1, 0, gst.get_info("Persian War Elephants"), 0);
     gst.entities.emplace_back(0, 1, gst.get_info("Scorpions"), 1);
     gst.entities.emplace_back(1, 2, gst.get_info("Archers"), 1);
+    gst.entities.emplace_back(4, 3, gst.get_info("Monks"), 0);
     
     View view (vec2 { (float)graphics.resx, (float)graphics.resy });
     

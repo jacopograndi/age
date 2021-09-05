@@ -29,6 +29,8 @@ class Ground {
     std::vector<int> star (int pos);
     std::vector<int> move_area (Gst &gst, Entity &ent);
     std::vector<int> attack_targets (Gst &gst, Entity &ent);
+    std::vector<int> heal_targets (Gst &gst, Entity &ent);
+    std::vector<int> convert_targets (Gst &gst, Entity &ent);
 };
 
 #endif

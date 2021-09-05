@@ -98,9 +98,37 @@ std::vector<int> Ground::attack_targets (Gst &gst, Entity &ent) {
     for (Entity &e : gst.entities) {
         if (!units && e.info->unit == 1) continue;
         if (!builds && e.info->unit == 0) continue;
-        if (e.owner != ent.owner && abs(e.x-ent.x)+abs(e.y-ent.y) <= range) {
+        int dist = abs(e.x-ent.x)+abs(e.y-ent.y);
+        if (dist > 0 && e.owner != ent.owner && dist <= range) {
             attacks.push_back(at(e.x, e.y));
         }
     }
     return attacks;
+}
+
+std::vector<int> Ground::heal_targets (Gst &gst, Entity &ent) {
+    std::vector<int> heals;
+    int range = gst.get_range(ent);
+    for (Entity &e : gst.entities) {
+        if (e.info->unit == 0) continue;
+        if (e.info->ent_class == EntityInfo::Class::sie) continue;
+        int dist = abs(e.x-ent.x)+abs(e.y-ent.y);
+        if (dist > 0 && e.owner == ent.owner && dist <= range) {
+            heals.push_back(at(e.x, e.y));
+        }
+    }
+    return heals;
+}
+
+std::vector<int> Ground::convert_targets (Gst &gst, Entity &ent) {
+    std::vector<int> converts;
+    int range = gst.get_range(ent);
+    for (Entity &e : gst.entities) {
+        if (e.info->unit == 0) continue;
+        int dist = abs(e.x-ent.x)+abs(e.y-ent.y);
+        if (dist > 0 && e.owner != ent.owner && dist <= range) {
+            converts.push_back(at(e.x, e.y));
+        }
+    }
+    return converts;
 }

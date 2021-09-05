@@ -529,8 +529,7 @@ void Graphics::render (Gst &gst, View &view)
     
     if (view.moves.size() > 0) {
         for (int m : view.moves) {
-            int x = m % gr.sizex;
-            int y = m / gr.sizex;
+            int x = m % gr.sizex; int y = m / gr.sizex;
             backend.render_rect(
                 0, 120, 255, 100,
                 (int)cam.pos.x + x*32, (int)cam.pos.y + y*32, 32, 32
@@ -540,10 +539,29 @@ void Graphics::render (Gst &gst, View &view)
     
     if (view.attacks.size() > 0) {
         for (int m : view.attacks) {
-            int x = m % gr.sizex;
-            int y = m / gr.sizex;
+            int x = m % gr.sizex; int y = m / gr.sizex;
             backend.render_rect(
                 255, 120, 0, 100,
+                (int)cam.pos.x + x*32, (int)cam.pos.y + y*32, 32, 32
+            );
+        }
+    }
+    
+    if (view.heals.size() > 0) {
+        for (int m : view.heals) {
+            int x = m % gr.sizex; int y = m / gr.sizex;
+            backend.render_rect(
+                0, 200, 0, 100,
+                (int)cam.pos.x + x*32, (int)cam.pos.y + y*32, 32, 32
+            );
+        }
+    }
+    
+    if (view.converts.size() > 0) {
+        for (int m : view.converts) {
+            int x = m % gr.sizex; int y = m / gr.sizex;
+            backend.render_rect(
+                200, 0, 200, 100,
                 (int)cam.pos.x + x*32, (int)cam.pos.y + y*32, 32, 32
             );
         }

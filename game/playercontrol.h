@@ -27,6 +27,7 @@ enum pc_state {
     target_build,
     merge_target,
     target_heal,
+    target_convert,
     menu_power,
     target_power,
     menu_unit,

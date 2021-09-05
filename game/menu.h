@@ -35,7 +35,7 @@ class Menu_unit : public Menu {
     Menu_unit () {}
     
     enum Opts {
-        move, attack, done, build, train, trade, age_up
+        move, attack, done, build, train, trade, age_up, heal, convert
     };
 };
 

@@ -46,19 +46,31 @@ class BattleResult {
     float atk_hp, def_hp;
 };
 
-class Gst {
-    private: std::default_random_engine engine = std::default_random_engine{};
+class Inv {
     public:
-    Gst(int sx, int sy) : ground(sx, sy) { }
+    Inv () {}
     
     std::vector<Tech> techs;
     std::vector<Ability> abilities;
     std::vector<EntityInfo> infos;
     std::vector<Tile> tiles;
-    std::vector<Entity> entities;
     Ground ground;
     
+    private: 
+    std::default_random_engine engine = std::default_random_engine{};
+}
+
+class Gst {
+    public:
+    Gst() { }
+    
+    Inv *inv;
+    
+    std::vector<Entity> entities;
     std::vector<Player> players;
+    
+    int turn { 0 };
+    int day { 0 };
     
     Player& get_player (int id);
     Tech* get_tech (int id);
@@ -76,20 +88,21 @@ class Gst {
     float get_damage (Entity &atk, Entity &def, float atk_hp);
     bool get_first_strike (Entity &atk, Entity &def);
     BattleResult battle_res (Entity &atk, Entity &def);
-    void battle (Entity &atk, Entity &def);
     void clear_dead();    
     int get_range(Entity &ent);
     
-    std::vector<int> get_possible_trains (Entity &ent);    
+    void battle (Entity &atk, Entity &def);
+    
+    void heal (Entity &atk, Entity &def);
+    void convert (Entity &atk, Entity &def);
+    
+    std::vector<int> get_possible_trains (Entity &ent);
     std::vector<int> get_possible_builds (Entity &ent);
     
     bool check_req_build (Entity &ent, EntityInfo *info);
     bool check_req_tech (Tech *tech, Player &player); 
     bool check_req_level (Player &player); 
     bool check_obstructed (Entity &ent);
-    
-    int turn { 0 };
-    int day { 0 };
     
     void end_day ();
     void level_upgrade (Player &player);

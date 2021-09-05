@@ -85,6 +85,34 @@ void View::process (Gst &gst, vec2 cam, vec2 mouse, int *mheld) {
             }
             found = true;
         }
+        
+        if (heals.size() > 0 && !found) {
+            for (int i=0; i<heals.size() && !found; i++) {
+                int x = heals[i] % gr.sizex;
+                int y = heals[i] / gr.sizex;
+                vec2 pos { (float)x*32, (float)y*32 };
+                if (pos.x < absmouse.x && absmouse.x <= pos.x+32 
+                && pos.y < absmouse.y && absmouse.y <= pos.y+32) 
+                {
+                    cursor_ground = heals[i];
+                }
+            }
+            found = true;
+        }
+        
+        if (converts.size() > 0 && !found) {
+            for (int i=0; i<converts.size() && !found; i++) {
+                int x = converts[i] % gr.sizex;
+                int y = converts[i] / gr.sizex;
+                vec2 pos { (float)x*32, (float)y*32 };
+                if (pos.x < absmouse.x && absmouse.x <= pos.x+32 
+                && pos.y < absmouse.y && absmouse.y <= pos.y+32) 
+                {
+                    cursor_ground = converts[i];
+                }
+            }
+            found = true;
+        }
 
         if (menu_train.active && !found) {
             int selected = menu_train.mouse_option(mouse);

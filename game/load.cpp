@@ -79,6 +79,9 @@ void load_json (Gst &gst) {
         for (auto ad : it["adjacent"]) {
             ent.adjacent.push_back(ad);
         }
+        for (auto ad : it["diagonal"]) {
+            ent.diagonal.push_back(ad);
+        }
         ent.ent_class = (EntityInfo::Class) EntityClass::from_string(
             it["class"].get<std::string>());
         for (auto ab : it["abilities"]) {
@@ -118,13 +121,16 @@ void load_json (Gst &gst) {
                 tech.bonus.req_range = b["req_range"];
             }
             if (b.contains("improved_heal")) {
-                tech.bonus.attack = b["improved_heal"]; 
+                tech.bonus.improved_heal = b["improved_heal"]; 
             }
             if (b.contains("improved_convert")) {
-                tech.bonus.attack = b["improved_convert"]; 
+                tech.bonus.improved_convert = b["improved_convert"]; 
             }
+            if (b.contains("cost")) tech.bonus.cost.clear();
             for (auto v : b["cost"]) { tech.bonus.cost.push_back(v); }
+            if (b.contains("cost_abs")) tech.bonus.cost_abs.clear();
             for (auto v : b["cost_abs"]) { tech.bonus.cost_abs.push_back(v); }
+            if (b.contains("prod")) tech.bonus.prod.clear();
             for (auto v : b["prod"]) { tech.bonus.prod.push_back(v); }
             
             for (auto v : b["aff_id"]) { tech.bonus.aff_id.push_back(v); }
@@ -139,6 +145,8 @@ void load_json (Gst &gst) {
                 tech.bonus.aff_all = b["aff_all"]; 
             }
         }
+        
+        std::cout << tech.id << tech.bonus.to_string() << std::endl;
         gst.techs.push_back(tech);
     }
 }

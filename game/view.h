@@ -23,6 +23,8 @@ class View {
     std::vector<int> moves;
     std::vector<int> attacks;
     std::vector<int> builds;
+    std::vector<int> heals;
+    std::vector<int> converts;
     
     Menu_unit menu_unit;
     Menu_day menu_day;

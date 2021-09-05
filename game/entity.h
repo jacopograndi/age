@@ -37,6 +37,7 @@ class EntityInfo {
     std::vector<float> cost { 0, 0 };
     
     std::vector<int> adjacent;
+    std::vector<int> diagonal;
     float defence_bonus { 0 };
     int upgrade { -1 };
     

@@ -52,7 +52,6 @@
         "name": "Horse Collar", "id": 7, "level": 1,
         "cost": [ 95, 280 ], "req_id": 101,
         "bonus": {
-            "aff_all": 1,
             "prod": [ 0.15, 0 ]
         }
     },{
@@ -106,21 +105,18 @@
         "name": "Cartography", "id": 14, "level": 1,
         "cost": [ 95, 280 ], "req_id": 107,
         "bonus": {
-            "aff_all": 1,
             "sight": 1
         }
     },{
         "name": "Trading", "id": 15, "level": 1,
         "cost": [ 95, 280 ], "req_id": 107,
         "bonus": {
-            "aff_all": 1,
             "trade": 1
         }
     },{
         "name": "Coniage", "id": 16, "level": 1,
         "cost": [ 125, 375 ], "req_id": 107,
         "bonus": {
-            "aff_all": 1,
             "prod": [ 0, 0.1 ]
         }
     },{
@@ -148,7 +144,6 @@
         "name": "Heavy Plow", "id": 20, "level": 2,
         "cost": [ 150, 450 ], "req_id": 101,
         "bonus": {
-            "aff_all": 1,
             "prod": [ 0.1, 0 ]
         }
     },{
@@ -223,7 +218,6 @@
         "name": "Banking", "id": 30, "level": 2,
         "cost": [ 200, 600 ], "req_id": 107,
         "bonus": {
-            "aff_all": 1,
             "trade": 1,
             "prod": [ 0, 0.05 ]
         }
@@ -269,7 +263,6 @@
         "name": "Crop Rotation", "id": 37, "level": 3,
         "cost": [ 250, 750 ], "req_id": 101,
         "bonus": {
-            "aff_all": 1,
             "prod": [ 0.1, 0 ]
         }
     },{
@@ -338,7 +331,6 @@
         "name": "Guilds", "id": 49, "level": 3,
         "cost": [ 250, 750 ], "req_id": 107, 
         "bonus": {
-            "aff_all": 1,
             "trade": 1,
             "prod": [ 0, 0.05 ]
         }

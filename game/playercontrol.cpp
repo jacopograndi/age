@@ -28,6 +28,18 @@ void open_unit_menu (Gst &gst, View &view, Fsm &fsm, int p) {
             view.menu_unit.options.emplace_back("Build", 
                 Menu_unit::Opts::build);
         }
+        if (gst.ground.heal_targets(gst, ent).size() > 0
+            && (gst.info_has_ability(ent.info, "Heal"))) 
+        {
+            view.menu_unit.options.emplace_back("Heal", 
+                Menu_unit::Opts::heal);
+        }
+        if (gst.ground.convert_targets(gst, ent).size() > 0
+            && (gst.info_has_ability(ent.info, "Convert"))) 
+        {
+            view.menu_unit.options.emplace_back("Convert", 
+                Menu_unit::Opts::convert);
+        }
         view.menu_unit.options.emplace_back("Done",
             Menu_unit::Opts::done);
     } else {
@@ -354,6 +366,60 @@ Player_control::Player_control () {
             view.menu_age_up.close();
             view.selected_entity = -1;
             std::cout << "closed ageup " << p << "\n";
+            return select;
+        }
+    ); 
+    fsm.arcs.emplace_back(
+        menu_unit, opt, Menu_unit::Opts::heal,
+        [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            Player &player = gst.players[gst.turn];
+            view.menu_unit.close();
+            Entity &ent = gst.entities[view.selected_entity];
+            view.heals = gst.ground.heal_targets(gst, ent);
+            std::cout << "heal targeting " << p << "\n";
+            return target_heal;
+        }
+    ); 
+    fsm.arcs.emplace_back(
+        target_heal, sel_ground, -1,
+        [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            std::cout << "healed " << p << "\n";
+            Entity &atk = gst.entities[view.selected_entity];
+            int x = view.cursor_ground % gst.ground.sizex;
+            int y = view.cursor_ground / gst.ground.sizex;
+            std::cout << "selg " << x << " " << y << "\n";
+            Entity &def = gst.get_at(x, y);
+            atk.done = true;
+            gst.heal(atk, def);
+            view.heals.clear();
+            view.selected_entity = -1;
+            return select;
+        }
+    ); 
+    fsm.arcs.emplace_back(
+        menu_unit, opt, Menu_unit::Opts::convert,
+        [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            Player &player = gst.players[gst.turn];
+            view.menu_unit.close();
+            Entity &ent = gst.entities[view.selected_entity];
+            view.converts = gst.ground.convert_targets(gst, ent);
+            std::cout << "convert targeting " << p << "\n";
+            return target_convert;
+        }
+    ); 
+    fsm.arcs.emplace_back(
+        target_convert, sel_ground, -1,
+        [](Gst &gst, View &view, Fsm &fsm, int p) { 
+            std::cout << "converted " << p << "\n";
+            Entity &atk = gst.entities[view.selected_entity];
+            int x = view.cursor_ground % gst.ground.sizex;
+            int y = view.cursor_ground / gst.ground.sizex;
+            std::cout << "selg " << x << " " << y << "\n";
+            Entity &def = gst.get_at(x, y);
+            atk.done = true;
+            gst.convert(atk, def);
+            view.converts.clear();
+            view.selected_entity = -1;
             return select;
         }
     ); 
