@@ -9,14 +9,14 @@ void open_unit_menu (Gst &gst, View &view, Fsm &fsm, int p) {
     Player &player = gst.players[ent.owner];
     view.menu_unit.options.clear();
     if (ent.info->unit == 1) {
-        if (gst.ground.move_area(gst, ent).size() > 0 
+        if (gst.inv->ground.move_area(gst, ent).size() > 0 
             && ent.moved == 0) 
         {
             view.menu_unit.options.emplace_back("Move", 
                 Menu_unit::Opts::move);
         }
-        if (gst.ground.attack_targets(gst, ent).size() > 0
-            && (!gst.info_has_ability(ent.info, "No Move & Attack") 
+        if (gst.inv->ground.attack_targets(gst, ent).size() > 0
+            && (!gst.inv->info_has_ability(ent.info, "No Move & Attack") 
                 || ent.moved == 0)) {
             view.menu_unit.options.emplace_back("Attack", 
                 Menu_unit::Opts::attack);
@@ -28,14 +28,14 @@ void open_unit_menu (Gst &gst, View &view, Fsm &fsm, int p) {
             view.menu_unit.options.emplace_back("Build", 
                 Menu_unit::Opts::build);
         }
-        if (gst.ground.heal_targets(gst, ent).size() > 0
-            && (gst.info_has_ability(ent.info, "Heal"))) 
+        if (gst.inv->ground.heal_targets(gst, ent).size() > 0
+            && (gst.inv->info_has_ability(ent.info, "Heal"))) 
         {
             view.menu_unit.options.emplace_back("Heal", 
                 Menu_unit::Opts::heal);
         }
-        if (gst.ground.convert_targets(gst, ent).size() > 0
-            && (gst.info_has_ability(ent.info, "Convert"))) 
+        if (gst.inv->ground.convert_targets(gst, ent).size() > 0
+            && (gst.inv->info_has_ability(ent.info, "Convert"))) 
         {
             view.menu_unit.options.emplace_back("Convert", 
                 Menu_unit::Opts::convert);
@@ -107,7 +107,7 @@ Player_control::Player_control () {
         [](Gst &gst, View &view, Fsm &fsm, int p) { 
             view.menu_day.close();
             view.menu_tech.tech_options.clear();
-            for (Tech &tech : gst.techs) {
+            for (Tech &tech : gst.inv->techs) {
                 view.menu_tech.tech_options.emplace_back(tech.name, &tech);
             }
             view.menu_tech.open(view.res);
@@ -121,7 +121,7 @@ Player_control::Player_control () {
             if (p == -1) 
                 return menu_tech;
             Player &player = gst.players[gst.turn];
-            Tech *tech = gst.get_tech(p);
+            Tech *tech = gst.inv->get_tech(p);
             if (!gst.check_req_tech(tech, player)) {
                 return menu_tech;
             }
@@ -171,8 +171,7 @@ Player_control::Player_control () {
             view.menu_train.options.clear();
             auto trains = gst.get_possible_trains(ent);
             for (int id : trains) {
-                EntityInfo *info = gst.get_info(id);
-                std::cout << id << " " << gst.get_info(id)->name << "\n";
+                EntityInfo *info = gst.inv->get_info(id);
                 Option opt { info->name, id };
                 opt.cost = gst.get_cost(info, player);
                 if (ent.info->id == 107) { // market
@@ -195,7 +194,7 @@ Player_control::Player_control () {
             view.menu_train.close();
             Entity &ent = gst.entities[view.selected_entity];
             ent.done = true;
-            Entity entb { ent.x, ent.y, gst.get_info(p), ent.owner };
+            Entity entb { ent.x, ent.y, gst.inv->get_info(p), ent.owner };
             entb.building = -1;
             entb.done = true;
             entb.hp = 50;
@@ -215,9 +214,8 @@ Player_control::Player_control () {
             Player &player = gst.players[ent.owner];
             view.menu_build.options.clear();
             for (int id : ent.info->build) {
-                EntityInfo *info = gst.get_info(id);
+                EntityInfo *info = gst.inv->get_info(id);
                 if(!gst.check_req_build(ent, info)) continue;
-                std::cout << id << " " << gst.get_info(id)->name << "\n";
                 Option opt { info->name, id };
                 opt.cost = gst.get_cost(info, player);
                 view.menu_build.options.push_back(opt);
@@ -233,7 +231,7 @@ Player_control::Player_control () {
             std::cout << "building " << p << "\n";
             Entity &ent = gst.entities[view.selected_entity];
             ent.done = true;
-            Entity entb { ent.x, ent.y, gst.get_info(p), ent.owner };
+            Entity entb { ent.x, ent.y, gst.inv->get_info(p), ent.owner };
             entb.building = -1;
             entb.done = true;
             entb.hp = 50;
@@ -250,7 +248,7 @@ Player_control::Player_control () {
             view.menu_unit.close();
             std::cout << "move " << p << "\n";
             Entity &ent = gst.entities[view.selected_entity];
-            view.moves = gst.ground.move_area(gst, ent);
+            view.moves = gst.inv->ground.move_area(gst, ent);
             return move;
         }
     ); 
@@ -260,8 +258,8 @@ Player_control::Player_control () {
             std::cout << "moved to " << p << "\n";
             Entity &ent = gst.entities[view.selected_entity];
             view.moves.clear();
-            ent.x = p % gst.ground.sizex;
-            ent.y = p / gst.ground.sizex;
+            ent.x = p % gst.inv->ground.sizex;
+            ent.y = p / gst.inv->ground.sizex;
             ent.moved = 1;
             open_unit_menu(gst, view, fsm, p);
             return menu_unit;
@@ -273,7 +271,7 @@ Player_control::Player_control () {
             view.menu_unit.close();
             std::cout << "attack " << p << "\n";
             Entity &ent = gst.entities[view.selected_entity];
-            view.attacks = gst.ground.attack_targets(gst, ent);
+            view.attacks = gst.inv->ground.attack_targets(gst, ent);
             return attack;
         }
     ); 
@@ -282,8 +280,8 @@ Player_control::Player_control () {
         [](Gst &gst, View &view, Fsm &fsm, int p) { 
             std::cout << "attacked " << p << "\n";
             Entity &atk = gst.entities[view.selected_entity];
-            int x = view.cursor_ground % gst.ground.sizex;
-            int y = view.cursor_ground / gst.ground.sizex;
+            int x = view.cursor_ground % gst.inv->ground.sizex;
+            int y = view.cursor_ground / gst.inv->ground.sizex;
             std::cout << "selg " << x << " " << y << "\n";
             Entity &def = gst.get_at(x, y);
             atk.done = true;
@@ -375,7 +373,7 @@ Player_control::Player_control () {
             Player &player = gst.players[gst.turn];
             view.menu_unit.close();
             Entity &ent = gst.entities[view.selected_entity];
-            view.heals = gst.ground.heal_targets(gst, ent);
+            view.heals = gst.inv->ground.heal_targets(gst, ent);
             std::cout << "heal targeting " << p << "\n";
             return target_heal;
         }
@@ -385,8 +383,8 @@ Player_control::Player_control () {
         [](Gst &gst, View &view, Fsm &fsm, int p) { 
             std::cout << "healed " << p << "\n";
             Entity &atk = gst.entities[view.selected_entity];
-            int x = view.cursor_ground % gst.ground.sizex;
-            int y = view.cursor_ground / gst.ground.sizex;
+            int x = view.cursor_ground % gst.inv->ground.sizex;
+            int y = view.cursor_ground / gst.inv->ground.sizex;
             std::cout << "selg " << x << " " << y << "\n";
             Entity &def = gst.get_at(x, y);
             atk.done = true;
@@ -402,7 +400,7 @@ Player_control::Player_control () {
             Player &player = gst.players[gst.turn];
             view.menu_unit.close();
             Entity &ent = gst.entities[view.selected_entity];
-            view.converts = gst.ground.convert_targets(gst, ent);
+            view.converts = gst.inv->ground.convert_targets(gst, ent);
             std::cout << "convert targeting " << p << "\n";
             return target_convert;
         }
@@ -412,8 +410,8 @@ Player_control::Player_control () {
         [](Gst &gst, View &view, Fsm &fsm, int p) { 
             std::cout << "converted " << p << "\n";
             Entity &atk = gst.entities[view.selected_entity];
-            int x = view.cursor_ground % gst.ground.sizex;
-            int y = view.cursor_ground / gst.ground.sizex;
+            int x = view.cursor_ground % gst.inv->ground.sizex;
+            int y = view.cursor_ground / gst.inv->ground.sizex;
             std::cout << "selg " << x << " " << y << "\n";
             Entity &def = gst.get_at(x, y);
             atk.done = true;

@@ -199,16 +199,16 @@ void render_entity_info (Graphics *graphics, Gst &gst, vec2 pos, int i) {
     graphics->backend.txt.render_text("Abilities", pos + vec2 { 10, 135 });
     std::string abname;
     for (int s=0; s<ent.info->abilities.size(); s++) {
-        abname = gst.abilities[ent.info->abilities[s]].name;
+        abname = gst.inv->abilities[ent.info->abilities[s]].name;
         graphics->backend.txt.render_text(abname, 
             pos + vec2 { 90, 135+s*10.0f });
     }
 }
 
 void render_tile_info (Graphics *graphics, Gst &gst, vec2 pos, int i) {
-    int x = i % gst.ground.sizex;
-    int y = i / gst.ground.sizex;
-    Tile &tile = gst.tiles[gst.ground.tiles[gst.ground.at(x,y)]];
+    int x = i % gst.inv->ground.sizex;
+    int y = i / gst.inv->ground.sizex;
+    Tile &tile = gst.inv->tiles[gst.inv->ground.tiles[gst.inv->ground.at(x,y)]];
     
     int w = 200, h = 95;
     graphics->backend.render_rect (
@@ -331,7 +331,8 @@ void render_attack_info (Graphics *graphics, Gst &gst, vec2 pos, int i, int j) {
         (int)pos.y + 35, 32, 32
     );
     {
-        Tile &tile = gst.tiles[gst.ground.tiles[gst.ground.at(atk.x,atk.y)]];
+        Tile &tile = gst.inv->tiles[gst.inv->ground.tiles[
+            gst.inv->ground.at(atk.x,atk.y)]];
         graphics->backend.render_sprite (
             (int)tile.spritebounds.x,
             (int)tile.spritebounds.y-16, 16, 32, 
@@ -351,7 +352,8 @@ void render_attack_info (Graphics *graphics, Gst &gst, vec2 pos, int i, int j) {
         (int)pos.y + 35, 32, 32
     );
     {
-        Tile &tile = gst.tiles[gst.ground.tiles[gst.ground.at(def.x,def.y)]];
+        Tile &tile = gst.inv->tiles[gst.inv->ground.tiles[
+            gst.inv->ground.at(def.x,def.y)]];
         graphics->backend.render_sprite (
             (int)tile.spritebounds.x,
             (int)tile.spritebounds.y-16, 16, 32, 
@@ -434,13 +436,13 @@ void render_attack_info (Graphics *graphics, Gst &gst, vec2 pos, int i, int j) {
 
 void Graphics::render (Gst &gst, View &view) 
 {
-    Ground &gr = gst.ground;
+    Ground &gr = gst.inv->ground;
     std::vector<Entity> &entities = gst.entities;
     vec2 res { (float)resx, (float)resy };
     
     for (int y=0; y<gr.sizey; y++) {
         for (int x=0; x<gr.sizex; x++) {
-            Tile &tile = gst.tiles[gr.tiles[gr.at(x,y)]];
+            Tile &tile = gst.inv->tiles[gr.tiles[gr.at(x,y)]];
             backend.render_sprite(
                 (int)tile.spritebounds.x,
                 (int)tile.spritebounds.y, 16, 16, 
@@ -449,7 +451,7 @@ void Graphics::render (Gst &gst, View &view)
         }
     }
     
-    for (Resource res : gst.ground.resources) {
+    for (Resource res : gr.resources) {
         int x = res.pos % gr.sizex;
         int y = res.pos / gr.sizex;
         backend.render_sprite(
@@ -464,7 +466,7 @@ void Graphics::render (Gst &gst, View &view)
     /* overlay */
     for (int y=0; y<gr.sizey; y++) {
         for (int x=0; x<gr.sizex; x++) {
-            Tile &tile = gst.tiles[gr.tiles[gr.at(x,y)]];
+            Tile &tile = gst.inv->tiles[gr.tiles[gr.at(x,y)]];
             backend.render_sprite(
                 (int)tile.spritebounds.x,
                 (int)tile.spritebounds.y-16, 16, 16, 
@@ -492,7 +494,7 @@ void Graphics::render (Gst &gst, View &view)
         int x = view.selected_ground % gr.sizex;
         int y = view.selected_ground / gr.sizex;
         vec2 pos { (float)x*32, (float)y*32 };
-        Tile &tile = gst.tiles[gr.tiles[gr.at(x,y)]];
+        Tile &tile = gst.inv->tiles[gr.tiles[gr.at(x,y)]];
         backend.render_sprite(
             (int)tile.spritebounds.x,
             (int)tile.spritebounds.y+256-16, 16, 32, 
@@ -586,7 +588,7 @@ void Graphics::render (Gst &gst, View &view)
     backend.txt.render_text(txtgold, pos + vec2 { res.x/2+10, 10 });
     std::string txtres = "Researching: ";
     if (player.researching != -1) { 
-        txtres += gst.get_tech(player.researching)->name; 
+        txtres += gst.inv->get_tech(player.researching)->name; 
     } else { txtres += "None"; }
     float reswidth = backend.txt.get_width(txtres);
     backend.txt.render_text(txtres, pos + vec2 { res.x-reswidth-10, 10 });
@@ -602,7 +604,7 @@ void Graphics::render (Gst &gst, View &view)
     if (view.hover_ground != -1) { info_ground = view.hover_ground; }
     if (view.selected_entity != -1) { 
         int i = view.selected_entity;
-        info_ground = gst.ground.at(entities[i].x, entities[i].y);
+        info_ground = gr.at(entities[i].x, entities[i].y);
     }
     if (view.selected_ground != -1) { info_ground = view.selected_ground; }
     

@@ -4,35 +4,37 @@
 #include <iostream>
 
 
-Player& Gst::get_player (int id) {
-    for (auto &player : players) {
-        if (id == player.id) return player;
-    }
-}
-
-Tech* Gst::get_tech (int id) {
+Tech* Inv::get_tech (int id) {
     for (auto &tech : techs) {
         if (id == tech.id) return &tech;
     }
 }
     
-EntityInfo* Gst::get_info (std::string name) {
+EntityInfo* Inv::get_info (std::string name) {
     for (EntityInfo &info : infos) {
         if (name == info.name) return &info;
     }
 }
 
-EntityInfo* Gst::get_info (int id) {
+EntityInfo* Inv::get_info (int id) {
     for (EntityInfo &info : infos) {
         if (id == info.id) return &info;
     }
 }
 
-bool Gst::info_has_ability (EntityInfo* info, std::string name) {
+bool Inv::info_has_ability (EntityInfo* info, std::string name) {
     for (int ab : info->abilities) {
         if (abilities[ab].name == name) return true;
     }
     return false;
+}
+
+
+
+Player& Gst::get_player (int id) {
+    for (auto &player : players) {
+        if (id == player.id) return player;
+    }
 }
 
 Entity& Gst::get_at (int x, int y) {
@@ -86,6 +88,8 @@ float Gst::get_type_bonus (Entity &atk, Entity &def) {
 int Gst::get_vet_level (Entity &ent) { return std::min(3, ent.fights/3); }
 
 std::vector<Bonus> Gst::get_bonuses (Entity &atk, Entity &def) {
+    auto &tiles = inv->tiles;
+    auto &ground = inv->ground;
     std::vector<Bonus> bs;
     if (tiles[ground.tiles[ground.at(atk.x, atk.y)]].attack_bonus != 0) {
         
@@ -116,35 +120,35 @@ std::vector<Bonus> Gst::get_bonuses (Entity &atk, Entity &def) {
         bs.emplace_back(get_type_bonus(def, atk), Bonus::Id::type, false);
     }*/
     
-    if (info_has_ability(atk.info, "Causes Fear")) 
+    if (inv->info_has_ability(atk.info, "Causes Fear")) 
         bs.emplace_back(-1.0f/3, Bonus::Id::ability, false);
-    if (info_has_ability(def.info, "Causes Fear")) 
+    if (inv->info_has_ability(def.info, "Causes Fear")) 
         bs.emplace_back(-1.0f/3, Bonus::Id::ability, true);
     
-    if (info_has_ability(atk.info, "Anti-Cavalry")) 
+    if (inv->info_has_ability(atk.info, "Anti-Cavalry")) 
         bs.emplace_back(4.0f/3, Bonus::Id::ability, true);
-    if (info_has_ability(def.info, "Anti-Cavalry")) 
+    if (inv->info_has_ability(def.info, "Anti-Cavalry")) 
         bs.emplace_back(4.0f/3, Bonus::Id::ability, false);
     
-    if (info_has_ability(atk.info, "Desert Charge")
-    && !info_has_ability(def.info, "Desert Charge")
+    if (inv->info_has_ability(atk.info, "Desert Charge")
+    && !inv->info_has_ability(def.info, "Desert Charge")
     && tiles[ground.tiles[ground.at(def.x, def.y)]].name == "Desert") 
         bs.emplace_back(1.0f/3, Bonus::Id::ability, true);
         
-    if (info_has_ability(atk.info, "Plains Charge")
-    && !info_has_ability(def.info, "Plains Charge")
+    if (inv->info_has_ability(atk.info, "Plains Charge")
+    && !inv->info_has_ability(def.info, "Plains Charge")
     && tiles[ground.tiles[ground.at(def.x, def.y)]].name == "Plains") 
         bs.emplace_back(1.0f/3, Bonus::Id::ability, true);
         
-    if (info_has_ability(atk.info, "Woodsman")
-    && !info_has_ability(def.info, "Woodsman")
+    if (inv->info_has_ability(atk.info, "Woodsman")
+    && !inv->info_has_ability(def.info, "Woodsman")
     && tiles[ground.tiles[ground.at(def.x, def.y)]].name == "Forest") 
         bs.emplace_back(1.0f/3, Bonus::Id::ability, true);
         
-    if (info_has_ability(atk.info, "Volley") && atk.hp >= 50) 
+    if (inv->info_has_ability(atk.info, "Volley") && atk.hp >= 50) 
         bs.emplace_back(1.0f/3, Bonus::Id::ability, true);
     
-    if (info_has_ability(atk.info, "Frenzy")) 
+    if (inv->info_has_ability(atk.info, "Frenzy")) 
         bs.emplace_back(1/atk.hp, Bonus::Id::ability, true);
     
     Player &player_atk = players[atk.owner];
@@ -188,7 +192,7 @@ float Gst::get_damage (Entity &atk, Entity &def) {
 
 bool Gst::get_first_strike (Entity &atk, Entity &def) {
     bool fs { false };
-    fs = info_has_ability(atk.info, "First Strike");
+    fs = inv->info_has_ability(atk.info, "First Strike");
     return fs;
 }
 
@@ -200,12 +204,12 @@ float clamp_hp (float hp) {
 
 BattleResult Gst::battle_res (Entity &atk, Entity &def) {
     BattleResult result { atk.hp, def.hp };
-    bool first_strike_atk = info_has_ability(atk.info, "First Strike");
-    bool first_strike_def = info_has_ability(def.info, "First Strike");
-    bool skirmish_atk = info_has_ability(atk.info, "Skirmish");
-    bool skirmish_def = info_has_ability(def.info, "Skirmish");
-    bool anticav_atk = info_has_ability(atk.info, "Anti-Cavalry");
-    bool anticav_def = info_has_ability(def.info, "Anti-Cavalry");
+    bool first_strike_atk = inv->info_has_ability(atk.info, "First Strike");
+    bool first_strike_def = inv->info_has_ability(def.info, "First Strike");
+    bool skirmish_atk = inv->info_has_ability(atk.info, "Skirmish");
+    bool skirmish_def = inv->info_has_ability(def.info, "Skirmish");
+    bool anticav_atk = inv->info_has_ability(atk.info, "Anti-Cavalry");
+    bool anticav_def = inv->info_has_ability(def.info, "Anti-Cavalry");
     first_strike_atk = first_strike_atk 
         || (skirmish_atk && def.info->range == 1);
     first_strike_def = first_strike_def 
@@ -225,32 +229,32 @@ BattleResult Gst::battle_res (Entity &atk, Entity &def) {
             result.atk_hp = clamp_hp(
                 result.atk_hp - get_damage(def, atk, result.def_hp));
         }
-        if (!info_has_ability(atk.info, "No Counter")) 
+        if (!inv->info_has_ability(atk.info, "No Counter")) 
             if (result.atk_hp > 0) 
                 result.def_hp = clamp_hp(
                     result.def_hp - get_damage(atk, def, result.atk_hp));
     } else {
         result.def_hp = clamp_hp(
             result.def_hp - get_damage(atk, def, result.atk_hp));
-        if (!info_has_ability(def.info, "No Counter") && def_inrange) 
+        if (!inv->info_has_ability(def.info, "No Counter") && def_inrange) 
             if (result.def_hp > 0) 
                 result.atk_hp = clamp_hp(
                     result.atk_hp - get_damage(def, atk, result.def_hp));
     }
     
-    if (info_has_ability(atk.info, "Rapid Fire")) 
+    if (inv->info_has_ability(atk.info, "Rapid Fire")) 
         if (result.def_hp > 0) 
             result.def_hp = clamp_hp(
                 result.def_hp - get_damage(atk, def, result.def_hp));
     
-    if (info_has_ability(def.info, "Rapid Fire") && def_inrange)
+    if (inv->info_has_ability(def.info, "Rapid Fire") && def_inrange)
         if (result.atk_hp > 0) 
             result.atk_hp = clamp_hp(
                 result.atk_hp - get_damage(def, atk, result.def_hp));
     
-    if (result.atk_hp > 0 && info_has_ability(atk.info, "Zeal")) 
+    if (result.atk_hp > 0 && inv->info_has_ability(atk.info, "Zeal")) 
         result.atk_hp = clamp_hp(result.atk_hp + 20);
-    if (result.def_hp > 0 && info_has_ability(def.info, "Zeal")) 
+    if (result.def_hp > 0 && inv->info_has_ability(def.info, "Zeal")) 
         result.def_hp = clamp_hp(result.def_hp + 20);
     
     return result;
@@ -285,6 +289,8 @@ void Gst::clear_dead() {
 int Gst::get_range (Entity &ent) {
     int range = ent.info->range;
     if (range > 1) {
+        auto &tiles = inv->tiles;
+        auto &ground = inv->ground;
         range += tiles[ground.tiles[ground.at(ent.x, ent.y)]].range_bonus; 
     }
     if (range < 1) range = 1;
@@ -306,7 +312,7 @@ void Gst::convert (Entity &atk, Entity &def) {
     if (player.has_tech(53)) { amt += 0.10f; } // tech faith
     // caution, randomness
     std::uniform_real_distribution<float> odds(0, 1);
-    float value = odds(engine);
+    float value = odds(inv->engine);
     std::cout << value << " / " << amt << " odds\n";
     if (value < amt) {
         def.owner = atk.owner;
@@ -320,7 +326,7 @@ std::vector<int> Gst::get_possible_trains (Entity &ent) {
     std::vector<int> trains;
     if (ent.info->id == 107) { // market special case
         std::vector<int> candidates;
-        for (EntityInfo &info : infos) {
+        for (EntityInfo &info : inv->infos) {
             if (info.id == 0) continue; // villager only in train_id
             if (info.level > player.level) continue;
             if (info.level < player.level && info.upgrade != -1) continue;
@@ -329,14 +335,14 @@ std::vector<int> Gst::get_possible_trains (Entity &ent) {
                 candidates.push_back(info.id);
             }
         }
-        std::shuffle(candidates.begin(), candidates.end(), engine);
+        std::shuffle(candidates.begin(), candidates.end(), inv->engine);
         // pick 3 cands at random
         for (int i=0; i<3; i++) trains.push_back(candidates[i]);
         return trains;
     }
     
     for (int id : ent.info->train_id) {
-        auto info = get_info(id);
+        auto info = inv->get_info(id);
         if (info->level > player.level) continue;
         if (info->level < player.level && info->upgrade != -1) continue;
         trains.push_back(id);
@@ -361,7 +367,7 @@ std::vector<int> Gst::get_possible_trains (Entity &ent) {
 std::vector<int> Gst::get_possible_builds (Entity &ent) {
     std::vector<int> builds;
     for (int id : ent.info->build) {
-        if (check_req_build(ent, get_info(id))) {
+        if (check_req_build(ent, inv->get_info(id))) {
             builds.push_back(id);
         }
     }
@@ -370,6 +376,7 @@ std::vector<int> Gst::get_possible_builds (Entity &ent) {
 
 
 bool Gst::check_req_build(Entity &ent, EntityInfo *info) {
+    auto &ground = inv->ground;
     Player &player = players[ent.owner];
     if (player.level < info->level) return false;
     for (int id : info->adjacent) {
@@ -476,7 +483,7 @@ bool Gst::check_req_level (Player &player) {
     }
     
     std::map<int, int> lv_techs;
-    for (int id : player.techs) lv_techs[get_tech(id)->level] ++;
+    for (int id : player.techs) lv_techs[inv->get_tech(id)->level] ++;
     if (player.level == 0) {
         if (lv_techs[0] >= 3) return true;
     }
@@ -538,7 +545,7 @@ void Gst::level_upgrade (Player &player) {
     for (Entity &e : entities) {
         if (get_player(e.owner) == player) {
             if (e.info->upgrade != -1 && e.info->level == player.level) {
-                e.info = get_info(e.info->upgrade);
+                e.info = inv->get_info(e.info->upgrade);
             }
         }
     }
@@ -548,7 +555,7 @@ void Gst::level_upgrade (Player &player) {
 void Gst::update_tech_lookup (Player &player) {
     player.tech_lookup.map_id.clear();
     for (int i : player.techs) {
-        Tech *tech = get_tech(i);
+        Tech *tech = inv->get_tech(i);
         std::vector<int> ids { };
         bool noaff = true;
         if (tech->bonus.aff_id.size() > 0) {
@@ -556,7 +563,7 @@ void Gst::update_tech_lookup (Player &player) {
             noaff = false;
         } else {
             if (tech->bonus.aff_level != -1) {
-                for (EntityInfo info : infos) {
+                for (EntityInfo info : inv->infos) {
                     if (info.level == tech->bonus.aff_level) {
                         ids.push_back(info.id);
                     }
@@ -564,7 +571,7 @@ void Gst::update_tech_lookup (Player &player) {
                 noaff = false;
             }
             if (tech->bonus.aff_class.size() > 0) {
-                for (EntityInfo info : infos) {
+                for (EntityInfo info : inv->infos) {
                     auto &cls = tech->bonus.aff_class;
                     if (std::find(cls.begin(), cls.end(), 
                         info.ent_class) != cls.end())                        
@@ -575,7 +582,7 @@ void Gst::update_tech_lookup (Player &player) {
                 noaff = false;
             }
         }
-        if (noaff) { for (auto info : infos) ids.push_back(info.id); }
+        if (noaff) { for (auto info : inv->infos) ids.push_back(info.id); }
         for (int id : ids) {
             player.tech_lookup.map_id[id] = 
                 player.tech_lookup.map_id[id] + tech->bonus;

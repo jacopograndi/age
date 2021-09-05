@@ -3,6 +3,6 @@
 
 #include "gst.h"
 
-void load_json (Gst &gst);
+void load_json (Inv &inv);
 
 #endif

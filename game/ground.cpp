@@ -4,14 +4,10 @@
 #include <iostream>
 #include <algorithm>
 
-Ground::Ground (int sx, int sy) {
+void Ground::build (int sx, int sy) {
     sizex = sx; sizey = sy;
     tiles = new int[sx*sy];
     for (int i=0; i<sx*sy; i++) tiles[i] = 0;
-}
-
-Ground::~Ground () {
-    
 }
 
 int Ground::at(int x, int y) {
@@ -47,7 +43,7 @@ std::vector<int> Ground::move_area (Gst &gst, Entity &ent) {
     std::vector<step> frontier { step { at(ent.x, ent.y), move_num } };
     
     int maxcost = 99;
-    if (gst.info_has_ability(ent.info, "Scout")) maxcost = 2;
+    if (gst.inv->info_has_ability(ent.info, "Scout")) maxcost = 2;
     
     int iter=0;
     for (; iter<10000; iter++) {
@@ -66,7 +62,7 @@ std::vector<int> Ground::move_area (Gst &gst, Entity &ent) {
         for (int t : forward_star) {
             if (!(std::find(visited.begin(), visited.end(), t) != visited.end())
             && !(std::find(frontier.begin(), frontier.end(), t) != frontier.end())) {
-                int movecost = gst.tiles[gst.ground.tiles[t]].move_cost;
+                int movecost = gst.inv->tiles[tiles[t]].move_cost;
                 if (movecost > maxcost) movecost = maxcost;
                 int walkedm = maxf.m - movecost;
                 bool obstructed = false;
@@ -93,8 +89,8 @@ std::vector<int> Ground::move_area (Gst &gst, Entity &ent) {
 std::vector<int> Ground::attack_targets (Gst &gst, Entity &ent) {
     std::vector<int> attacks;
     int range = gst.get_range(ent);
-    bool builds = !gst.info_has_ability(ent.info, "Units Only");
-    bool units = !gst.info_has_ability(ent.info, "Buildings Only");
+    bool builds = !gst.inv->info_has_ability(ent.info, "Units Only");
+    bool units = !gst.inv->info_has_ability(ent.info, "Buildings Only");
     for (Entity &e : gst.entities) {
         if (!units && e.info->unit == 1) continue;
         if (!builds && e.info->unit == 0) continue;

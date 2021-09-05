@@ -16,12 +16,13 @@ class Resource {
 
 class Ground {
     public:
-    Ground (int sx, int sy);
-    ~Ground ();
+    Ground () {}
     
     int *tiles;
     
     std::vector<Resource> resources;
+    
+    void build (int sx, int sy);
     
     int sizex;
     int sizey;

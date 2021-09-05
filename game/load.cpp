@@ -32,8 +32,8 @@ std::vector<Ability> load_abilities () {
     return abs;
 }
 
-void load_json (Gst &gst) {    
-    gst.abilities = load_abilities();
+void load_json (Inv &inv) {    
+    inv.abilities = load_abilities();
 
     std::ifstream file_tiles("content/tiles.json");
     json j_tiles; file_tiles >> j_tiles;
@@ -44,7 +44,7 @@ void load_json (Gst &gst) {
         tile.defence_bonus = it["defence_bonus"];
         tile.range_bonus = it["range_bonus"];
         tile.spritebounds = vec2 { it["spritebounds"][0], it["spritebounds"][1] };
-        gst.tiles.push_back(tile);
+        inv.tiles.push_back(tile);
     }
     
     std::ifstream file_ents("content/entities.json");
@@ -86,8 +86,8 @@ void load_json (Gst &gst) {
             it["class"].get<std::string>());
         for (auto ab : it["abilities"]) {
             int index = 0;
-            for (int i=0; i<gst.abilities.size(); i++) {
-                if (gst.abilities[i].name == ab) { index = i; break; }
+            for (int i=0; i<inv.abilities.size(); i++) {
+                if (inv.abilities[i].name == ab) { index = i; break; }
             }
             ent.abilities.push_back(index);
         }
@@ -96,7 +96,7 @@ void load_json (Gst &gst) {
         if (it.contains("defence_bonus")) { 
             ent.defence_bonus = it["defence_bonus"];
         }
-        gst.infos.push_back(ent);
+        inv.infos.push_back(ent);
     }
     
     std::ifstream file_techs("content/techs.json");
@@ -147,6 +147,6 @@ void load_json (Gst &gst) {
         }
         
         std::cout << tech.id << tech.bonus.to_string() << std::endl;
-        gst.techs.push_back(tech);
+        inv.techs.push_back(tech);
     }
 }

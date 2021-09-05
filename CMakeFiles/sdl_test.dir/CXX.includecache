@@ -630,8 +630,6 @@ vector
 SDL2/SDL.h
 -
 
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/constants.h
-
 C:/Users/jaksk/Desktop/dev/_cpp/age/game/entity.h
 vector
 -
@@ -642,27 +640,9 @@ iostream
 ../umath/vec2.h
 C:/Users/jaksk/Desktop/dev/_cpp/age/umath/vec2.h
 
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/ground.cpp
-ground.h
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/ground.h
-gst.h
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/gst.h
-iostream
--
-algorithm
--
-
 C:/Users/jaksk/Desktop/dev/_cpp/age/game/ground.h
 entity.h
 C:/Users/jaksk/Desktop/dev/_cpp/age/game/entity.h
-
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/gst.cpp
-gst.h
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/gst.h
-map
--
-iostream
--
 
 C:/Users/jaksk/Desktop/dev/_cpp/age/game/gst.h
 iostream
@@ -703,12 +683,6 @@ C:/Users/jaksk/Desktop/dev/_cpp/age/game/nlohmann/json.hpp
 C:/Users/jaksk/Desktop/dev/_cpp/age/game/load.h
 gst.h
 C:/Users/jaksk/Desktop/dev/_cpp/age/game/gst.h
-
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/menu.cpp
-iostream
--
-menu.h
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/menu.h
 
 C:/Users/jaksk/Desktop/dev/_cpp/age/game/menu.h
 vector
@@ -1078,16 +1052,6 @@ vector
 tech.h
 C:/Users/jaksk/Desktop/dev/_cpp/age/game/tech.h
 
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/playercontrol.cpp
-iostream
--
-string
--
-playercontrol.h
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/playercontrol.h
-entity.h
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/entity.h
-
 C:/Users/jaksk/Desktop/dev/_cpp/age/game/playercontrol.h
 iostream
 -
@@ -1099,10 +1063,6 @@ vector
 -
 functional
 -
-
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/tech.cpp
-tech.h
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/tech.h
 
 C:/Users/jaksk/Desktop/dev/_cpp/age/game/tech.h
 vector
@@ -1126,10 +1086,6 @@ string
 ../umath/vec2.h
 C:/Users/jaksk/Desktop/dev/_cpp/age/umath/vec2.h
 
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/view.cpp
-view.h
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/view.h
-
 C:/Users/jaksk/Desktop/dev/_cpp/age/game/view.h
 vector
 -
@@ -1143,24 +1099,6 @@ C:/Users/jaksk/Desktop/dev/_cpp/age/game/menu.h
 C:/Users/jaksk/Desktop/dev/_cpp/age/graphics/cam.h
 vector
 -
-
-C:/Users/jaksk/Desktop/dev/_cpp/age/graphics/graphics.cpp
-algorithm
--
-iostream
--
-string
--
-math.h
--
-graphics.h
-C:/Users/jaksk/Desktop/dev/_cpp/age/graphics/graphics.h
-../game/menu.h
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/menu.h
-../game/tile.h
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/tile.h
-../game/constants.h
-C:/Users/jaksk/Desktop/dev/_cpp/age/game/constants.h
 
 C:/Users/jaksk/Desktop/dev/_cpp/age/graphics/graphics.h
 vector

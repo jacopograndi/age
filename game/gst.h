@@ -56,13 +56,17 @@ class Inv {
     std::vector<Tile> tiles;
     Ground ground;
     
-    private: 
+    Tech* get_tech (int id);
+    EntityInfo* get_info (std::string name);
+    EntityInfo* get_info (int id);
+    bool info_has_ability (EntityInfo* info, std::string name);
+    
     std::default_random_engine engine = std::default_random_engine{};
-}
+};
 
 class Gst {
     public:
-    Gst() { }
+    Gst(Inv *inv) : inv(inv) { }
     
     Inv *inv;
     
@@ -73,10 +77,7 @@ class Gst {
     int day { 0 };
     
     Player& get_player (int id);
-    Tech* get_tech (int id);
-    EntityInfo* get_info (std::string name);
-    EntityInfo* get_info (int id);
-    bool info_has_ability (EntityInfo* info, std::string name);
+    
     Entity& get_at (int x, int y);
     std::vector<float> get_cost (EntityInfo *info, Player &player);
     float get_trade_rate (Player &player);

@@ -1,7 +1,7 @@
 #include "view.h"
 
 void View::process (Gst &gst, vec2 cam, vec2 mouse, int *mheld) {
-    Ground &gr = gst.ground;
+    Ground &gr = gst.inv->ground;
     std::vector<Entity> &entities = gst.entities;
     
     vec2 absmouse { mouse }; 
