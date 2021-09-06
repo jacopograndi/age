@@ -13,38 +13,9 @@
 #include "game/tile.h"
 #include "game/load.h"
 
-// state representation
-/*
-    ground matrix
-    . tile: {
-        name
-        range bonus
-        travel cost
-        defence bonus
-        sight penalty
-    }
-    units list
-    . unit: {
-        name
-        type
-        attack
-        defence
-        life
-        move points
-        sight
-        (morale?)
-        ability list
-        . abilities: [ ]
-    }
-    builds
-    . build: {
-        same as unit
-        trainees list
-    }
-    tech
-    resources (food, gold)
-    trade bonus
-*/
+#include "game/ai/engine.h"
+#include "game/ai/performer.h"
+
 
 int main () {
     Graphics graphics (900, 600);
@@ -56,8 +27,9 @@ int main () {
     float ts = 16;
     
     Inv inv;
-    inv.ground.build(15,15);
+    load_json(inv);
     
+    inv.ground.build(15,15);
     inv.ground.tiles[1] = 1;
     inv.ground.tiles[8] = 1;
     inv.ground.tiles[11] = 2;
@@ -69,21 +41,17 @@ int main () {
     for (int i=0; i<2000; i+=71) {
         inv.ground.tiles[i%(inv.ground.sizex*inv.ground.sizey)] = 1;
     }
-    
     inv.ground.resources.emplace_back(inv.ground.at(3, 4), Resource::Type::gold);
     inv.ground.resources.emplace_back(inv.ground.at(4, 4), Resource::Type::food);
     
-    Gst gst { &inv };
     
-    load_json(inv);
+    Gst gst { &inv };
     
     gst.players.emplace_back(255, 0, 0, 0);
     gst.players[0].res = std::vector<float> { 1500, 1500 };
     gst.players.emplace_back(0, 0, 255, 1);
     gst.players[1].res = std::vector<float> { 1500, 1500 };
     gst.players[0].level = 2;
-    
-    
     
     gst.entities.emplace_back(5, 1, inv.get_info("Town Center"), 0);
     gst.entities.emplace_back(6, 1, inv.get_info("Barracks"), 0);
@@ -124,18 +92,17 @@ int main () {
         timing.process();
         while (timing.check_process()) {
             com.process_clicks();
-            // input detection
-            // turn fsm or ai
-            // turn tick calculations
-            /*
-                economy
-                tech
-                upgrades
-                win condition
-            */ 
             view.process(gst, graphics.cam.pos, mousepos, com.mheld);
             if (com.check_key(SDL_SCANCODE_ESCAPE)) {
                 view.back = 1;
+            }
+            
+            if (com.check_key(SDL_SCANCODE_SPACE)) {
+                ai::engine eng { gst };
+                auto best = eng.get_best();
+                
+                ai::performer perf { gst };
+                gst = perf.apply(best);
             }
             
             control.process(gst, view);

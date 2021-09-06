@@ -50,6 +50,9 @@ CMakeFiles/sdl_test.dir/commands/commands.cpp.obj: C:/MinGW_libs/include/SDL2/cl
 CMakeFiles/sdl_test.dir/commands/commands.cpp.obj: commands/commands.cpp
 CMakeFiles/sdl_test.dir/commands/commands.cpp.obj: commands/commands.h
 
+CMakeFiles/sdl_test.dir/game/ai/action.cpp.obj: game/ai/action.cpp
+CMakeFiles/sdl_test.dir/game/ai/action.cpp.obj: game/ai/action.h
+
 CMakeFiles/sdl_test.dir/game/entity.cpp.obj: game/entity.cpp
 CMakeFiles/sdl_test.dir/game/entity.cpp.obj: game/entity.h
 CMakeFiles/sdl_test.dir/game/entity.cpp.obj: umath/vec2.h
@@ -226,6 +229,12 @@ CMakeFiles/sdl_test.dir/main.cpp.obj: C:/MinGW_libs/include/SDL2/SDL_video.h
 CMakeFiles/sdl_test.dir/main.cpp.obj: C:/MinGW_libs/include/SDL2/begin_code.h
 CMakeFiles/sdl_test.dir/main.cpp.obj: C:/MinGW_libs/include/SDL2/close_code.h
 CMakeFiles/sdl_test.dir/main.cpp.obj: commands/commands.h
+CMakeFiles/sdl_test.dir/main.cpp.obj: game/ai/action.h
+CMakeFiles/sdl_test.dir/main.cpp.obj: game/ai/engine.h
+CMakeFiles/sdl_test.dir/main.cpp.obj: game/ai/evaluator.h
+CMakeFiles/sdl_test.dir/main.cpp.obj: game/ai/generator.h
+CMakeFiles/sdl_test.dir/main.cpp.obj: game/ai/performer.h
+CMakeFiles/sdl_test.dir/main.cpp.obj: game/ai/tactic.h
 CMakeFiles/sdl_test.dir/main.cpp.obj: game/entity.h
 CMakeFiles/sdl_test.dir/main.cpp.obj: game/ground.h
 CMakeFiles/sdl_test.dir/main.cpp.obj: game/gst.h

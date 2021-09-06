@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/sdl_test.dir/commands/commands.cpp.obj"
+  "CMakeFiles/sdl_test.dir/game/ai/action.cpp.obj"
   "CMakeFiles/sdl_test.dir/game/entity.cpp.obj"
   "CMakeFiles/sdl_test.dir/game/ground.cpp.obj"
   "CMakeFiles/sdl_test.dir/game/gst.cpp.obj"

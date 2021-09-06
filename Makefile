@@ -168,6 +168,33 @@ commands/commands.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\sdl_test.dir\build.make CMakeFiles/sdl_test.dir/commands/commands.cpp.s
 .PHONY : commands/commands.cpp.s
 
+game/ai/action.obj: game/ai/action.cpp.obj
+
+.PHONY : game/ai/action.obj
+
+# target to build an object file
+game/ai/action.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\sdl_test.dir\build.make CMakeFiles/sdl_test.dir/game/ai/action.cpp.obj
+.PHONY : game/ai/action.cpp.obj
+
+game/ai/action.i: game/ai/action.cpp.i
+
+.PHONY : game/ai/action.i
+
+# target to preprocess a source file
+game/ai/action.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\sdl_test.dir\build.make CMakeFiles/sdl_test.dir/game/ai/action.cpp.i
+.PHONY : game/ai/action.cpp.i
+
+game/ai/action.s: game/ai/action.cpp.s
+
+.PHONY : game/ai/action.s
+
+# target to generate assembly for a file
+game/ai/action.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\sdl_test.dir\build.make CMakeFiles/sdl_test.dir/game/ai/action.cpp.s
+.PHONY : game/ai/action.cpp.s
+
 game/entity.obj: game/entity.cpp.obj
 
 .PHONY : game/entity.obj
@@ -504,6 +531,9 @@ help:
 	@echo ... commands/commands.obj
 	@echo ... commands/commands.i
 	@echo ... commands/commands.s
+	@echo ... game/ai/action.obj
+	@echo ... game/ai/action.i
+	@echo ... game/ai/action.s
 	@echo ... game/entity.obj
 	@echo ... game/entity.i
 	@echo ... game/entity.s

@@ -65,23 +65,25 @@ std::vector<int> Ground::move_area (Gst &gst, Entity &ent) {
                 int movecost = gst.inv->tiles[tiles[t]].move_cost;
                 if (movecost > maxcost) movecost = maxcost;
                 int walkedm = maxf.m - movecost;
-                bool obstructed = false;
+                bool obs_enemy = false, obs_friend = false;
                 for (Entity &e : gst.entities) {
-                    if (e.owner != ent.owner && at(e.x, e.y) == t) {
-                        obstructed = true;
+                    if (at(e.x, e.y) == t) {
+                        if (e.owner != ent.owner) obs_enemy = true;
+                        else obs_friend = true;
                         break;
                     }
                 }
-                if (walkedm >= 0 && !obstructed) {
+                if (walkedm >= 0 && !obs_enemy) {
                     frontier.emplace_back(t, walkedm);
-                    moves.push_back(t);
+                    if (!obs_friend) {
+                        moves.push_back(t);
+                    }
                 }
             }
         }
         visited.push_back(maxf.pos);
     }
     
-    std::cout << "iters: " << iter;
     
     return moves;
 }

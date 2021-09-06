@@ -50,6 +50,9 @@ CMakeFiles/sdl_test.dir/commands/commands.cpp.obj
  C:/MinGW_libs/include/SDL2/close_code.h
  C:/Users/jaksk/Desktop/dev/_cpp/age/commands/commands.cpp
  C:/Users/jaksk/Desktop/dev/_cpp/age/commands/commands.h
+CMakeFiles/sdl_test.dir/game/ai/action.cpp.obj
+ C:/Users/jaksk/Desktop/dev/_cpp/age/game/ai/action.cpp
+ C:/Users/jaksk/Desktop/dev/_cpp/age/game/ai/action.h
 CMakeFiles/sdl_test.dir/game/entity.cpp.obj
  C:/Users/jaksk/Desktop/dev/_cpp/age/game/entity.cpp
  C:/Users/jaksk/Desktop/dev/_cpp/age/game/entity.h
@@ -227,6 +230,12 @@ CMakeFiles/sdl_test.dir/main.cpp.obj
  C:/MinGW_libs/include/SDL2/begin_code.h
  C:/MinGW_libs/include/SDL2/close_code.h
  C:/Users/jaksk/Desktop/dev/_cpp/age/commands/commands.h
+ C:/Users/jaksk/Desktop/dev/_cpp/age/game/ai/action.h
+ C:/Users/jaksk/Desktop/dev/_cpp/age/game/ai/engine.h
+ C:/Users/jaksk/Desktop/dev/_cpp/age/game/ai/evaluator.h
+ C:/Users/jaksk/Desktop/dev/_cpp/age/game/ai/generator.h
+ C:/Users/jaksk/Desktop/dev/_cpp/age/game/ai/performer.h
+ C:/Users/jaksk/Desktop/dev/_cpp/age/game/ai/tactic.h
  C:/Users/jaksk/Desktop/dev/_cpp/age/game/entity.h
  C:/Users/jaksk/Desktop/dev/_cpp/age/game/ground.h
  C:/Users/jaksk/Desktop/dev/_cpp/age/game/gst.h

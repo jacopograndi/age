@@ -50,22 +50,32 @@ namespace EntityClass {
 
 class Entity {
     public:
-    Entity(int x, int y, EntityInfo *info, int owner) 
+    Entity (int x, int y, EntityInfo *info, int owner) 
         : x(x), y(y), info(info), owner(owner) { moved = 0; hp = 100; }
     
+    // copy constructor
+    Entity (const Entity& rhs) { 
+        building = rhs.building; hp = rhs.hp; x = rhs.x; y = rhs.y;
+        done = rhs.done; moved = rhs.moved; info = rhs.info;
+        fights = rhs.fights; owner = rhs.owner;
+    }
+    Entity& operator=(const Entity& rhs) {
+        building = rhs.building; hp = rhs.hp; x = rhs.x; y = rhs.y;
+        done = rhs.done; moved = rhs.moved; info = rhs.info;
+        fights = rhs.fights; owner = rhs.owner;
+    };
 
     bool operator==(Entity oth) { 
         return x == oth.x && y == oth.y && info->unit == oth.info->unit;
     }
 
     int building { 0 };
-    float hp; /**/
+    float hp;
     int x, y;
     bool done = false;
     int moved;
     EntityInfo *info;
     int fights { 0 };
-    
     int owner;
 };
 

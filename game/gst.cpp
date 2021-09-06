@@ -261,8 +261,8 @@ BattleResult Gst::battle_res (Entity &atk, Entity &def) {
 }
 
 void Gst::battle (Entity &atk, Entity &def) {
-    std::cout << "! attack " << atk.info->name << "(hp:" << atk.hp << "), "
-    << def.info->name << "(hp:" << def.hp << ") \n";
+    /*std::cout << "! attack " << atk.info->name << "(hp:" << atk.hp << "), "
+    << def.info->name << "(hp:" << def.hp << ") \n";*/
     
     auto result = battle_res(atk, def);
     atk.hp = result.atk_hp;
@@ -271,8 +271,8 @@ void Gst::battle (Entity &atk, Entity &def) {
     if (atk.info->unit == 1) atk.fights += 1;
     if (def.info->unit == 1) def.fights += 1;
     
-    std::cout << "! result " << atk.info->name << "(hp:" << atk.hp << "), "
-    << def.info->name << "(hp:" << def.hp << ") \n";
+    /*std::cout << "! result " << atk.info->name << "(hp:" << atk.hp << "), "
+    << def.info->name << "(hp:" << def.hp << ") \n";*/
     clear_dead();
 }
 
@@ -317,6 +317,20 @@ void Gst::convert (Entity &atk, Entity &def) {
     if (value < amt) {
         def.owner = atk.owner;
     }
+}
+
+
+int Gst::get_nearest_enemy (Entity &ent, int &mindist) {
+    auto &ground = inv->ground;
+    int pos = -1; mindist = 9999999;
+    for (Entity &oth : entities) {
+        if (oth.owner == ent.owner) continue;
+        int dist = abs(oth.x-ent.x) + abs(oth.y-ent.y);
+        if (dist < mindist) {
+            mindist = dist;
+            pos = ground.at(oth.x, oth.y);
+        }
+    } 
 }
 
 

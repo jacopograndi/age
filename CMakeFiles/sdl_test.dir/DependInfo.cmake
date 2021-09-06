@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "C:/Users/jaksk/Desktop/dev/_cpp/age/commands/commands.cpp" "C:/Users/jaksk/Desktop/dev/_cpp/age/CMakeFiles/sdl_test.dir/commands/commands.cpp.obj"
+  "C:/Users/jaksk/Desktop/dev/_cpp/age/game/ai/action.cpp" "C:/Users/jaksk/Desktop/dev/_cpp/age/CMakeFiles/sdl_test.dir/game/ai/action.cpp.obj"
   "C:/Users/jaksk/Desktop/dev/_cpp/age/game/entity.cpp" "C:/Users/jaksk/Desktop/dev/_cpp/age/CMakeFiles/sdl_test.dir/game/entity.cpp.obj"
   "C:/Users/jaksk/Desktop/dev/_cpp/age/game/ground.cpp" "C:/Users/jaksk/Desktop/dev/_cpp/age/CMakeFiles/sdl_test.dir/game/ground.cpp.obj"
   "C:/Users/jaksk/Desktop/dev/_cpp/age/game/gst.cpp" "C:/Users/jaksk/Desktop/dev/_cpp/age/CMakeFiles/sdl_test.dir/game/gst.cpp.obj"

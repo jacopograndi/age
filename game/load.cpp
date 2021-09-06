@@ -145,8 +145,6 @@ void load_json (Inv &inv) {
                 tech.bonus.aff_all = b["aff_all"]; 
             }
         }
-        
-        std::cout << tech.id << tech.bonus.to_string() << std::endl;
         inv.techs.push_back(tech);
     }
 }

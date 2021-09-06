@@ -68,11 +68,20 @@ class Gst {
     public:
     Gst(Inv *inv) : inv(inv) { }
     
+    // copy constructor
+    Gst (const Gst& rhs) { 
+        inv = rhs.inv; entities = rhs.entities; players = rhs.players;
+        turn = rhs.turn; day = rhs.day;
+    }
+    Gst& operator=(const Gst& rhs) {
+        inv = rhs.inv; entities = rhs.entities; players = rhs.players;
+        turn = rhs.turn; day = rhs.day;
+    };
+    
     Inv *inv;
     
     std::vector<Entity> entities;
     std::vector<Player> players;
-    
     int turn { 0 };
     int day { 0 };
     
@@ -96,6 +105,8 @@ class Gst {
     
     void heal (Entity &atk, Entity &def);
     void convert (Entity &atk, Entity &def);
+    
+    int get_nearest_enemy (Entity &ent, int &mindist);
     
     std::vector<int> get_possible_trains (Entity &ent);
     std::vector<int> get_possible_builds (Entity &ent);
