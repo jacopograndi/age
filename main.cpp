@@ -44,7 +44,6 @@ int main () {
     inv.ground.resources.emplace_back(inv.ground.at(3, 4), Resource::Type::gold);
     inv.ground.resources.emplace_back(inv.ground.at(4, 4), Resource::Type::food);
     
-    
     Gst gst { &inv };
     
     gst.players.emplace_back(255, 0, 0, 0);
@@ -72,7 +71,8 @@ int main () {
     View view (vec2 { (float)graphics.resx, (float)graphics.resy });
     
     vec2 mouselast { 0, 0 };
-    
+   
+
     while(true) {
         if (com.process_events()) break;
         if (com.resx != -1) { 
@@ -104,7 +104,6 @@ int main () {
                 ai::performer perf { gst };
                 gst = perf.apply(best);
             }
-            
             control.process(gst, view);
             com.process_keys();
         }

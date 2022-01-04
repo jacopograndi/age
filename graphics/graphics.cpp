@@ -656,17 +656,21 @@ void Graphics::render (Gst &gst, View &view)
 
 Graphics_sdl::Graphics_sdl (int resx, int resy) {
     SDL_Init(SDL_INIT_VIDEO);
-    
+
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
 
     window = SDL_CreateWindow("age", SDL_WINDOWPOS_UNDEFINED, 
         SDL_WINDOWPOS_UNDEFINED, resx, resy, SDL_WINDOW_SHOWN 
         | SDL_WINDOW_RESIZABLE);
-    screenSurface = SDL_GetWindowSurface(window);
+	if (window == nullptr) {
+		std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
+	}
+
+	//screenSurface = SDL_GetWindowSurface(window);
 
     rend = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     SDL_SetRenderDrawBlendMode(rend, SDL_BLENDMODE_BLEND);
-    
+
     load_sheet();
     
     txt.gRenderer = rend;

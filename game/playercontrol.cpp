@@ -67,7 +67,7 @@ void open_unit_menu (Gst &gst, View &view, Fsm &fsm, int p) {
 
 Player_control::Player_control () {   
     fsm.arcs.emplace_back(
-        select, sel_ground, -1,
+        sel, sel_ground, -1,
         [](Gst &gst, View &view, Fsm &fsm, int p) { 
             view.selected_ground = p;
             std::cout << "selected ground " << p << "\n";
@@ -91,7 +91,7 @@ Player_control::Player_control () {
             view.selected_ground = -1;
             gst.end_day();
             std::cout << "end day " << p << "\n";
-            return select;
+            return sel;
         }
     ); 
     fsm.arcs.emplace_back(
@@ -99,7 +99,7 @@ Player_control::Player_control () {
         [](Gst &gst, View &view, Fsm &fsm, int p) {
             view.menu_day.close();
             view.selected_ground = -1; 
-            return select;
+            return sel;
         }
     );   
     fsm.arcs.emplace_back(
@@ -133,7 +133,7 @@ Player_control::Player_control () {
             view.menu_tech.close();
             view.selected_ground = -1; 
             std::cout << "selected tech " << p << "\n";
-            return select;
+            return sel;
         }
     ); 
     fsm.arcs.emplace_back(
@@ -141,11 +141,11 @@ Player_control::Player_control () {
         [](Gst &gst, View &view, Fsm &fsm, int p) { 
             view.menu_tech.close();
             view.selected_ground = -1; 
-            return select;
+            return sel;
         }
     ); 
     fsm.arcs.emplace_back(
-        select, sel_unit, -1,
+        sel, sel_unit, -1,
         [](Gst &gst, View &view, Fsm &fsm, int p) { 
             view.selected_entity = p;
             open_unit_menu(gst, view, fsm, p);
@@ -158,7 +158,7 @@ Player_control::Player_control () {
         [](Gst &gst, View &view, Fsm &fsm, int p) { 
             view.selected_entity = -1;
             view.menu_unit.close();
-            return select;
+            return sel;
         }
     ); 
     fsm.arcs.emplace_back(
@@ -202,7 +202,7 @@ Player_control::Player_control () {
             Player &player = gst.players[gst.turn];
             player.pay(cost);
             view.selected_entity = -1;
-            return select;
+            return sel;
         }
     ); 
     fsm.arcs.emplace_back(
@@ -239,7 +239,7 @@ Player_control::Player_control () {
             Player &player = gst.players[gst.turn];
             player.pay(gst.get_cost(entb.info, player));
             view.selected_entity = -1;
-            return select;
+            return sel;
         }
     ); 
     fsm.arcs.emplace_back(
@@ -288,7 +288,7 @@ Player_control::Player_control () {
             gst.battle(atk, def);
             view.attacks.clear();
             view.selected_entity = -1;
-            return select;
+            return sel;
         }
     ); 
     fsm.arcs.emplace_back(
@@ -313,6 +313,7 @@ Player_control::Player_control () {
             return menu_trade;
         }
     ); 
+	/*
     fsm.arcs.emplace_back(
         menu_trade, opt, -1,
         [](Gst &gst, View &view, Fsm &fsm, int p) { 
@@ -327,7 +328,7 @@ Player_control::Player_control () {
             gst.entities[view.selected_entity].done = true;
             view.selected_entity = -1;
             std::cout << "done trading " << p << "\n";
-            return select;
+            return sel;
         }
     ); 
     fsm.arcs.emplace_back(
@@ -355,7 +356,7 @@ Player_control::Player_control () {
             gst.entities[view.selected_entity].done = true;
             view.selected_entity = -1;
             std::cout << "aged up " << p << "\n";
-            return select;
+            return sel;
         }
     ); 
     fsm.arcs.emplace_back(
@@ -364,7 +365,7 @@ Player_control::Player_control () {
             view.menu_age_up.close();
             view.selected_entity = -1;
             std::cout << "closed ageup " << p << "\n";
-            return select;
+            return sel;
         }
     ); 
     fsm.arcs.emplace_back(
@@ -391,7 +392,7 @@ Player_control::Player_control () {
             gst.heal(atk, def);
             view.heals.clear();
             view.selected_entity = -1;
-            return select;
+            return sel;
         }
     ); 
     fsm.arcs.emplace_back(
@@ -418,7 +419,7 @@ Player_control::Player_control () {
             gst.convert(atk, def);
             view.converts.clear();
             view.selected_entity = -1;
-            return select;
+            return sel;
         }
     ); 
     fsm.arcs.emplace_back(
@@ -428,9 +429,9 @@ Player_control::Player_control () {
             gst.entities[view.selected_entity].done = true;
             view.selected_entity = -1;
             std::cout << "done " << p << "\n";
-            return select;
+            return sel;
         }
-    ); 
+    ); */
 }
 
 void Player_control::process (Gst &gst, View &view) {

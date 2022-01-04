@@ -24,10 +24,10 @@ bool Commands_sdl::process_events () {
     SDL_GetMouseState(&mx, &my);
     
     resx = -1; resy = -1;
-    
+
     SDL_Event e;
     while(SDL_PollEvent(&e) != 0) {
-        if(e.type == SDL_QUIT) {
+		if(e.type == SDL_QUIT) {
             return true;
         }
         if(e.type == SDL_KEYDOWN && e.key.repeat == 0) {

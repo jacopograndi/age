@@ -8,9 +8,8 @@
 #include <vector>
 #include <functional>
 
-
 enum pc_state {
-    select,
+    sel,
     move,
     attack,
     train, 
@@ -46,6 +45,7 @@ enum pc_action {
 };
 
 
+
 class Fsm;
 using lambda = std::function<pc_state(Gst&, View&, Fsm&, int p)>;
 
@@ -58,12 +58,12 @@ class Arc {
     pc_action act;
     int p;
     
-    lambda f;
+	lambda f;
 };
 
 class Fsm {
     public:
-    Fsm() { state = select; }
+    Fsm() { state = sel; }
     
     void transition (Gst &gst, View &view, Fsm &fsm, pc_action act, int p) {
         std::cout << "> transitioning from " << state << " with " << act << std::endl;
