@@ -1,3 +1,0 @@
-/home/j/ws/age/CMakeFiles/sdl_test.dir
-/home/j/ws/age/CMakeFiles/edit_cache.dir
-/home/j/ws/age/CMakeFiles/rebuild_cache.dir
